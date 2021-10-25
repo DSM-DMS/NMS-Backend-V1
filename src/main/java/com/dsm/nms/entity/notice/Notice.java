@@ -28,8 +28,8 @@ public class Notice extends BaseTimeEntity {
     @Column(nullable = false)
     private String content;
 
-    @OneToMany(mappedBy = "notice")
-    private Set<Target> targets = new HashSet<>();
+    @OneToMany(mappedBy = "notice", cascade = CascadeType.REMOVE)
+    private List<Target> targets;
 
     @OneToMany(mappedBy = "notice", cascade = CascadeType.REMOVE)
     private List<Image> images;
@@ -42,7 +42,7 @@ public class Notice extends BaseTimeEntity {
     private Teacher teacher;
 
     @Builder
-    public Notice(String title, String content, Set<Target> targets, List<Image> images, Teacher teacher) {
+    public Notice(String title, String content, List<Target> targets, List<Image> images, Teacher teacher) {
         this.title = title;
         this.content = content;
         this.targets = targets;
