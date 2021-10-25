@@ -18,10 +18,15 @@ public class Target {
     @NotNull
     @Enumerated(EnumType.STRING)
     private Tag tag;
+    
+    @JoinColumn(name = "notice_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Notice notice;
 
     @Builder
-    public Target(Tag tag) {
+    public Target(Tag tag, Notice notice) {
         this.tag = tag;
+        this.notice = notice;
     }
 
 }
