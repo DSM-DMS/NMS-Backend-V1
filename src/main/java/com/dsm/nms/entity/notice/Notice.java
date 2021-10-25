@@ -28,7 +28,7 @@ public class Notice extends BaseTimeEntity {
     @Column(nullable = false)
     private String content;
 
-    @OneToMany
+    @OneToMany(mappedBy = "notice", cascade = CascadeType.REMOVE)
     private List<Target> targets;
 
     @OneToMany(mappedBy = "notice", cascade = CascadeType.REMOVE)
