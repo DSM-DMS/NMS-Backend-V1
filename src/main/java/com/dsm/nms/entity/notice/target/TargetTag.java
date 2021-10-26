@@ -1,6 +1,6 @@
 package com.dsm.nms.entity.notice.target;
 
-public enum Tag {
+public enum TargetTag {
     FIRST,
     SECOND,
     THIRD,
