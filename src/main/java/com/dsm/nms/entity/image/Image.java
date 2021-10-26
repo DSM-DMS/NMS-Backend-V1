@@ -15,6 +15,7 @@ public class Image {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private Integer order = 1;
     private String imagePath;
     private String imageUrl;
 
