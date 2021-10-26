@@ -1,13 +1,13 @@
 package com.dsm.nms.entity.notice.target;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Target {
@@ -17,16 +17,9 @@ public class Target {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Tag tag;
-    
-    @JoinColumn(name = "notice_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Notice notice;
+    private TargetTag targetTag;
 
-    @Builder
-    public Target(Tag tag, Notice notice) {
-        this.tag = tag;
-        this.notice = notice;
-    }
+    @OneToMany(mappedBy = "target")
+    private List<NoticeTarget> notices;
 
 }
