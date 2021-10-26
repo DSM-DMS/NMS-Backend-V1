@@ -2,7 +2,7 @@ package com.dsm.nms.entity.notice;
 
 import com.dsm.nms.entity.BaseTimeEntity;
 import com.dsm.nms.entity.image.Image;
-import com.dsm.nms.entity.notice.target.Target;
+import com.dsm.nms.entity.notice.target.NoticeTarget;
 import com.dsm.nms.entity.star.Star;
 import com.dsm.nms.entity.teacher.Teacher;
 import lombok.AccessLevel;
@@ -28,8 +28,12 @@ public class Notice extends BaseTimeEntity {
     @Column(nullable = false)
     private String content;
 
+    @JoinColumn(name = "teacher_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Teacher teacher;
+
     @OneToMany(mappedBy = "notice", cascade = CascadeType.REMOVE)
-    private List<Target> targets;
+    private List<NoticeTarget> targets;
 
     @OneToMany(mappedBy = "notice", cascade = CascadeType.REMOVE)
     private List<Image> images;
@@ -37,16 +41,10 @@ public class Notice extends BaseTimeEntity {
     @OneToMany(mappedBy = "notice", cascade = CascadeType.REMOVE)
     private Set<Star> stars = new HashSet<>();
 
-    @JoinColumn(name = "teacher_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Teacher teacher;
-
     @Builder
-    public Notice(String title, String content, List<Target> targets, List<Image> images, Teacher teacher) {
+    public Notice(String title, String content, Teacher teacher) {
         this.title = title;
         this.content = content;
-        this.targets = targets;
-        this.images = images;
         this.teacher = teacher;
     }
 
