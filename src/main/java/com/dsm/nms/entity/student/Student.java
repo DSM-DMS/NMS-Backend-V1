@@ -1,10 +1,12 @@
 package com.dsm.nms.entity.student;
 
+import com.dsm.nms.entity.star.Star;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -14,15 +16,25 @@ public class Student {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(nullable = false)
     private String name;
-    private String number;
-    private String email;
-    private String password;
 
+    @Column(nullable = false)
+    private String number;
+
+    @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
+    private String profileUrl;
+
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Grade grade;
 
-    private String profileUrl;
+    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE)
+    private List<Star> stars;
 
     @Builder
     public Student(String name, String number, String email, String password, Grade grade) {
