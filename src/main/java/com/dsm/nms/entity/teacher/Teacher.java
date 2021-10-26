@@ -12,15 +12,28 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Teacher {
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String username;
+
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
     private String email;
     private String profileUrl;
 
+    @Column(nullable = false)
+    private String phoneNumber;
+    private String introduction;
+
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Department department;
 
