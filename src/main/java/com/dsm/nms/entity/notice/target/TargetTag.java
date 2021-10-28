@@ -1,9 +1,9 @@
 package com.dsm.nms.entity.notice.target;
 
 public enum TargetTag {
-    FIRST,
-    SECOND,
-    THIRD,
+    GRADE_FIRST,
+    GRADE_SECOND,
+    GRADE_THIRD,
     SCHOOL,
     SUBURBS
 }
