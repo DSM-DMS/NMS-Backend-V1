@@ -1,5 +1,6 @@
 package com.dsm.nms.entity.notice.target;
 
+import com.dsm.nms.entity.notice.noticetarget.NoticeTarget;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

@@ -1,4 +1,4 @@
-package com.dsm.nms.entity.notice.target;
+package com.dsm.nms.entity.notice.noticetarget;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

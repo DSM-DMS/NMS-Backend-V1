@@ -1,6 +1,7 @@
-package com.dsm.nms.entity.notice.target;
+package com.dsm.nms.entity.notice.noticetarget;
 
 import com.dsm.nms.entity.notice.Notice;
+import com.dsm.nms.entity.notice.target.Target;
 import lombok.*;
 import javax.persistence.*;
 

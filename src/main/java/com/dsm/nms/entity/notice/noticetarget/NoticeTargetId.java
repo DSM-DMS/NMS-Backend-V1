@@ -1,4 +1,4 @@
-package com.dsm.nms.entity.notice.target;
+package com.dsm.nms.entity.notice.noticetarget;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -2,7 +2,7 @@ package com.dsm.nms.entity.notice;
 
 import com.dsm.nms.entity.BaseTimeEntity;
 import com.dsm.nms.entity.image.Image;
-import com.dsm.nms.entity.notice.target.NoticeTarget;
+import com.dsm.nms.entity.notice.noticetarget.NoticeTarget;
 import com.dsm.nms.entity.star.Star;
 import com.dsm.nms.entity.teacher.Teacher;
 import lombok.AccessLevel;
