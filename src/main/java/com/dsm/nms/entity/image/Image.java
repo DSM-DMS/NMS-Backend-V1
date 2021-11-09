@@ -1,5 +1,6 @@
 package com.dsm.nms.entity.image;
 
+import com.dsm.nms.entity.BaseTimeEntity;
 import com.dsm.nms.entity.notice.Notice;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Image {
+public class Image extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
