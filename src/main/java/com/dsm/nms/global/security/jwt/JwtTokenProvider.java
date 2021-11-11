@@ -74,7 +74,9 @@ public class JwtTokenProvider {
         if(body.get("role").equals("teacher"))
             return teacherDetailsService
                     .loadUserByUsername(body.getSubject());
-        return studentDetailsService
-                .loadUserByUsername(body.getSubject());
+        else if(body.get("role").equals("student"))
+            return studentDetailsService
+                    .loadUserByUsername(body.getSubject());
+        else System.out.println("예외 처리좀요");
     }
 }
