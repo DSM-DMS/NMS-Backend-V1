@@ -13,7 +13,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleGlobal(NmsException e) {
         final ErrorCode errorCode = e.getErrorCode();
         return new ResponseEntity<>(
-                new ErrorResponse(errorCode.getStatus(), errorCode.getMessage()), HttpStatus.valueOf(errorCode.getStatus())
+                new ErrorResponse(errorCode.getMessage()), HttpStatus.valueOf(errorCode.getStatus())
         );
     }
 
