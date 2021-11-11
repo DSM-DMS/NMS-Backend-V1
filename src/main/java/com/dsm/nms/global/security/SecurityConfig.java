@@ -1,6 +1,5 @@
 package com.dsm.nms.global.security;
 
-import com.dsm.nms.global.security.jwt.FilterConfig;
 import com.dsm.nms.global.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
