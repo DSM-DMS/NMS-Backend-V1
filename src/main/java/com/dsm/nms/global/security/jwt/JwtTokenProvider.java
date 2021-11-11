@@ -1,15 +1,17 @@
 package com.dsm.nms.global.security.jwt;
 
+import com.dsm.nms.global.exception.ExpiredTokenException;
+import com.dsm.nms.global.exception.InvalidRoleException;
+import com.dsm.nms.global.exception.InvalidTokenException;
 import com.dsm.nms.global.security.auth.StudentDetailsService;
 import com.dsm.nms.global.security.auth.TeacherDetailsService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import reactor.util.annotation.Nullable;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -50,33 +52,46 @@ public class JwtTokenProvider {
 
     public String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(jwtProperties.getHeader());
-        if(bearerToken != null && bearerToken.startsWith(jwtProperties.getPrefix()))
-            return bearerToken.substring(jwtProperties.getHeader().length()+1);
+
+        if(bearerToken != null && bearerToken.startsWith(jwtProperties.getPrefix())) {
+            return bearerToken.substring(jwtProperties.getHeader().length() + 1);
+        }
         return null;
     }
 
     public Authentication getAuthentication(String token) {
         Claims body = getBody(token);
-        if(body.getExpiration().before(new Date()))
-            return null;
+
+        if(body.getExpiration().before(new Date())) {
+            throw ExpiredTokenException.EXCEPTION;
+        }
 
         UserDetails userDetails = getDetails(body);
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    public Claims getBody(String token) {
-            return Jwts.parser().setSigningKey(jwtProperties.getSecretKey())
-                    .parseClaimsJws(token).getBody();
-            //여기 예외점요
+    private Claims getBody(String token) {
+        try {
+            return Jwts.parser()
+                    .setSigningKey(jwtProperties.getSecretKey())
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (ExpiredJwtException e) {
+            throw ExpiredTokenException.EXCEPTION;
+        } catch (MalformedJwtException | SignatureException e) {
+            throw InvalidTokenException.EXCEPTION;
+        }
     }
 
-    public UserDetails getDetails(Claims body) {
-        if(body.get("role").equals("teacher"))
-            return teacherDetailsService
-                    .loadUserByUsername(body.getSubject());
-        else
-            return studentDetailsService
-                    .loadUserByUsername(body.getSubject());
-        //예외좀요
+    @Nullable
+    private UserDetails getDetails(Claims body) {
+        switch (body.get("role", String.class)) {
+            case "teacher":
+                return teacherDetailsService.loadUserByUsername(body.getSubject());
+            case "student":
+                return studentDetailsService.loadUserByUsername(body.getSubject());
+            default: throw InvalidRoleException.EXCEPTION;
+        }
     }
+
 }
