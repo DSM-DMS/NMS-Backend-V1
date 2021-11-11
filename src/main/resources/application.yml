@@ -26,9 +26,8 @@ spring:
     property-naming-strategy: SNAKE_CASE
 
 jwt:
-  header: ${HEADER}
-  prefix: ${PREFIX}
-  secret: ${SECRET}
-  exp:
-    access: ${ACCESS}
-    refresh: ${REFRESH}
+  header: ${JWT_HEADER}
+  prefix: ${JWT_PREFIX}
+  secretKey: ${JWT_SECRET_KEY}
+  accessExp: ${JWT_ACCESS_EXP}
+  refreshExp: ${JWT_REFRESH_EXP}
