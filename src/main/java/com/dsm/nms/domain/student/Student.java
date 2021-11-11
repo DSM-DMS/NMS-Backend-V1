@@ -20,7 +20,7 @@ public class Student {
     private String name;
 
     @Column(nullable = false)
-    private String number;
+    private String gcn;
 
     @Column(nullable = false)
     private String email;
@@ -37,9 +37,9 @@ public class Student {
     private List<Star> stars;
 
     @Builder
-    public Student(String name, String number, String email, String password, Grade grade) {
+    public Student(String name, String gcn, String email, String password, Grade grade) {
         this.name = name;
-        this.number = number;
+        this.gcn = gcn;
         this.email = email;
         this.password = password;
         this.grade = grade;
