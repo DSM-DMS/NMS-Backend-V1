@@ -16,33 +16,42 @@ public class Student {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "char(5)")
     private String name;
 
-    @Column(nullable = false)
-    private String number;
+    @Column(nullable = false, unique = true)
+    private String nickname;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "char(60)")
     private String password;
+
     private String profileUrl;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Grade grade;
 
+    @Column(nullable = false, columnDefinition = "char(1)")
+    private String classNum;
+
+    @Column(nullable = false, columnDefinition = "char(2)")
+    private String number;
+
     @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE)
     private List<Star> stars;
 
     @Builder
-    public Student(String name, String number, String email, String password, Grade grade) {
-        this.name = name;
-        this.number = number;
-        this.email = email;
-        this.password = password;
+    public Student(String nickname, String name, Grade grade, String classNum, String number, String password, String email) {
+        this.nickname = nickname;
         this.grade = grade;
+        this.name = name;
+        this.classNum = classNum;
+        this.number = number;
+        this.password = password;
+        this.email = email;
     }
 
 }

@@ -1,6 +1,8 @@
-package com.dsm.nms.global.security.jwt;
+package com.dsm.nms.global.security;
 
 import com.dsm.nms.global.error.ExceptionFilter;
+import com.dsm.nms.global.security.jwt.JwtTokenFilter;
+import com.dsm.nms.global.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
