@@ -1,9 +1,0 @@
-package com.dsm.nms.domain.notice.target;
-
-public enum TargetTag {
-    GRADE_FIRST,
-    GRADE_SECOND,
-    GRADE_THIRD,
-    SCHOOL,
-    SUBURBS
-}
