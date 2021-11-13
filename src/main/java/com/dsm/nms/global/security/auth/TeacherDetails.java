@@ -1,6 +1,6 @@
 package com.dsm.nms.global.security.auth;
 
-import com.dsm.nms.domain.teacher.Teacher;
+import com.dsm.nms.domain.teacher.entity.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;

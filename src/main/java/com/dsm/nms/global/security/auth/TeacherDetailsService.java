@@ -1,6 +1,6 @@
 package com.dsm.nms.global.security.auth;
 
-import com.dsm.nms.domain.teacher.TeacherRepository;
+import com.dsm.nms.domain.teacher.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
