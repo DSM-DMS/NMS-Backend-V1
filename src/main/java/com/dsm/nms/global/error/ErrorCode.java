@@ -11,6 +11,8 @@ public enum ErrorCode {
     EXPIRED_TOKEN(401, "Expired Token"),
     INVALID_ROLE(401, "Invalid Role"),
 
+    AUTH_CODE_NOT_FOUND(404, "Auth Code Not Found"),
+
     TEACHER_ALREADY_EXISTS(409,  "Teacher Already Exists"),
     STUDENT_ALREADY_EXISTS(409,  "Student Already Exists"),
     AUTH_CODE_ALREADY_CERTIFIED(409,"Auth Code Already Certified"),
