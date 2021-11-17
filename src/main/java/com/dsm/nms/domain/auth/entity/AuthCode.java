@@ -24,12 +24,26 @@ public class AuthCode {
         this.email = email;
         this.code = code;
         this.isCertified = false;
-        this.ttl = 10L;
+        this.ttl = 30L;
     }
 
     public String updateAuthCode(String code) {
         this.code = code;
-        this.ttl = 10L;
+        this.ttl = 30L;
         return this.email;
+    }
+
+    public boolean isAuthCode(String code) {
+        return this.code.equals(code);
+    }
+
+    public boolean getCertified() {
+        return this.isCertified;
+    }
+
+    public AuthCode changeCertified() {
+        this.isCertified = true;
+        this.ttl = 300L;
+        return this;
     }
 }
