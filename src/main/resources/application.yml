@@ -36,6 +36,8 @@ aws:
   accessKey: ${AWS_ACCESSKEY}
   secretKey: ${AWS_SECRETKEY}
   region: ${AWS_REGION}
+  ses:
+    baseEmail: ${BASE_EMAIL}
 
 cloud:
   aws:
