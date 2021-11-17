@@ -10,6 +10,7 @@ public enum ErrorCode {
     INVALID_TOKEN(401, "Invalid Token"),
     EXPIRED_TOKEN(401, "Expired Token"),
     INVALID_ROLE(401, "Invalid Role"),
+    INVALID_AUTH_CODE(401, "Invalid Auth Code"),
 
     AUTH_CODE_NOT_FOUND(404, "Auth Code Not Found"),
 
