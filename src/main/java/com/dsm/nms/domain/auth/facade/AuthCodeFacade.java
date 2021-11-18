@@ -42,7 +42,7 @@ public class AuthCodeFacade {
 
     public Optional<AuthCode> getAuthCode(String email) {
         return Optional.of(authCodeRepository.findById(email)
-                .orElseThrow(()->AuthCodeNotFoundException.EXCEPTION));
+                .orElseThrow(() -> AuthCodeNotFoundException.EXCEPTION));
     }
 
     public boolean alreadyCertifiedFilter(boolean certify) {
