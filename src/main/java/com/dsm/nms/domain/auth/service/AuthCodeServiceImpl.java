@@ -48,12 +48,12 @@ public class AuthCodeServiceImpl implements AuthCodeService{
 
         authCodeFacade.getAuthCode(email)
                 .filter(
-                        f -> authCodeFacade.alreadyCertifiedFilter(
-                                f.getCertified()
+                        authCode -> authCodeFacade.alreadyCertifiedFilter(
+                                authCode.getCertified()
                         )
                 )
                 .filter(
-                        f -> f.isAuthCode(
+                        authCode -> authCode.isAuthCode(
                                 request.getCode()
                         )
                 )

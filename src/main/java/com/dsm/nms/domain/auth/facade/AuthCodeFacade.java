@@ -31,7 +31,7 @@ public class AuthCodeFacade {
     public boolean isLimit(String email) {
         authCodeLimitRepository.findById(email)
                 .filter(authCodeLimit -> authCodeLimit.getCount() < 3)
-                .orElseThrow(() ->AuthCodeRequestOverLimitException.EXCEPTION);
+                .orElseThrow(() -> AuthCodeRequestOverLimitException.EXCEPTION);
         return true;
     }
 
@@ -42,12 +42,13 @@ public class AuthCodeFacade {
 
     public Optional<AuthCode> getAuthCode(String email) {
         return Optional.of(authCodeRepository.findById(email)
-                .orElseThrow(()->AuthCodeNotFoundException.EXCEPTION));
+                .orElseThrow(() -> AuthCodeNotFoundException.EXCEPTION));
     }
 
     public boolean alreadyCertifiedFilter(boolean certify) {
         if (certify)
             throw AuthCodeAlreadyCertifiedException.EXCEPTION;
+
         return true;
     }
 }
