@@ -1,10 +1,9 @@
 package com.dsm.nms.domain.auth.api;
 
+import com.dsm.nms.domain.auth.api.dto.request.PasswordRequest;
 import com.dsm.nms.domain.auth.api.dto.request.SendCodeRequest;
 import com.dsm.nms.domain.auth.api.dto.request.VerifyCodeRequest;
-import com.dsm.nms.domain.auth.api.dto.request.PasswordRequest;
 import com.dsm.nms.domain.auth.service.AuthCodeService;
-import com.dsm.nms.domain.auth.service.password.PasswordService;
 import com.dsm.nms.domain.auth.service.password.StudentPasswordService;
 import com.dsm.nms.domain.auth.service.password.TeacherPasswordService;
 import lombok.RequiredArgsConstructor;

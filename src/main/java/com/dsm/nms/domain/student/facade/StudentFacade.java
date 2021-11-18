@@ -3,7 +3,6 @@ package com.dsm.nms.domain.student.facade;
 import com.dsm.nms.domain.student.entity.Student;
 import com.dsm.nms.domain.student.exception.StudentAlreadyExistsException;
 import com.dsm.nms.domain.student.repository.StudentRepository;
-import com.dsm.nms.domain.teacher.entity.Teacher;
 import com.dsm.nms.domain.teacher.exception.TeacherNotFouncException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
