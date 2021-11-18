@@ -2,7 +2,7 @@ package com.dsm.nms.domain.auth.api;
 
 import com.dsm.nms.domain.auth.api.dto.request.PasswordRequest;
 import com.dsm.nms.domain.auth.api.dto.request.SendCodeRequest;
-import com.dsm.nms.domain.auth.api.dto.request.VerifyCodeRequest;
+import com.dsm.nms.domain.auth.api.dto.request.CertifyCodeRequest;
 import com.dsm.nms.domain.auth.service.AuthCodeService;
 import com.dsm.nms.domain.auth.service.password.StudentPasswordService;
 import com.dsm.nms.domain.auth.service.password.TeacherPasswordService;
@@ -26,10 +26,10 @@ public class AuthController {
         authCodeService.sendCode(sendCodeRequest);
     }
 
+feature/56-verify-password-api
     @PutMapping("/email")
-    public void verifyCode(@RequestBody @Valid VerifyCodeRequest verifyCodeRequest) {
-        authCodeService.verifyCode(verifyCodeRequest);
-    }
+    public void certifyCode(@RequestBody @Valid CertifyCodeRequest certifyCodeRequest) {
+        authCodeService.certifyCode(certifyCodeRequest);
 
     @PostMapping("/student/password")
     public void verifyStudentPassword(@RequestBody @Valid PasswordRequest passwordRequest) {
