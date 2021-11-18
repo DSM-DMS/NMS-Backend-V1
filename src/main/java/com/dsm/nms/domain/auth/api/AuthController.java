@@ -26,10 +26,10 @@ public class AuthController {
         authCodeService.sendCode(sendCodeRequest);
     }
 
-feature/56-verify-password-api
     @PutMapping("/email")
     public void certifyCode(@RequestBody @Valid CertifyCodeRequest certifyCodeRequest) {
         authCodeService.certifyCode(certifyCodeRequest);
+    }
 
     @PostMapping("/student/password")
     public void verifyStudentPassword(@RequestBody @Valid PasswordRequest passwordRequest) {
