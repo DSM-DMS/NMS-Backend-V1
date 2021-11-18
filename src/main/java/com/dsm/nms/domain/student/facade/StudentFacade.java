@@ -16,9 +16,9 @@ public class StudentFacade {
     private final StudentRepository studentRepository;
 
     public boolean isAlreadyExists(String email) {
-        if(studentRepository.findByEmail(email).isPresent()) {
+        if(studentRepository.findByEmail(email).isPresent())
             throw StudentAlreadyExistsException.EXCEPTION;
-        }
+
         return true;
     }
 
