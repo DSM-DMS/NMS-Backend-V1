@@ -13,10 +13,8 @@ public class UserUtil {
     private final TeacherRepository teacherRepository;
     private final StudentRepository studentRepository;
 
-    public boolean existEmailFilter(String email) {
-        if(teacherRepository.existsByEmail(email) || studentRepository.existsByEmail(email))
+    public void existEmailFilter(String email) {
+        if(teacherRepository.findByEmail(email).isPresent() || studentRepository.findByEmail(email).isPresent())
             throw EmailAlreadyExistException.EXCEPTION;
-
-        return true;
     }
 }
