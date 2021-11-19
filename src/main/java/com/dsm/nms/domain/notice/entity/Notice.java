@@ -4,6 +4,7 @@ import com.dsm.nms.domain.BaseTimeEntity;
 import com.dsm.nms.domain.image.entity.Image;
 import com.dsm.nms.domain.notice.entity.noticetarget.NoticeTarget;
 import com.dsm.nms.domain.star.entity.Star;
+import com.dsm.nms.domain.teacher.api.dto.request.RegisterNoticeRequest;
 import com.dsm.nms.domain.teacher.entity.Teacher;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -41,10 +42,9 @@ public class Notice extends BaseTimeEntity {
     @OneToMany(mappedBy = "notice", cascade = CascadeType.REMOVE)
     private Set<Star> stars = new HashSet<>();
 
-    @Builder
-    public Notice(String title, String content, Teacher teacher) {
-        this.title = title;
-        this.content = content;
+    public Notice(RegisterNoticeRequest request, Teacher teacher) {
+        this.title = request.getTitle();
+        this.content = request.getContent();
         this.teacher = teacher;
     }
 
