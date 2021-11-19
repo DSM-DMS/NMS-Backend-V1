@@ -5,6 +5,7 @@ import com.dsm.nms.domain.teacher.entity.Department;
 import com.dsm.nms.global.aop.Enum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -17,6 +18,7 @@ public class SignUpRequest {
 
     @NotBlank(message = "name은 Null, 공백을 허용하지 않습니다.")
     @Pattern(regexp = "^[\\S]+$", message = "name은 띄어쓰기를 허용하지 않습니다.")
+    @Length(max = 5)
     private String name;
 
     @NotBlank(message = "username은 Null, 공백을 허용하지 않습니다.")
