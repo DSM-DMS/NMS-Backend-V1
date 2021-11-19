@@ -1,6 +1,7 @@
 package com.dsm.nms.global.utils.aws.ses;
 
 import com.amazonaws.services.simpleemail.model.*;
+import com.dsm.nms.global.config.SesConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

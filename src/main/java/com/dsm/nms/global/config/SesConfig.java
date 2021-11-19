@@ -1,4 +1,4 @@
-package com.dsm.nms.global.utils.aws.ses;
+package com.dsm.nms.global.config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
