@@ -49,4 +49,9 @@ public class Teacher {
         this.department = department;
     }
 
+    public Teacher updatePassword(String newPassword) {
+        this.password = newPassword;
+        return this;
+    }
+
 }

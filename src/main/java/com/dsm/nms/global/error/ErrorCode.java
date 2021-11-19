@@ -18,9 +18,10 @@ public enum ErrorCode {
     AUTH_CODE_ALREADY_CERTIFIED(409,"Auth Code Already Certified"),
     AUTH_CODE_REQUEST_OVER_LIMIT(429, "Auth Code Request Over Limit"),
 
-    TEACHER_ALREADY_EXISTS(409,  "Teacher Already Exists"),
     TEACHER_NOT_FOUND(404, "Teacher Not Found"),
+    TEACHER_ALREADY_EXISTS(409,  "Teacher Already Exists"),
 
+    STUDENT_NOT_FOUND(404, "Student Not Found"),
     STUDENT_ALREADY_EXISTS(409,  "Student Already Exists");
 
     private final int status;

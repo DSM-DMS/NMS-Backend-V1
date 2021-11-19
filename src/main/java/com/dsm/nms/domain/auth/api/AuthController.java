@@ -42,4 +42,14 @@ public class AuthController {
         teacherPasswordService.verifyPassword(passwordRequest);
     }
 
+    @PutMapping("/student/password")
+    public void changeStudentPassword(@RequestBody @Valid PasswordRequest passwordRequest) {
+        studentPasswordService.changePassword(passwordRequest);
+    }
+
+    @PutMapping("/teacher/password")
+    public void changeTeacherPassword(@RequestBody @Valid PasswordRequest passwordRequest) {
+        teacherPasswordService.changePassword(passwordRequest);
+    }
+
 }

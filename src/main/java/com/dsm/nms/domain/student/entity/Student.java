@@ -55,4 +55,9 @@ public class Student {
         this.email = email;
     }
 
+    public Student updatePassword(String newPassword) {
+        this.password = newPassword;
+        return this;
+    }
+
 }
