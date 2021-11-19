@@ -4,7 +4,9 @@ import com.dsm.nms.domain.teacher.entity.Teacher;
 import com.dsm.nms.domain.teacher.exception.TeacherAlreadyExistsException;
 import com.dsm.nms.domain.teacher.exception.TeacherNotFouncException;
 import com.dsm.nms.domain.teacher.repository.TeacherRepository;
+import com.dsm.nms.global.exception.AuthenticationNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +22,15 @@ public class TeacherFacade {
             throw TeacherAlreadyExistsException.EXCEPTION;
 
         return true;
+    }
+
+    public Teacher getCurrentTeacher() {
+        Object object = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if(!(object instanceof Teacher))
+            throw AuthenticationNotFoundException.EXCEPTION;
+
+        return (Teacher) object;
     }
 
     public Teacher getByEmail(String email) {
