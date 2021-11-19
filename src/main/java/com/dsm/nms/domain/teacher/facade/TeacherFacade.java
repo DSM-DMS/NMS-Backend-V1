@@ -1,8 +1,10 @@
 package com.dsm.nms.domain.teacher.facade;
 
+import com.dsm.nms.domain.teacher.api.dto.request.SignUpRequest;
 import com.dsm.nms.domain.teacher.entity.Teacher;
 import com.dsm.nms.domain.teacher.exception.TeacherAlreadyExistsException;
 import com.dsm.nms.domain.teacher.exception.TeacherNotFouncException;
+import com.dsm.nms.domain.teacher.exception.UsernameAlreadyExistsException;
 import com.dsm.nms.domain.teacher.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,10 +18,15 @@ public class TeacherFacade {
     private final TeacherRepository teacherRepository;
 
     public boolean isAlreadyExists(String email) {
-        if(teacherRepository.findByEmail(email).isPresent())
+        if (teacherRepository.findByEmail(email).isPresent())
             throw TeacherAlreadyExistsException.EXCEPTION;
 
         return true;
+    }
+
+    public void existUsernameFilter(String username) {
+        if (teacherRepository.findByUsername(username).isPresent())
+            throw UsernameAlreadyExistsException.EXCEPTION;
     }
 
     public Teacher getByEmail(String email) {
