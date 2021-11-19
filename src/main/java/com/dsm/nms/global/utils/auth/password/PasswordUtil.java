@@ -1,4 +1,4 @@
-package com.dsm.nms.global.utils.password;
+package com.dsm.nms.global.utils.auth.password;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

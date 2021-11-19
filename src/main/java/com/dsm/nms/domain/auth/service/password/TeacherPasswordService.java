@@ -4,7 +4,7 @@ import com.dsm.nms.domain.auth.api.dto.request.PasswordRequest;
 import com.dsm.nms.domain.teacher.exception.TeacherNotFouncException;
 import com.dsm.nms.domain.teacher.facade.TeacherFacade;
 import com.dsm.nms.global.exception.InvalidPasswordException;
-import com.dsm.nms.global.utils.password.PasswordUtil;
+import com.dsm.nms.global.utils.auth.password.PasswordUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
