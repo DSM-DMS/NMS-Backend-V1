@@ -12,6 +12,7 @@ public enum ErrorCode {
 
     INVALID_ROLE(401, "Invalid Role"),
     INVALID_PASSWORD(401, "Invalid Password"),
+    AUTHENTICATION_NOT_FOUND(404, "Authentication Not Found"),
 
     INVALID_AUTH_CODE(401, "Invalid Auth Code"),
     AUTH_CODE_NOT_FOUND(404, "Auth Code Not Found"),
