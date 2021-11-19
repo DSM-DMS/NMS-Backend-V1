@@ -2,6 +2,7 @@ package com.dsm.nms.domain.student.facade;
 
 import com.dsm.nms.domain.student.entity.Student;
 import com.dsm.nms.domain.student.exception.StudentAlreadyExistsException;
+import com.dsm.nms.domain.student.exception.StudentNotFoundException;
 import com.dsm.nms.domain.student.repository.StudentRepository;
 import com.dsm.nms.domain.teacher.exception.TeacherNotFouncException;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class StudentFacade {
 
     public Student getByEmail(String email) {
         return studentRepository.findByEmail(email)
-                .orElseThrow(() -> TeacherNotFouncException.EXCEPTION);
+                .orElseThrow(() -> StudentNotFoundException.EXCEPTION);
     }
 
     public String getPasswordByEmail(String email) {
