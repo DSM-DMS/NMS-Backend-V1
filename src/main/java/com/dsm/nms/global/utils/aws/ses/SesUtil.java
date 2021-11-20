@@ -8,10 +8,12 @@ import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-public class SesUtils {
+public class SesUtil {
+
+    @Value("${aws.ses.email}")
+    private String baseEmail;
 
     private final SesConfig sesConfig;
-    private final AwsSesProperties awsSesProperties;
 
     public void sendEmail(String to, String authCode) {
         Message message = new Message()
@@ -20,7 +22,7 @@ public class SesUtils {
                         .withHtml(createContent(authCode)));
 
         SendEmailRequest sendEmailRequest = new SendEmailRequest()
-                .withSource(awsSesProperties.getBaseEmail())
+                .withSource(baseEmail)
                 .withDestination(new Destination().withToAddresses(to))
                 .withMessage(message);
 
