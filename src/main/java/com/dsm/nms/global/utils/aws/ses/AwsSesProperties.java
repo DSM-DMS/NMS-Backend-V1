@@ -1,4 +1,4 @@
-package com.dsm.nms.global.utils.aws;
+package com.dsm.nms.global.utils.aws.ses;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,10 +8,12 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @Getter
 @AllArgsConstructor
 @ConstructorBinding
-@ConfigurationProperties(prefix = "aws")
-public class AwsProperties {
+@ConfigurationProperties(prefix = "aws.ses")
+public class AwsSesProperties {
 
     private final String accessKey;
     private final String secretKey;
     private final String region;
+    private final String baseEmail;
+
 }
