@@ -26,7 +26,10 @@ public enum ErrorCode {
     STUDENT_NOT_FOUND(404, "Student Not Found"),
     STUDENT_ALREADY_EXISTS(409,  "Student Already Exists"),
 
-    EMAIL_ALREADY_EXISTS(409, "Email Already Exists");
+    EMAIL_ALREADY_EXISTS(409, "Email Already Exists"),
+
+    TARGET_NOT_FOUND(404, "Target Not Found"),
+    ;
 
     private final int status;
     private final String message;
