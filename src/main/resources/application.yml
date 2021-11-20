@@ -33,16 +33,21 @@ jwt:
   refreshExp: ${JWT_REFRESH_EXP}
 
 aws:
-  accessKey: ${AWS_ACCESSKEY}
-  secretKey: ${AWS_SECRETKEY}
-  region: ${AWS_REGION}
   ses:
-    baseEmail: ${BASE_EMAIL}
+    baseEmail: ${AWS_SES_BASE_EMAIL}
+    accessKey: ${AWS_SES_ACCESS}
+    secretKey: ${AWS_SES_SECRET}
+    region: ${AWS_SES_REGION}
 
 cloud:
   aws:
+    s3:
+      bucket: ${AWS_S3_BUCKET}
     region:
-      static: ${AWS_REGION}
+      static: ${AWS_S3_REGION}
     stack:
       auto: false
+    credentials:
+      access-key: ${AWS_S3_ACCESS}
+      secret-key: ${AWS_S3_SECRET}
 
