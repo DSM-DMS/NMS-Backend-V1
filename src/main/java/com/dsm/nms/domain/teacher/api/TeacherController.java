@@ -1,10 +1,23 @@
 package com.dsm.nms.domain.teacher.api;
 
+import com.dsm.nms.domain.teacher.service.TeacherService;
+import com.dsm.nms.domain.teacher.api.dto.request.SignUpRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/teacher")
 public class TeacherController {
 
+    private final TeacherService teacherService;
+
+    @ResponseStatus(value = HttpStatus.CREATED)
+    @PostMapping("/")
+    public void join(@RequestBody @Valid SignUpRequest signUpRequest) {
+        teacherService.signUp(signUpRequest);
+    }
 }
