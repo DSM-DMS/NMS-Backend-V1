@@ -29,6 +29,8 @@ public enum ErrorCode {
     EMAIL_ALREADY_EXISTS(409, "Email Already Exists"),
 
     TARGET_NOT_FOUND(404, "Target Not Found"),
+
+    IMAGE_NOT_FOUND(404, "Image Not Found")
     ;
 
     private final int status;
