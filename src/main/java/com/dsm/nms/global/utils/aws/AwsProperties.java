@@ -8,10 +8,10 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @Getter
 @AllArgsConstructor
 @ConstructorBinding
-@ConfigurationProperties(prefix = "aws")
+@ConfigurationProperties(prefix = "aws.credentials")
 public class AwsProperties {
 
     private final String accessKey;
     private final String secretKey;
-    private final String region;
+
 }

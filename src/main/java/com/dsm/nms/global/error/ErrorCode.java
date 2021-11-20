@@ -12,6 +12,7 @@ public enum ErrorCode {
 
     INVALID_ROLE(401, "Invalid Role"),
     INVALID_PASSWORD(401, "Invalid Password"),
+    AUTHENTICATION_NOT_FOUND(404, "Authentication Not Found"),
 
     INVALID_AUTH_CODE(401, "Invalid Auth Code"),
     AUTH_CODE_NOT_FOUND(404, "Auth Code Not Found"),
@@ -25,7 +26,12 @@ public enum ErrorCode {
     STUDENT_NOT_FOUND(404, "Student Not Found"),
     STUDENT_ALREADY_EXISTS(409,  "Student Already Exists"),
 
-    EMAIL_ALREADY_EXISTS(409, "Email Already Exists");
+    EMAIL_ALREADY_EXISTS(409, "Email Already Exists"),
+
+    TARGET_NOT_FOUND(404, "Target Not Found"),
+
+    IMAGE_NOT_FOUND(404, "Image Not Found")
+    ;
 
     private final int status;
     private final String message;

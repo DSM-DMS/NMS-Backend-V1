@@ -1,4 +1,4 @@
-package com.dsm.nms.global.utils.aws.ses;
+package com.dsm.nms.global.config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -6,12 +6,16 @@ import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClientBuilder;
 import com.dsm.nms.global.utils.aws.AwsProperties;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @RequiredArgsConstructor
 @Configuration
 public class SesConfig {
+
+    @Value("S${aws.region}")
+    private String region;
 
     private final AwsProperties awsProperties;
 
@@ -22,7 +26,8 @@ public class SesConfig {
 
         return AmazonSimpleEmailServiceClientBuilder.standard()
                 .withCredentials(credentialsProvider)
-                .withRegion(awsProperties.getRegion())
+                .withRegion(region)
                 .build();
     }
+
 }

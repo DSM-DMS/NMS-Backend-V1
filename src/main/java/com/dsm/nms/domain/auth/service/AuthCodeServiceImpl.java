@@ -8,7 +8,7 @@ import com.dsm.nms.domain.auth.exception.InvalidAuthCodeException;
 import com.dsm.nms.domain.auth.facade.AuthCodeFacade;
 import com.dsm.nms.domain.auth.repository.AuthCodeLimitRepository;
 import com.dsm.nms.domain.auth.repository.AuthCodeRepository;
-import com.dsm.nms.global.utils.aws.ses.SesUtils;
+import com.dsm.nms.global.utils.aws.ses.SesUtil;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ import javax.transaction.Transactional;
 @Service
 public class AuthCodeServiceImpl implements AuthCodeService{
 
-    private final SesUtils sesUtils;
+    private final SesUtil sesUtil;
     private final AuthCodeRepository authCodeRepository;
     private final AuthCodeLimitRepository authCodeLimitRepository;
     private final AuthCodeFacade authCodeFacade;
@@ -39,7 +39,7 @@ public class AuthCodeServiceImpl implements AuthCodeService{
                 .map(authCodeLimitRepository::save)
                 .orElseGet(() -> authCodeFacade.newAuthCode(email, code));
 
-        sesUtils.sendEmail(email, code);
+        sesUtil.sendEmail(email, code);
     }
 
     @Override

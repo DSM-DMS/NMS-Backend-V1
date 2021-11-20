@@ -16,7 +16,7 @@ public class Image extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "seq", columnDefinition = "integer default 1")
+    @Column(name = "sequence", columnDefinition = "integer default 1")
     private Integer order;
     private String imagePath;
     private String imageUrl;

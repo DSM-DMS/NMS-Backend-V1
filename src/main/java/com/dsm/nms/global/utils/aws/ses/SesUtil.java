@@ -1,16 +1,17 @@
 package com.dsm.nms.global.utils.aws.ses;
 
 import com.amazonaws.services.simpleemail.model.*;
+import com.dsm.nms.global.config.SesConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-public class SesUtils {
+public class SesUtil {
 
-    @Value("${aws.ses.baseEmail}")
-    private String from;
+    @Value("${aws.ses.email}")
+    private String baseEmail;
 
     private final SesConfig sesConfig;
 
@@ -21,7 +22,7 @@ public class SesUtils {
                         .withHtml(createContent(authCode)));
 
         SendEmailRequest sendEmailRequest = new SendEmailRequest()
-                .withSource(from)
+                .withSource(baseEmail)
                 .withDestination(new Destination().withToAddresses(to))
                 .withMessage(message);
 
@@ -33,4 +34,5 @@ public class SesUtils {
                 .withCharset("UTF-8")
                 .withData(text);
     }
+
 }
