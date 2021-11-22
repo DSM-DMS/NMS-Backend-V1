@@ -1,10 +1,13 @@
 package com.dsm.nms.global.security.jwt;
 
+import com.dsm.nms.domain.refreshtoken.entity.RefreshToken;
+import com.dsm.nms.domain.refreshtoken.repository.RefreshTokenRepository;
 import com.dsm.nms.global.exception.ExpiredTokenException;
 import com.dsm.nms.global.exception.InvalidRoleException;
 import com.dsm.nms.global.exception.InvalidTokenException;
 import com.dsm.nms.global.security.auth.StudentDetailsService;
 import com.dsm.nms.global.security.auth.TeacherDetailsService;
+import com.dsm.nms.global.utils.auth.dto.response.TokenResponse;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,10 +26,26 @@ public class JwtTokenProvider {
     private final JwtProperties jwtProperties;
     private final StudentDetailsService studentDetailsService;
     private final TeacherDetailsService teacherDetailsService;
+    private final RefreshTokenRepository refreshTokenRepository;
 
-    public String generateAccessToken(String id, String role) {
+    public TokenResponse generateToken(String email, String role) {
+        String access = generateAccessToken(email, role);
+        String refresh = generateRefreshToken(email, role);
+
+        refreshTokenRepository.save(
+                RefreshToken.builder()
+                        .email(email)
+                        .refreshToken(refresh)
+                        .refreshExpiration(jwtProperties.getRefreshExp() * 1000)
+                        .build()
+        );
+
+        return new TokenResponse(access, refresh);
+    }
+
+    public String generateAccessToken(String email, String role) {
         return Jwts.builder()
-                .setSubject(id)
+                .setSubject(email)
                 .claim("type", "access")
                 .claim("role", role)
                 .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
@@ -37,9 +56,9 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public String generateRefreshToken(String id, String role) {
+    public String generateRefreshToken(String email, String role) {
         return Jwts.builder()
-                .setSubject(id)
+                .setSubject(email)
                 .claim("type", "refresh")
                 .claim("role", role)
                 .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
