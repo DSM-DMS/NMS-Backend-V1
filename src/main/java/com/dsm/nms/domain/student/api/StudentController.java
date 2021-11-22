@@ -1,7 +1,9 @@
 package com.dsm.nms.domain.student.api;
 
-import com.dsm.nms.domain.student.api.dto.request.SignUpRequest;
 import com.dsm.nms.domain.student.service.StudentService;
+import com.dsm.nms.global.utils.auth.dto.request.LoginRequest;
+import com.dsm.nms.global.utils.auth.dto.request.StudentSignUpRequest;
+import com.dsm.nms.global.utils.auth.dto.response.TokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,8 +20,13 @@ public class StudentController {
     private final StudentService studentService;
 
     @PostMapping("/")
-    public void signUp(@RequestBody @Valid SignUpRequest signUpRequest) {
-        studentService.singUp(signUpRequest);
+    public void signUp(@RequestBody @Valid StudentSignUpRequest studentSignUpRequest) {
+        studentService.singUp(studentSignUpRequest);
+    }
+
+    @PostMapping("/auth")
+    public TokenResponse login(@RequestBody @Valid LoginRequest loginRequest) {
+        return studentService.login(loginRequest);
     }
 
 }
