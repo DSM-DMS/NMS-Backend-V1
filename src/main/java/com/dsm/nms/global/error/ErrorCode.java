@@ -25,6 +25,7 @@ public enum ErrorCode {
 
     STUDENT_NOT_FOUND(404, "Student Not Found"),
     STUDENT_ALREADY_EXISTS(409,  "Student Already Exists"),
+    NICKNAME_ALREADY_EXISTS(409, "Nickname Already Exists"),
 
     EMAIL_ALREADY_EXISTS(409, "Email Already Exists"),
 

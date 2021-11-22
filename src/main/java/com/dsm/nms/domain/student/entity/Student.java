@@ -1,6 +1,8 @@
 package com.dsm.nms.domain.student.entity;
 
 import com.dsm.nms.domain.star.entity.Star;
+import com.dsm.nms.domain.student.api.dto.request.SignUpRequest;
+import com.dsm.nms.domain.student.entity.Grade;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -43,15 +45,14 @@ public class Student {
     @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE)
     private List<Star> stars;
 
-    @Builder
-    public Student(String nickname, String name, Grade grade, String classNum, String number, String password, String email) {
-        this.nickname = nickname;
-        this.grade = grade;
-        this.name = name;
-        this.classNum = classNum;
-        this.number = number;
-        this.password = password;
-        this.email = email;
+    public Student(SignUpRequest signUpRequest) {
+        this.nickname = signUpRequest.getNickname();
+        this.grade = Grade.valueOf(signUpRequest.getGrade());
+        this.name = signUpRequest.getName();
+        this.classNum = signUpRequest.getClassNum();
+        this.number = signUpRequest.getNumber();
+        this.password = signUpRequest.getPassword();
+        this.email = signUpRequest.getEmail();
     }
 
     public Student updatePassword(String newPassword) {
