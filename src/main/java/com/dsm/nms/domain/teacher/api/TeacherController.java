@@ -17,7 +17,7 @@ public class TeacherController {
 
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping("/")
-    public void join(@RequestBody @Valid SignUpRequest signUpRequest) {
+    public void signUp(@RequestBody @Valid SignUpRequest signUpRequest) {
         teacherService.signUp(signUpRequest);
     }
 }
