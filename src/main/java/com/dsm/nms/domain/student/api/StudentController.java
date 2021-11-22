@@ -2,8 +2,6 @@ package com.dsm.nms.domain.student.api;
 
 import com.dsm.nms.domain.student.api.dto.request.SignUpRequest;
 import com.dsm.nms.domain.student.service.StudentService;
-import com.dsm.nms.global.utils.auth.dto.request.LoginRequest;
-import com.dsm.nms.global.utils.auth.dto.response.TokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
