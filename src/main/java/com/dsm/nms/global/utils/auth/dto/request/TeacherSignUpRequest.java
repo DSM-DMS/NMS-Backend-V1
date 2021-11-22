@@ -1,4 +1,4 @@
-package com.dsm.nms.domain.teacher.api.dto.request;
+package com.dsm.nms.global.utils.auth.dto.request;
 
 
 import com.dsm.nms.domain.teacher.entity.Department;
@@ -14,7 +14,7 @@ import javax.validation.constraints.Pattern;
 
 @Getter
 @NoArgsConstructor
-public class SignUpRequest {
+public class TeacherSignUpRequest {
 
     @NotBlank(message = "name은 Null, 공백을 허용하지 않습니다.")
     @Pattern(regexp = "^[\\S]+$", message = "name은 띄어쓰기를 허용하지 않습니다.")

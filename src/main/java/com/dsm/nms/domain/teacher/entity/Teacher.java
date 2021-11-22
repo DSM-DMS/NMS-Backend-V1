@@ -1,7 +1,7 @@
 package com.dsm.nms.domain.teacher.entity;
 
 import com.dsm.nms.domain.notice.entity.Notice;
-import com.dsm.nms.domain.teacher.api.dto.request.SignUpRequest;
+import com.dsm.nms.global.utils.auth.dto.request.TeacherSignUpRequest;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,12 +40,12 @@ public class Teacher {
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.REMOVE)
     private List<Notice> notices;
 
-    public Teacher(SignUpRequest signUpRequest) {
-        this.name = signUpRequest.getName();
-        this.username = signUpRequest.getUsername();
-        this.password = signUpRequest.getPassword();
-        this.email = signUpRequest.getEmail();
-        this.department = Department.valueOf(signUpRequest.getDepartment());
+    public Teacher(TeacherSignUpRequest teacherSignUpRequest) {
+        this.name = teacherSignUpRequest.getName();
+        this.username = teacherSignUpRequest.getUsername();
+        this.password = teacherSignUpRequest.getPassword();
+        this.email = teacherSignUpRequest.getEmail();
+        this.department = Department.valueOf(teacherSignUpRequest.getDepartment());
     }
 
     public Teacher updatePassword(String newPassword) {

@@ -1,6 +1,6 @@
 package com.dsm.nms.domain.teacher.service;
 
-import com.dsm.nms.domain.teacher.api.dto.request.SignUpRequest;
+import com.dsm.nms.global.utils.auth.dto.request.TeacherSignUpRequest;
 import com.dsm.nms.domain.teacher.entity.Teacher;
 import com.dsm.nms.domain.teacher.facade.TeacherFacade;
 import com.dsm.nms.domain.teacher.repository.TeacherRepository;
@@ -20,10 +20,10 @@ public class TeacherServiceImpl implements TeacherService{
 
     @Override
     @Transactional
-    public void signUp(SignUpRequest signUpRequest) {
-        teacherFacade.existUsernameFilter(signUpRequest.getUsername());
-        userUtil.existEmailFilter(signUpRequest.getEmail());
+    public void signUp(TeacherSignUpRequest teacherSignUpRequest) {
+        teacherFacade.existUsernameFilter(teacherSignUpRequest.getUsername());
+        userUtil.existEmailFilter(teacherSignUpRequest.getEmail());
 
-        teacherRepository.save(new Teacher(signUpRequest));
+        teacherRepository.save(new Teacher(teacherSignUpRequest));
     }
 }
