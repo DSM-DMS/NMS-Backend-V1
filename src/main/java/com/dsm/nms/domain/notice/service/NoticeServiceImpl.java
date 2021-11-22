@@ -4,7 +4,7 @@ import com.dsm.nms.domain.image.facade.ImageFacade;
 import com.dsm.nms.domain.notice.entity.Notice;
 import com.dsm.nms.domain.notice.facade.NoticeFacade;
 import com.dsm.nms.domain.notice.repository.NoticeRepository;
-import com.dsm.nms.domain.teacher.api.dto.request.RegisterNoticeRequest;
+import com.dsm.nms.domain.notice.api.dto.RegisterNoticeRequest;
 import com.dsm.nms.domain.teacher.entity.Teacher;
 import com.dsm.nms.domain.teacher.facade.TeacherFacade;
 import lombok.RequiredArgsConstructor;

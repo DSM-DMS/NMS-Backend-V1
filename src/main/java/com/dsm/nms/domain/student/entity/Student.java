@@ -1,7 +1,6 @@
 package com.dsm.nms.domain.student.entity;
 
 import com.dsm.nms.domain.star.entity.Star;
-import com.dsm.nms.domain.student.entity.Grade;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
