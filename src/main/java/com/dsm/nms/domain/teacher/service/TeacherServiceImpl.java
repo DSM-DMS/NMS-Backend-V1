@@ -21,7 +21,7 @@ public class TeacherServiceImpl implements TeacherService{
     @Override
     @Transactional
     public void signUp(SignUpRequest signUpRequest) {
-        teacherFacade.existUsernameFilter(signUpRequest.getUsername());
+        teacherFacade.existsUsernameFilter(signUpRequest.getUsername());
         userUtil.existEmailFilter(signUpRequest.getEmail());
 
         teacherRepository.save(new Teacher(signUpRequest));

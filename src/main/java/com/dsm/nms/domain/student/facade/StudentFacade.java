@@ -24,7 +24,7 @@ public class StudentFacade {
         return true;
     }
 
-    public void existNicknameFilter(String nickname) {
+    public void existsNicknameFilter(String nickname) {
         if (studentRepository.findByNickname(nickname).isPresent())
             throw NicknameAlreadyExistException.EXCEPTION;
     }

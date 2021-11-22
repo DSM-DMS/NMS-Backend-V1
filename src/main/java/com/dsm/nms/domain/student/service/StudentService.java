@@ -3,5 +3,5 @@ package com.dsm.nms.domain.student.service;
 import com.dsm.nms.domain.student.api.dto.request.SignUpRequest;
 
 public interface StudentService {
-    void singUp(SignUpRequest signUpRequest);
+    void signUp(SignUpRequest signUpRequest);
 }

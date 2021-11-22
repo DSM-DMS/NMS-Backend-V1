@@ -1,6 +1,5 @@
 package com.dsm.nms.domain.teacher.facade;
 
-import com.dsm.nms.domain.teacher.api.dto.request.SignUpRequest;
 import com.dsm.nms.domain.teacher.entity.Teacher;
 import com.dsm.nms.domain.teacher.exception.TeacherAlreadyExistsException;
 import com.dsm.nms.domain.teacher.exception.TeacherNotFouncException;
@@ -35,7 +34,7 @@ public class TeacherFacade {
         return (Teacher) object;
     }
   
-    public void existUsernameFilter(String username) {
+    public void existsUsernameFilter(String username) {
         if (teacherRepository.findByUsername(username).isPresent())
             throw UsernameAlreadyExistsException.EXCEPTION;
     }

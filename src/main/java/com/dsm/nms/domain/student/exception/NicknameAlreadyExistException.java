@@ -9,6 +9,6 @@ public class NicknameAlreadyExistException extends NmsException {
             new NicknameAlreadyExistException();
 
     private NicknameAlreadyExistException() {
-        super(ErrorCode.STUDENT_ALREADY_EXISTS);
+        super(ErrorCode.NICKNAME_ALREADY_EXISTS);
     }
 }
