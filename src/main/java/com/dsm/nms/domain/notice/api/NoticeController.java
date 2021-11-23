@@ -29,7 +29,7 @@ public class NoticeController {
     @PatchMapping("/{notice-id}")
     public void modifyNotice(@PathVariable Integer noticeId,
                              @RequestPart @Valid ModifyNoticeRequest noticeRequest,
-                             @RequestPart(required = false) List<Map<MultipartFile, Integer>> images) {
+                             @RequestPart(required = false) List<Map<Integer, MultipartFile>> images) {
         noticeService.modifyNotice(noticeId, noticeRequest, images);
     }
 

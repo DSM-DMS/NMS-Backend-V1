@@ -39,7 +39,7 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     @Transactional
-    public void modifyNotice(Integer noticeId, ModifyNoticeRequest noticeRequest, List<Map<MultipartFile, Integer>> images) {
+    public void modifyNotice(Integer noticeId, ModifyNoticeRequest noticeRequest, List<Map<Integer, MultipartFile>> images) {
 
         Notice findNotice = noticeRepository.findById(noticeId)
                 .map(s -> s.updateTitleAndContent(noticeRequest))
