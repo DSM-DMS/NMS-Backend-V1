@@ -1,5 +1,6 @@
 package com.dsm.nms.domain.notice.api;
 
+import com.dsm.nms.domain.notice.api.dto.ModifyNoticeRequest;
 import com.dsm.nms.domain.notice.api.dto.RegisterNoticeRequest;
 import com.dsm.nms.domain.notice.service.NoticeService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -22,6 +24,13 @@ public class NoticeController {
     public void registerNotice(@RequestPart @Valid RegisterNoticeRequest noticeRequest,
                                @RequestPart(required = false) List<MultipartFile> images) {
         noticeService.registerNotice(noticeRequest, images);
+    }
+
+    @PatchMapping("/{notice-id}")
+    public void modifyNotice(@PathVariable Integer noticeId,
+                             @RequestPart @Valid ModifyNoticeRequest noticeRequest,
+                             @RequestPart(required = false) List<Map<MultipartFile, Integer>> images) {
+        noticeService.modifyNotice(noticeId, noticeRequest, images);
     }
 
 }
