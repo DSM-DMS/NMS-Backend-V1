@@ -30,6 +30,7 @@ public class StudentServiceImpl implements StudentService {
         studentFacade.existsNicknameFilter(signUpRequest.getNickname());
         userUtil.existEmailFilter(signUpRequest.getEmail());
 
+        signUpRequest.encodePassword(passwordEncoder.encode(signUpRequest.getPassword()));
         studentRepository.save(new Student(signUpRequest));
     }
 

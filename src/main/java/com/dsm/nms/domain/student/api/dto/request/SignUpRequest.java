@@ -46,4 +46,8 @@ public class SignUpRequest {
     @NotBlank(message = "email은 Null, 공백을 허용하지 않습니다.")
     @Email(message = "email 형식이 올바르지 않습니다.")
     private String email;
+
+    public void encodePassword(String password) {
+        this.password = password;
+    }
 }
