@@ -38,8 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/email/**").permitAll()
-                .antMatchers("/teacher/").permitAll()
-                .antMatchers("/student/").permitAll()
+                .antMatchers("/teacher/", "/teacher/auth").permitAll()
+                .antMatchers("/student/", "/student/auth").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
