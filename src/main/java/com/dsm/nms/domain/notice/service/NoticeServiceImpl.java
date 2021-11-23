@@ -1,7 +1,9 @@
 package com.dsm.nms.domain.notice.service;
 
 import com.dsm.nms.domain.image.facade.ImageFacade;
+import com.dsm.nms.domain.notice.api.dto.ModifyNoticeRequest;
 import com.dsm.nms.domain.notice.entity.Notice;
+import com.dsm.nms.domain.notice.exception.NoticeNotFoundException;
 import com.dsm.nms.domain.notice.facade.NoticeFacade;
 import com.dsm.nms.domain.notice.repository.NoticeRepository;
 import com.dsm.nms.domain.notice.api.dto.RegisterNoticeRequest;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -32,6 +35,17 @@ public class NoticeServiceImpl implements NoticeService {
         imageFacade.addImages(notice, images);
         noticeFacade.addTargetField(notice, noticeRequest.getTags());
 
+    }
+
+    @Override
+    @Transactional
+    public void modifyNotice(Integer noticeId, ModifyNoticeRequest noticeRequest, List<Map<MultipartFile, Integer>> images) {
+
+        Notice findNotice = noticeRepository.findById(noticeId)
+                .map(s -> s.updateTitleAndContent(noticeRequest))
+                .orElseThrow(() -> NoticeNotFoundException.EXCEPTION);
+
+        imageFacade.modifyImages(findNotice, images);
     }
 
 }
