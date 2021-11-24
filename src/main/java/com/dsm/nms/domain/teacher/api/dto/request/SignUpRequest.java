@@ -1,6 +1,5 @@
 package com.dsm.nms.domain.teacher.api.dto.request;
 
-
 import com.dsm.nms.domain.teacher.entity.Department;
 import com.dsm.nms.global.aop.Enum;
 import lombok.Getter;

@@ -1,10 +1,13 @@
 package com.dsm.nms.global.security.jwt;
 
+import com.dsm.nms.domain.refreshtoken.entity.RefreshToken;
+import com.dsm.nms.domain.refreshtoken.repository.RefreshTokenRepository;
 import com.dsm.nms.global.exception.ExpiredTokenException;
 import com.dsm.nms.global.exception.InvalidRoleException;
 import com.dsm.nms.global.exception.InvalidTokenException;
 import com.dsm.nms.global.security.auth.StudentDetailsService;
 import com.dsm.nms.global.security.auth.TeacherDetailsService;
+import com.dsm.nms.global.security.jwt.dto.response.TokenResponse;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,6 +26,22 @@ public class JwtTokenProvider {
     private final JwtProperties jwtProperties;
     private final StudentDetailsService studentDetailsService;
     private final TeacherDetailsService teacherDetailsService;
+    private final RefreshTokenRepository refreshTokenRepository;
+
+    public TokenResponse generateToken(String id, String role) {
+        String access = generateAccessToken(id, role);
+        String refresh = generateRefreshToken(id, role);
+
+        refreshTokenRepository.save(
+                RefreshToken.builder()
+                        .id(id)
+                        .refreshToken(refresh)
+                        .refreshExpiration(jwtProperties.getRefreshExp() * 1000)
+                        .build()
+        );
+
+        return new TokenResponse(access, refresh);
+    }
 
     public String generateAccessToken(String id, String role) {
         return Jwts.builder()
