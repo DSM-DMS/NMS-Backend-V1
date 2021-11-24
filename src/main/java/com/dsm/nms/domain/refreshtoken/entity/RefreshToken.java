@@ -16,7 +16,7 @@ import java.io.Serializable;
 public class RefreshToken implements Serializable {
 
     @Id
-    private String username;
+    private String id;
 
     @Indexed
     private String refreshToken;
@@ -25,8 +25,8 @@ public class RefreshToken implements Serializable {
     private Long refreshExpiration;
 
     @Builder
-    public RefreshToken(String username, String refreshToken, Long refreshExpiration) {
-        this.username = username;
+    public RefreshToken(String id, String refreshToken, Long refreshExpiration) {
+        this.id = id;
         this.refreshToken = refreshToken;
         this.refreshExpiration = refreshExpiration;
     }
