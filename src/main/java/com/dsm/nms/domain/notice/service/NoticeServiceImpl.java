@@ -33,7 +33,7 @@ public class NoticeServiceImpl implements NoticeService {
         Notice notice = noticeRepository.save(new Notice(noticeRequest, teacher));
 
         imageFacade.addImages(notice, images);
-        noticeFacade.addTargetField(notice, noticeRequest.getTags());
+        noticeFacade.addTargetTags(notice, noticeRequest.getTags());
 
     }
 

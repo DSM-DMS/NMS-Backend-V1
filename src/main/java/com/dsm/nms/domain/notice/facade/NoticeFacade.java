@@ -19,7 +19,7 @@ public class NoticeFacade {
     private final TargetRepository targetRepository;
     private final NoticeTargetRepository noticeTargetRepository;
 
-    public void addTargetField(Notice notice, List<TargetTag> tags) {
+    public void addTargetTags(Notice notice, List<TargetTag> tags) {
         tags.forEach(targetTag -> noticeTargetRepository.save(NoticeTarget.builder()
                 .target(getTarget(targetTag))
                 .notice(notice)
