@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Component
@@ -28,6 +29,7 @@ public class NoticeFacade {
 
     private Target getTarget(TargetTag tag) {
         return targetRepository.findByTargetTag(tag)
+                .or(() -> Optional.of(new Target(tag)))
                 .orElseThrow(() -> TargetNotFoundException.EXCEPTION);
     }
 

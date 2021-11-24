@@ -23,4 +23,8 @@ public class Target {
     @OneToMany(mappedBy = "target")
     private List<NoticeTarget> notices;
 
+    public Target(TargetTag tag) {
+        this.targetTag = tag;
+    }
+
 }
