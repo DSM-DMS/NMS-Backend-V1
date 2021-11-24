@@ -9,5 +9,5 @@ import java.util.Map;
 
 public interface NoticeService {
     void registerNotice(RegisterNoticeRequest noticeRequest, List<MultipartFile> images);
-    void modifyNotice(Integer noticeId, ModifyNoticeRequest noticeRequest, List<Map<Integer, MultipartFile>> images);
+    void modifyNotice(Integer noticeId, ModifyNoticeRequest noticeRequest, List<MultipartFile> images);
 }

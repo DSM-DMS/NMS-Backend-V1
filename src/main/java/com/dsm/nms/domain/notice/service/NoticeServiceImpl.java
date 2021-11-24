@@ -34,13 +34,11 @@ public class NoticeServiceImpl implements NoticeService {
 
         imageFacade.addImages(notice, images);
         noticeFacade.addTargetTags(notice, noticeRequest.getTags());
-
     }
 
     @Override
     @Transactional
-    public void modifyNotice(Integer noticeId, ModifyNoticeRequest noticeRequest, List<Map<Integer, MultipartFile>> images) {
-
+    public void modifyNotice(Integer noticeId, ModifyNoticeRequest noticeRequest, List<MultipartFile> images) {
         Notice findNotice = noticeRepository.findById(noticeId)
                 .map(s -> s.updateTitleAndContent(noticeRequest))
                 .orElseThrow(() -> NoticeNotFoundException.EXCEPTION);
