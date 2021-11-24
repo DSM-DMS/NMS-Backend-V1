@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
@@ -27,6 +28,20 @@ public class ImageFacade {
                     .notice(notice)
                     .build());
         }
+    }
+
+    public void modifyImages(Notice notice, List<MultipartFile> images) {
+        removeImages(notice);
+        addImages(notice, images);
+    }
+
+    public void removeImages(Notice notice) {
+        imageRepository.findByNotice(notice)
+                .stream()
+                .map(Image::getImagePath)
+                .forEach(s3Util::removeFile);
+
+        imageRepository.deleteByNotice(notice);
     }
 
 }

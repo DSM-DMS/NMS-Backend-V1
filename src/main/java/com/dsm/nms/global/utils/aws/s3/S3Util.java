@@ -1,8 +1,8 @@
 package com.dsm.nms.global.utils.aws.s3;
 
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.dsm.nms.domain.image.exception.ImageNotFoundException;
 import com.dsm.nms.global.config.S3Config;
@@ -31,6 +31,10 @@ public class S3Util {
         }
 
         return fileName;
+    }
+
+    public void removeFile(String imagePath) {
+        amazonS3Client.deleteObject(new DeleteObjectRequest(s3Config.getBucket(), imagePath));
     }
 
     public String getFileUrl(String fileName) {
