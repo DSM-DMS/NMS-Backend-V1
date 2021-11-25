@@ -49,8 +49,8 @@ public class NoticeServiceImpl implements NoticeService {
     @Transactional
     public void removeNotice(Integer noticeId) {
         Notice notice = noticeFacade.getByNoticeId(noticeId);
-        noticeRepository.delete(notice);
         imageFacade.removeImages(notice);
+        noticeRepository.delete(notice);
     }
 
 }
