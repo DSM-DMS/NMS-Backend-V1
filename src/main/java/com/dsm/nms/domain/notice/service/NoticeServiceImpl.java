@@ -45,4 +45,12 @@ public class NoticeServiceImpl implements NoticeService {
         imageFacade.modifyImages(findNotice, images);
     }
 
+    @Override
+    @Transactional
+    public void removeNotice(Integer noticeId) {
+        Notice notice = noticeFacade.getByNoticeId(noticeId);
+        noticeRepository.delete(notice);
+        imageFacade.removeImages(notice);
+    }
+
 }
