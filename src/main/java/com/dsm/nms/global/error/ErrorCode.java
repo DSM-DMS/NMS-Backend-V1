@@ -31,7 +31,9 @@ public enum ErrorCode {
 
     TARGET_NOT_FOUND(404, "Target Not Found"),
 
-    IMAGE_NOT_FOUND(404, "Image Not Found")
+    IMAGE_NOT_FOUND(404, "Image Not Found"),
+
+    NOTICE_NOT_FOUND(404, "Notice Not Found")
     ;
 
     private final int status;

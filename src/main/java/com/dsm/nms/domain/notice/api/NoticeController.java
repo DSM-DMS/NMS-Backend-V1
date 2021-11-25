@@ -1,5 +1,6 @@
 package com.dsm.nms.domain.notice.api;
 
+import com.dsm.nms.domain.notice.api.dto.ModifyNoticeRequest;
 import com.dsm.nms.domain.notice.api.dto.RegisterNoticeRequest;
 import com.dsm.nms.domain.notice.service.NoticeService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,13 @@ public class NoticeController {
     public void registerNotice(@RequestPart @Valid RegisterNoticeRequest noticeRequest,
                                @RequestPart(required = false) List<MultipartFile> images) {
         noticeService.registerNotice(noticeRequest, images);
+    }
+
+    @PatchMapping("/{notice-id}")
+    public void modifyNotice(@PathVariable(name = "notice-id") Integer noticeId,
+                             @RequestPart @Valid ModifyNoticeRequest noticeRequest,
+                             @RequestPart(required = false) List<MultipartFile> images) {
+        noticeService.modifyNotice(noticeId, noticeRequest, images);
     }
 
 }

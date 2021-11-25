@@ -29,4 +29,18 @@ public class ImageFacade {
         }
     }
 
+    public void modifyImages(Notice notice, List<MultipartFile> images) {
+        removeImages(notice);
+        addImages(notice, images);
+    }
+
+    public void removeImages(Notice notice) {
+        imageRepository.findByNotice(notice)
+                .stream()
+                .map(Image::getImagePath)
+                .forEach(s3Util::removeFile);
+
+        imageRepository.deleteByNotice(notice);
+    }
+
 }
