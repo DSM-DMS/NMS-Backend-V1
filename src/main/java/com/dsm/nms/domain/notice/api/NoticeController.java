@@ -2,6 +2,7 @@ package com.dsm.nms.domain.notice.api;
 
 import com.dsm.nms.domain.notice.api.dto.request.ModifyNoticeRequest;
 import com.dsm.nms.domain.notice.api.dto.request.RegisterNoticeRequest;
+import com.dsm.nms.domain.notice.api.dto.response.NoticeResponse;
 import com.dsm.nms.domain.notice.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,6 +38,11 @@ public class NoticeController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeNotice(@PathVariable(name = "notice-id") Integer noticeId) {
         noticeService.removeNotice(noticeId);
+    }
+
+    @GetMapping
+    public NoticeResponse getAllNotices() {
+        return noticeService.getAllNotices();
     }
 
 }
