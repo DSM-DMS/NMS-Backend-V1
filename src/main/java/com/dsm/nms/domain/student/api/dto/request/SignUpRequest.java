@@ -31,6 +31,7 @@ public class SignUpRequest {
 
     @NotBlank(message = "classNum은 Null, 공백을 허용하지 않습니다.")
     @Pattern(regexp = "^[1-4]$", message = "classNum은 1,2,3,4만 허용됩니다.")
+    @Length(max = 1, message = "classNum은 1자리만 허용됩니다.")
     private String classNum;
 
     @NotBlank(message = "number는 Null, 공백을 허용하지 않습니다.")
