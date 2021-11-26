@@ -1,7 +1,7 @@
 package com.dsm.nms.domain.notice.service;
 
-import com.dsm.nms.domain.notice.api.dto.ModifyNoticeRequest;
-import com.dsm.nms.domain.notice.api.dto.RegisterNoticeRequest;
+import com.dsm.nms.domain.notice.api.dto.request.ModifyNoticeRequest;
+import com.dsm.nms.domain.notice.api.dto.request.RegisterNoticeRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

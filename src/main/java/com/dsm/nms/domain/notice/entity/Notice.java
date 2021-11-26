@@ -2,10 +2,10 @@ package com.dsm.nms.domain.notice.entity;
 
 import com.dsm.nms.domain.BaseTimeEntity;
 import com.dsm.nms.domain.image.entity.Image;
-import com.dsm.nms.domain.notice.api.dto.ModifyNoticeRequest;
+import com.dsm.nms.domain.notice.api.dto.request.ModifyNoticeRequest;
 import com.dsm.nms.domain.notice.entity.noticetarget.NoticeTarget;
 import com.dsm.nms.domain.star.entity.Star;
-import com.dsm.nms.domain.notice.api.dto.RegisterNoticeRequest;
+import com.dsm.nms.domain.notice.api.dto.request.RegisterNoticeRequest;
 import com.dsm.nms.domain.teacher.entity.Teacher;
 import lombok.AccessLevel;
 import lombok.Getter;

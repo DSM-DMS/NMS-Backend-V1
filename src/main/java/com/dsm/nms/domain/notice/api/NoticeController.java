@@ -1,7 +1,7 @@
 package com.dsm.nms.domain.notice.api;
 
-import com.dsm.nms.domain.notice.api.dto.ModifyNoticeRequest;
-import com.dsm.nms.domain.notice.api.dto.RegisterNoticeRequest;
+import com.dsm.nms.domain.notice.api.dto.request.ModifyNoticeRequest;
+import com.dsm.nms.domain.notice.api.dto.request.RegisterNoticeRequest;
 import com.dsm.nms.domain.notice.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
