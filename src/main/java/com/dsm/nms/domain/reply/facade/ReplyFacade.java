@@ -36,7 +36,7 @@ public class ReplyFacade {
                 .collect(toList());
     }
 
-    public void addReply(Integer commentId, String content, Teacher teacher) {
+    public void createReply(Integer commentId, String content, Teacher teacher) {
         replyRepository.save(new Reply(commentFacade.getById(commentId), content, teacher));
     }
 

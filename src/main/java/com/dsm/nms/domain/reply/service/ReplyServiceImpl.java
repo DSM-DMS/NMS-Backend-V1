@@ -16,7 +16,7 @@ public class ReplyServiceImpl implements ReplyService {
     @Override
     @Transactional
     public void addReply(Integer commentId, String content) {
-        replyFacade.addReply(commentId, content, teacherFacade.getCurrentTeacher());
+        replyFacade.createReply(commentId, content, teacherFacade.getCurrentTeacher());
     }
 
 }
