@@ -29,8 +29,8 @@ public class Teacher {
     private String email;
     private String profileUrl;
 
-    @Column(nullable = false)
     private String phoneNumber;
+
     private String introduction;
 
     @Column(nullable = false)
