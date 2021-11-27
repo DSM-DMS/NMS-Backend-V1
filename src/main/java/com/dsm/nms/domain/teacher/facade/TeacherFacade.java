@@ -11,12 +11,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.regex.Pattern;
+
 @Component
 @RequiredArgsConstructor
 public class TeacherFacade {
 
     private final PasswordEncoder passwordEncoder;
     private final TeacherRepository teacherRepository;
+
+    private static final String pattern = "^[\\w\\.-]{1,64}@[\\w\\.-]{1,252}\\.\\w{2,4}$";
 
     public boolean isAlreadyExists(String email) {
         if (teacherRepository.findByEmail(email).isPresent())
@@ -44,8 +48,20 @@ public class TeacherFacade {
                 .orElseThrow(() -> TeacherNotFouncException.EXCEPTION);
     }
 
+    public Teacher getByUsername(String username) {
+        return teacherRepository.findByUsername(username)
+                .orElseThrow(() -> TeacherNotFouncException.EXCEPTION);
+    }
+
     public String getPasswordByEmail(String email) {
         return passwordEncoder.encode(getByEmail(email).getPassword());
+    }
+
+    public Teacher getById(String id) {
+        if (Pattern.matches(pattern, id))
+            return getByEmail(id);
+
+        return getByUsername(id);
     }
 
 }
