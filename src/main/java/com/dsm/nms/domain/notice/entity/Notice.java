@@ -31,8 +31,9 @@ public class Notice extends BaseTimeEntity {
     @Column(nullable = false)
     private String content;
 
-    @Embedded
-    private Writer writer;
+    @JoinColumn(name = "teacher_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Teacher teacher;
 
     @OneToMany(mappedBy = "notice", cascade = CascadeType.REMOVE)
     private List<NoticeTarget> targets;
@@ -49,8 +50,7 @@ public class Notice extends BaseTimeEntity {
     public Notice(RegisterNoticeRequest request, Teacher teacher) {
         this.title = request.getTitle();
         this.content = request.getContent();
-        this.writer.setName(teacher.getName());
-        this.writer.setProfileUrl(teacher.getProfileUrl());
+        this.teacher = teacher;
     }
 
     public Notice updateTitleAndContent(ModifyNoticeRequest noticeRequest) {
