@@ -1,7 +1,6 @@
 package com.dsm.nms.domain.reply.service;
 
 import com.dsm.nms.domain.reply.facade.ReplyFacade;
-import com.dsm.nms.domain.teacher.entity.Teacher;
 import com.dsm.nms.domain.teacher.facade.TeacherFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,9 +16,7 @@ public class ReplyServiceImpl implements ReplyService {
     @Override
     @Transactional
     public void addReply(Integer commentId, String content) {
-        Teacher teacher = teacherFacade.getCurrentTeacher();
-
-        replyFacade.addReply(commentId, content, teacher);
+        replyFacade.addReply(commentId, content, teacherFacade.getCurrentTeacher());
     }
 
 }

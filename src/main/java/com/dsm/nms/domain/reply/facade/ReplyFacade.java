@@ -37,8 +37,7 @@ public class ReplyFacade {
     }
 
     public void addReply(Integer commentId, String content, Teacher teacher) {
-        Comment comment = commentFacade.getById(commentId);
-        replyRepository.save(new Reply(comment, content, teacher));
+        replyRepository.save(new Reply(commentFacade.getById(commentId), content, teacher));
     }
 
 }
