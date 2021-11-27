@@ -8,6 +8,7 @@ import com.dsm.nms.domain.notice.api.dto.request.ModifyNoticeRequest;
 import com.dsm.nms.domain.notice.api.dto.request.RegisterNoticeRequest;
 import com.dsm.nms.domain.notice.api.dto.response.NoticeResponse;
 import com.dsm.nms.domain.notice.entity.Notice;
+import com.dsm.nms.domain.notice.entity.target.TargetTag;
 import com.dsm.nms.domain.notice.exception.NoticeNotFoundException;
 import com.dsm.nms.domain.notice.facade.NoticeFacade;
 import com.dsm.nms.domain.notice.repository.NoticeRepository;
@@ -82,42 +83,13 @@ public class NoticeServiceImpl implements NoticeService {
                                     .name(notice.getTeacher().getName())
                                     .profileUrl(notice.getTeacher().getProfileUrl())
                                     .build())
-                            .targets(noticeTargetRepository.findByNoticeId(notice.getId()).stream()
-                                    .map(noticeTarget -> noticeTarget.getTarget().getTargetTag())
-                                    .collect(toList()))
+                            .targets(getTargetTags(notice))
                             .createdDate(notice.getCreatedDate())
                             .updatedDate(notice.getUpdatedDate())
-                            .images(notice.getImages().stream()
-                                    .map(Image::getImageUrl)
-                                    .collect(toList()))
+                            .images(getNoticeImages(notice))
                             .isStar(starFacade.checkIsStar(notice))
                             .commentCount(getCommentCount(notice))
-                            .comments(notice.getComments().stream()
-                                    .map(comment -> {
-                                        return NoticeResponse.comment.builder()
-                                                .id(comment.getId())
-                                                .writer(NoticeResponse.writer.builder()
-                                                        .name(comment.getStudent().getName())
-                                                        .profileUrl(comment.getStudent().getProfileUrl())
-                                                        .build())
-                                                .content(comment.getContent())
-                                                .createdDate(comment.getCreatedDate())
-                                                .replies(comment.getReplies().stream()
-                                                        .map(reply -> {
-                                                            return NoticeResponse.reply.builder()
-                                                                    .id(reply.getId())
-                                                                    .writer(NoticeResponse.writer.builder()
-                                                                            .name(reply.getTeacher().getName())
-                                                                            .profileUrl(reply.getTeacher().getProfileUrl())
-                                                                            .build())
-                                                                    .content(reply.getContent())
-                                                                    .createdDate(reply.getCreatedDate())
-                                                                    .build();
-                                                        })
-                                                        .collect(toList()))
-                                                .build();
-                                    })
-                                    .collect(toList()))
+                            .comments(getComments(notice))
                             .build();
                 })
                 .collect(toList());
@@ -134,6 +106,51 @@ public class NoticeServiceImpl implements NoticeService {
                 getCounts(replyRepository.countByCommentId(notice.getComments().stream()
                         .map(Comment::getId)
                         .collect(toList())));
+    }
+
+    private List<TargetTag> getTargetTags(Notice notice) {
+        return noticeTargetRepository.findByNoticeId(notice.getId()).stream()
+                .map(noticeTarget -> noticeTarget.getTarget().getTargetTag())
+                .collect(toList());
+    }
+
+    private List<String> getNoticeImages(Notice notice) {
+        return notice.getImages().stream()
+                .map(Image::getImageUrl)
+                .collect(toList());
+    }
+
+    private List<NoticeResponse.comment> getComments(Notice notice) {
+        return notice.getComments().stream()
+                .map(comment -> {
+                    return NoticeResponse.comment.builder()
+                            .id(comment.getId())
+                            .writer(NoticeResponse.writer.builder()
+                                    .name(comment.getStudent().getName())
+                                    .profileUrl(comment.getStudent().getProfileUrl())
+                                    .build())
+                            .content(comment.getContent())
+                            .createdDate(comment.getCreatedDate())
+                            .replies(getReplies(comment))
+                            .build();
+                })
+                .collect(toList());
+    }
+
+    private List<NoticeResponse.reply> getReplies(Comment comment) {
+        return comment.getReplies().stream()
+                .map(reply -> {
+                    return NoticeResponse.reply.builder()
+                            .id(reply.getId())
+                            .writer(NoticeResponse.writer.builder()
+                                    .name(reply.getTeacher().getName())
+                                    .profileUrl(reply.getTeacher().getProfileUrl())
+                                    .build())
+                            .content(reply.getContent())
+                            .createdDate(reply.getCreatedDate())
+                            .build();
+                })
+                .collect(toList());
     }
 
 }
