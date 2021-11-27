@@ -15,6 +15,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.stream.Collectors.toList;
+
 @RequiredArgsConstructor
 @Component
 public class NoticeFacade {
@@ -39,6 +41,12 @@ public class NoticeFacade {
         return targetRepository.findByTargetTag(tag)
                 .or(() -> Optional.of(new Target(tag)))
                 .orElseThrow(() -> TargetNotFoundException.EXCEPTION);
+    }
+
+    public List<TargetTag> getTargetTags(Notice notice) {
+        return noticeTargetRepository.findByNoticeId(notice.getId()).stream()
+                .map(noticeTarget -> noticeTarget.getTarget().getTargetTag())
+                .collect(toList());
     }
 
 }
