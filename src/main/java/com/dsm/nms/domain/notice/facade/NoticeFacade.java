@@ -9,12 +9,13 @@ import com.dsm.nms.domain.notice.exception.TargetNotFoundException;
 import com.dsm.nms.domain.notice.repository.NoticeRepository;
 import com.dsm.nms.domain.notice.repository.NoticeTargetRepository;
 import com.dsm.nms.domain.notice.repository.TargetRepository;
-import com.dsm.nms.global.aop.Enum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 @Component
@@ -40,6 +41,12 @@ public class NoticeFacade {
         return targetRepository.findByTargetTag(tag)
                 .or(() -> Optional.of(new Target(tag)))
                 .orElseThrow(() -> TargetNotFoundException.EXCEPTION);
+    }
+
+    public List<TargetTag> getTargetTags(Notice notice) {
+        return noticeTargetRepository.findByNoticeId(notice.getId()).stream()
+                .map(noticeTarget -> noticeTarget.getTarget().getTargetTag())
+                .collect(toList());
     }
 
 }

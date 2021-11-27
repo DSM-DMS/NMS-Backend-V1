@@ -1,12 +1,14 @@
 package com.dsm.nms.domain.notice.entity;
 
-import com.dsm.nms.domain.BaseTimeEntity;
+import com.dsm.nms.global.entity.BaseTimeEntity;
+import com.dsm.nms.domain.comment.entity.Comment;
 import com.dsm.nms.domain.image.entity.Image;
-import com.dsm.nms.domain.notice.api.dto.ModifyNoticeRequest;
+import com.dsm.nms.domain.notice.api.dto.request.ModifyNoticeRequest;
 import com.dsm.nms.domain.notice.entity.noticetarget.NoticeTarget;
 import com.dsm.nms.domain.star.entity.Star;
-import com.dsm.nms.domain.notice.api.dto.RegisterNoticeRequest;
+import com.dsm.nms.domain.notice.api.dto.request.RegisterNoticeRequest;
 import com.dsm.nms.domain.teacher.entity.Teacher;
+import com.dsm.nms.global.entity.Writer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,9 +31,8 @@ public class Notice extends BaseTimeEntity {
     @Column(nullable = false)
     private String content;
 
-    @JoinColumn(name = "teacher_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Teacher teacher;
+    @Embedded
+    private Writer writer;
 
     @OneToMany(mappedBy = "notice", cascade = CascadeType.REMOVE)
     private List<NoticeTarget> targets;
@@ -42,10 +43,14 @@ public class Notice extends BaseTimeEntity {
     @OneToMany(mappedBy = "notice", cascade = CascadeType.REMOVE)
     private Set<Star> stars = new HashSet<>();
 
+    @OneToMany(mappedBy = "notice", cascade = CascadeType.REMOVE)
+    private List<Comment> comments;
+
     public Notice(RegisterNoticeRequest request, Teacher teacher) {
         this.title = request.getTitle();
         this.content = request.getContent();
-        this.teacher = teacher;
+        this.writer.setName(teacher.getName());
+        this.writer.setProfileUrl(teacher.getProfileUrl());
     }
 
     public Notice updateTitleAndContent(ModifyNoticeRequest noticeRequest) {
