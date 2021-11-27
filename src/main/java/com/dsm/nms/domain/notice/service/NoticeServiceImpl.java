@@ -99,10 +99,14 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     private Integer getCommentCount(Notice notice) {
-        return getCounts(commentRepository.countByNoticeId(notice.getId())) +
-                getCounts(replyRepository.countByCommentId(notice.getComments().stream()
-                        .map(Comment::getId)
-                        .collect(toList())));
+        int commentCounts = getCounts(commentRepository.countByNoticeId(notice.getId()));
+        int replyCounts = notice.getComments().stream()
+                .map(Comment::getId)
+                .map(replyRepository::countByCommentId)
+                .mapToInt(this::getCounts)
+                .sum();
+        
+        return commentCounts + replyCounts;
     }
 
 }
