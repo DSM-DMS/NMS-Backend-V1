@@ -8,8 +8,6 @@ import com.dsm.nms.domain.notice.api.dto.request.ModifyNoticeRequest;
 import com.dsm.nms.domain.notice.api.dto.request.RegisterNoticeRequest;
 import com.dsm.nms.domain.notice.api.dto.response.NoticeResponse;
 import com.dsm.nms.domain.notice.entity.Notice;
-import com.dsm.nms.domain.notice.entity.noticetarget.NoticeTarget;
-import com.dsm.nms.domain.notice.entity.target.TargetTag;
 import com.dsm.nms.domain.notice.exception.NoticeNotFoundException;
 import com.dsm.nms.domain.notice.facade.NoticeFacade;
 import com.dsm.nms.domain.notice.repository.NoticeRepository;
