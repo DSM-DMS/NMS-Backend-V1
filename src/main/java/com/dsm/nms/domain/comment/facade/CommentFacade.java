@@ -1,5 +1,8 @@
 package com.dsm.nms.domain.comment.facade;
 
+import com.dsm.nms.domain.comment.entity.Comment;
+import com.dsm.nms.domain.comment.exception.CommentNotFoundException;
+import com.dsm.nms.domain.comment.repository.CommentRepository;
 import com.dsm.nms.domain.notice.api.dto.response.NoticeResponse;
 import com.dsm.nms.domain.notice.entity.Notice;
 import com.dsm.nms.domain.reply.facade.ReplyFacade;
@@ -15,6 +18,7 @@ import static java.util.stream.Collectors.toList;
 public class CommentFacade {
 
     private final ReplyFacade replyFacade;
+    private final CommentRepository commentRepository;
 
     public List<NoticeResponse.comment> getComments(Notice notice) {
         return notice.getComments().stream()
@@ -31,6 +35,11 @@ public class CommentFacade {
                             .build();
                 })
                 .collect(toList());
+    }
+
+    public Comment getById(Integer id) {
+        return commentRepository.findById(id)
+                .orElseThrow(() -> CommentNotFoundException.EXCEPTION);
     }
 
 }
