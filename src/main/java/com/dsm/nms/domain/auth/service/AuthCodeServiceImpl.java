@@ -11,6 +11,7 @@ import com.dsm.nms.domain.auth.repository.AuthCodeRepository;
 import com.dsm.nms.global.utils.aws.ses.SesUtil;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -25,6 +26,7 @@ public class AuthCodeServiceImpl implements AuthCodeService{
     private final AuthCodeFacade authCodeFacade;
 
     @Override
+    @Async
     @Transactional
     public void sendCode(SendCodeRequest sendCodeRequest) {
 
