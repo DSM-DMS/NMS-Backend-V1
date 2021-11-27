@@ -5,7 +5,10 @@ import com.dsm.nms.domain.student.exception.NicknameAlreadyExistException;
 import com.dsm.nms.domain.student.exception.StudentAlreadyExistsException;
 import com.dsm.nms.domain.student.exception.StudentNotFoundException;
 import com.dsm.nms.domain.student.repository.StudentRepository;
+import com.dsm.nms.domain.teacher.exception.TeacherNotFouncException;
+import com.dsm.nms.global.exception.AuthenticationNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +18,15 @@ public class StudentFacade {
 
     private final PasswordEncoder passwordEncoder;
     private final StudentRepository studentRepository;
+
+    public Student getCurrentStudent() {
+        Object object = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if(!(object instanceof Student))
+            throw AuthenticationNotFoundException.EXCEPTION;
+
+        return (Student) object;
+    }
 
     public boolean isAlreadyExists(String email) {
         if(studentRepository.findByEmail(email).isPresent())

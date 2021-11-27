@@ -1,4 +1,4 @@
-package com.dsm.nms.domain;
+package com.dsm.nms.global.entity;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

@@ -1,6 +1,6 @@
 package com.dsm.nms.domain.image.entity;
 
-import com.dsm.nms.domain.BaseTimeEntity;
+import com.dsm.nms.global.entity.BaseTimeEntity;
 import com.dsm.nms.domain.notice.entity.Notice;
 import lombok.AccessLevel;
 import lombok.Builder;
