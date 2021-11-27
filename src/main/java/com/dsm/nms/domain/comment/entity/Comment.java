@@ -1,10 +1,12 @@
 package com.dsm.nms.domain.comment.entity;
 
+import com.dsm.nms.domain.comment.api.dto.request.CommentRequest;
 import com.dsm.nms.global.entity.BaseTimeEntity;
 import com.dsm.nms.domain.notice.entity.Notice;
 import com.dsm.nms.domain.reply.entity.Reply;
 import com.dsm.nms.global.entity.Writer;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -32,4 +34,10 @@ public class Comment extends BaseTimeEntity {
     @OneToMany(mappedBy = "comment", cascade = CascadeType.REMOVE)
     private List<Reply> replies;
 
+    @Builder
+    public Comment(CommentRequest commentRequest, String name, String profileUrl) {
+        this.content = commentRequest.getContent();
+        this.writer.setName(name);
+        this.writer.setProfileUrl(profileUrl);
+    }
 }
