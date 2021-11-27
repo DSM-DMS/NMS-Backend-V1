@@ -2,7 +2,7 @@ package com.dsm.nms.domain.teacher.facade;
 
 import com.dsm.nms.domain.teacher.entity.Teacher;
 import com.dsm.nms.domain.teacher.exception.TeacherAlreadyExistsException;
-import com.dsm.nms.domain.teacher.exception.TeacherNotFouncException;
+import com.dsm.nms.domain.teacher.exception.TeacherNotFoundException;
 import com.dsm.nms.domain.teacher.exception.UsernameAlreadyExistsException;
 import com.dsm.nms.domain.teacher.repository.TeacherRepository;
 import com.dsm.nms.global.exception.AuthenticationNotFoundException;
@@ -45,12 +45,12 @@ public class TeacherFacade {
 
     public Teacher getByEmail(String email) {
         return teacherRepository.findByEmail(email)
-                .orElseThrow(() -> TeacherNotFouncException.EXCEPTION);
+                .orElseThrow(() -> TeacherNotFoundException.EXCEPTION);
     }
 
     public Teacher getByUsername(String username) {
         return teacherRepository.findByUsername(username)
-                .orElseThrow(() -> TeacherNotFouncException.EXCEPTION);
+                .orElseThrow(() -> TeacherNotFoundException.EXCEPTION);
     }
 
     public String getPasswordByEmail(String email) {

@@ -1,7 +1,7 @@
 package com.dsm.nms.domain.auth.service.password;
 
 import com.dsm.nms.domain.auth.api.dto.request.PasswordRequest;
-import com.dsm.nms.domain.teacher.exception.TeacherNotFouncException;
+import com.dsm.nms.domain.teacher.exception.TeacherNotFoundException;
 import com.dsm.nms.domain.teacher.facade.TeacherFacade;
 import com.dsm.nms.global.exception.InvalidPasswordException;
 import com.dsm.nms.global.utils.auth.password.PasswordUtil;
@@ -36,7 +36,7 @@ public class TeacherPasswordService implements PasswordService {
                 teacherFacade.getByEmail(passwordRequest.getEmail())
         )
                 .map(teacher -> teacher.updatePassword(passwordEncoder.encode(passwordRequest.getPassword())))
-                .orElseThrow(() -> TeacherNotFouncException.EXCEPTION);
+                .orElseThrow(() -> TeacherNotFoundException.EXCEPTION);
     }
 
 }
