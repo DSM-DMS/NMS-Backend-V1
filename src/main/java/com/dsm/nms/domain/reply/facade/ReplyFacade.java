@@ -22,6 +22,7 @@ public class ReplyFacade {
 
     public List<NoticeResponse.reply> getReplies(Comment comment) {
         return comment.getReplies().stream()
+                .filter(Reply::isTeacher)
                 .map(reply -> {
                     return NoticeResponse.reply.builder()
                             .id(reply.getId())

@@ -1,9 +1,10 @@
 package com.dsm.nms.domain.comment.entity;
 
-import com.dsm.nms.global.entity.BaseTimeEntity;
 import com.dsm.nms.domain.notice.entity.Notice;
 import com.dsm.nms.domain.reply.entity.Reply;
-import com.dsm.nms.global.entity.Writer;
+import com.dsm.nms.domain.student.entity.Student;
+import com.dsm.nms.domain.teacher.entity.Teacher;
+import com.dsm.nms.global.entity.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,12 +23,19 @@ public class Comment extends BaseTimeEntity {
     @Column(nullable = false)
     private String content;
 
+    private boolean isTeacher;
+
     @JoinColumn(name = "notice_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Notice notice;
 
-    @Embedded
-    private Writer writer;
+    @JoinColumn(name = "teacher_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Teacher teacher;
+
+    @JoinColumn(name = "student_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Student student;
 
     @OneToMany(mappedBy = "comment", cascade = CascadeType.REMOVE)
     private List<Reply> replies;

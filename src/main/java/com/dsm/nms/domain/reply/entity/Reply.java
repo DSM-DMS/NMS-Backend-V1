@@ -21,6 +21,8 @@ public class Reply extends BaseTimeEntity {
     @Column(nullable = false)
     private String content;
 
+    private boolean isTeacher;
+
     @JoinColumn(name = "comment_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Comment comment;
@@ -28,6 +30,10 @@ public class Reply extends BaseTimeEntity {
     @JoinColumn(name = "teacher_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Teacher teacher;
+
+    @JoinColumn(name = "student_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Student student;
 
     public Reply(Comment comment, String content, Teacher teacher) {
         this.content = content;
