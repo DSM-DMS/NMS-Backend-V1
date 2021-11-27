@@ -38,4 +38,7 @@ public class SignUpRequest {
     @Enum(enumClass = Department.class, message = "존재하지 않는 부서입니다.")
     private String department;
 
+    public void encodePassword(String password) {
+        this.password = password;
+    }
 }
