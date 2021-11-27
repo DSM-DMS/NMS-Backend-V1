@@ -1,6 +1,7 @@
 package com.dsm.nms.domain.notice.entity;
 
 import com.dsm.nms.domain.BaseTimeEntity;
+import com.dsm.nms.domain.comment.entity.Comment;
 import com.dsm.nms.domain.image.entity.Image;
 import com.dsm.nms.domain.notice.api.dto.request.ModifyNoticeRequest;
 import com.dsm.nms.domain.notice.entity.noticetarget.NoticeTarget;
@@ -41,6 +42,9 @@ public class Notice extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "notice", cascade = CascadeType.REMOVE)
     private Set<Star> stars = new HashSet<>();
+
+    @OneToMany(mappedBy = "notice", cascade = CascadeType.REMOVE)
+    private List<Comment> comments;
 
     public Notice(RegisterNoticeRequest request, Teacher teacher) {
         this.title = request.getTitle();
