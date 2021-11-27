@@ -10,6 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @RequiredArgsConstructor
 @Component
 public class ImageFacade {
@@ -41,6 +43,12 @@ public class ImageFacade {
                 .forEach(s3Util::removeFile);
 
         imageRepository.deleteByNotice(notice);
+    }
+
+    public List<String> getNoticeImages(Notice notice) {
+        return notice.getImages().stream()
+                .map(Image::getImageUrl)
+                .collect(toList());
     }
 
 }
