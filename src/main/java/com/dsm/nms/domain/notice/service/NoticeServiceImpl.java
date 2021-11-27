@@ -8,9 +8,12 @@ import com.dsm.nms.domain.notice.api.dto.request.ModifyNoticeRequest;
 import com.dsm.nms.domain.notice.api.dto.request.RegisterNoticeRequest;
 import com.dsm.nms.domain.notice.api.dto.response.NoticeResponse;
 import com.dsm.nms.domain.notice.entity.Notice;
+import com.dsm.nms.domain.notice.entity.noticetarget.NoticeTarget;
+import com.dsm.nms.domain.notice.entity.target.TargetTag;
 import com.dsm.nms.domain.notice.exception.NoticeNotFoundException;
 import com.dsm.nms.domain.notice.facade.NoticeFacade;
 import com.dsm.nms.domain.notice.repository.NoticeRepository;
+import com.dsm.nms.domain.notice.repository.NoticeTargetRepository;
 import com.dsm.nms.domain.reply.repository.ReplyRepository;
 import com.dsm.nms.domain.star.facade.StarFacade;
 import com.dsm.nms.domain.teacher.entity.Teacher;
@@ -32,9 +35,10 @@ public class NoticeServiceImpl implements NoticeService {
     private final ImageFacade imageFacade;
     private final NoticeFacade noticeFacade;
     private final TeacherFacade teacherFacade;
-    private final NoticeRepository noticeRepository;
     private final ReplyRepository replyRepository;
+    private final NoticeRepository noticeRepository;
     private final CommentRepository commentRepository;
+    private final NoticeTargetRepository noticeTargetRepository;
 
     @Override
     @Transactional
@@ -80,6 +84,9 @@ public class NoticeServiceImpl implements NoticeService {
                                     .name(notice.getTeacher().getName())
                                     .profileUrl(notice.getTeacher().getProfileUrl())
                                     .build())
+                            .targets(noticeTargetRepository.findByNoticeId(notice.getId()).stream()
+                                    .map(noticeTarget -> noticeTarget.getTarget().getTargetTag())
+                                    .collect(toList()))
                             .createdDate(notice.getCreatedDate())
                             .updatedDate(notice.getUpdatedDate())
                             .images(notice.getImages().stream()
