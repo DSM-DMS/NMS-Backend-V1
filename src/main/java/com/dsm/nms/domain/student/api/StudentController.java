@@ -23,7 +23,6 @@ public class StudentController {
         studentService.signUp(signUpRequest);
     }
 
-    @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping("/auth")
     public TokenResponse login(@RequestBody @Valid LoginRequest loginRequest) {
         return studentService.login(loginRequest);
