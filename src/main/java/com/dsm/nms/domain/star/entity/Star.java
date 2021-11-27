@@ -1,6 +1,6 @@
 package com.dsm.nms.domain.star.entity;
 
-import com.dsm.nms.domain.BaseTimeEntity;
+import com.dsm.nms.global.entity.BaseTimeEntity;
 import com.dsm.nms.domain.notice.entity.Notice;
 import com.dsm.nms.domain.student.entity.Student;
 import lombok.AccessLevel;
