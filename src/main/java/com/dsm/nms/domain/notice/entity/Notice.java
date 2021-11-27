@@ -8,7 +8,6 @@ import com.dsm.nms.domain.notice.entity.noticetarget.NoticeTarget;
 import com.dsm.nms.domain.star.entity.Star;
 import com.dsm.nms.domain.notice.api.dto.request.RegisterNoticeRequest;
 import com.dsm.nms.domain.teacher.entity.Teacher;
-import com.dsm.nms.global.entity.Writer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,12 +30,9 @@ public class Notice extends BaseTimeEntity {
     @Column(nullable = false)
     private String content;
 
-    @AttributeOverrides({
-            @AttributeOverride(name = "name", column = @Column(name = "teacher_name")),
-            @AttributeOverride(name = "profileUrl", column = @Column(name = "teacher_profile_url"))
-    })
-    @Embedded
-    private Writer writer;
+    @JoinColumn(name = "teacher_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Teacher teacher;
 
     @OneToMany(mappedBy = "notice", cascade = CascadeType.REMOVE)
     private List<NoticeTarget> targets;
@@ -53,8 +49,7 @@ public class Notice extends BaseTimeEntity {
     public Notice(RegisterNoticeRequest request, Teacher teacher) {
         this.title = request.getTitle();
         this.content = request.getContent();
-        this.writer.getName() = teacher.getName();
-        this.writer.getProfileUrl() = teacher.getProfileUrl();
+        this.teacher = teacher;
     }
 
     public Notice updateTitleAndContent(ModifyNoticeRequest noticeRequest) {
