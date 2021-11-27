@@ -31,4 +31,11 @@ public class Reply extends BaseTimeEntity {
     @Embedded
     private Writer writer;
 
+    public Reply(Comment comment, String content, Teacher teacher) {
+        this.content = content;
+        this.comment = comment;
+        this.writer.setName(teacher.getName());
+        this.writer.setProfileUrl(teacher.getProfileUrl());
+    }
+
 }
