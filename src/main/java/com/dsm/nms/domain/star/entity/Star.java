@@ -12,6 +12,14 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name="star_uk",
+                        columnNames = {"notice_id", "student_id"}
+                )
+        }
+)
 public class Star extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
