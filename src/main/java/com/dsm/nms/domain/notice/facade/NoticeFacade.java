@@ -9,7 +9,6 @@ import com.dsm.nms.domain.notice.exception.TargetNotFoundException;
 import com.dsm.nms.domain.notice.repository.NoticeRepository;
 import com.dsm.nms.domain.notice.repository.NoticeTargetRepository;
 import com.dsm.nms.domain.notice.repository.TargetRepository;
-import com.dsm.nms.global.aop.Enum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
