@@ -28,6 +28,6 @@ public class CommentController {
     @DeleteMapping("/")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delComment(@RequestParam("comment-id") int commentId) {
-        commentService.
+        commentService.delComment(commentId);
     }
 }
