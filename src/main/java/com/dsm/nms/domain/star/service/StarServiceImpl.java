@@ -2,6 +2,7 @@ package com.dsm.nms.domain.star.service;
 
 import com.dsm.nms.domain.notice.facade.NoticeFacade;
 import com.dsm.nms.domain.star.entity.Star;
+import com.dsm.nms.domain.star.exception.StarAlreadyExistException;
 import com.dsm.nms.domain.star.exception.StarNotFoundException;
 import com.dsm.nms.domain.star.repository.StarRepository;
 import com.dsm.nms.domain.student.facade.StudentFacade;
@@ -20,6 +21,10 @@ public class StarServiceImpl implements StarService{
 
     @Override
     public void star(int noticeId) {
+
+        if(starRepository.findById(noticeId).isPresent())
+            throw StarAlreadyExistException.EXCEPTION;
+
         starRepository.save(Star.builder()
                 .notice(noticeFacade.getByNoticeId(noticeId))
                 .student(studentFacade.getCurrentStudent())
