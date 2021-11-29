@@ -2,13 +2,11 @@ package com.dsm.nms.domain.star.service;
 
 import com.dsm.nms.domain.notice.facade.NoticeFacade;
 import com.dsm.nms.domain.star.entity.Star;
-import com.dsm.nms.domain.star.exception.StarAlreadyExistException;
+import com.dsm.nms.domain.star.exception.StarAlreadyExistsException;
 import com.dsm.nms.domain.star.exception.StarNotFoundException;
 import com.dsm.nms.domain.star.repository.StarRepository;
 import com.dsm.nms.domain.student.facade.StudentFacade;
-import com.dsm.nms.global.security.auth.StudentDetails;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -23,7 +21,7 @@ public class StarServiceImpl implements StarService{
     public void star(int noticeId) {
 
         if(starRepository.findById(noticeId).isPresent())
-            throw StarAlreadyExistException.EXCEPTION;
+            throw StarAlreadyExistsException.EXCEPTION;
 
         starRepository.save(Star.builder()
                 .notice(noticeFacade.getByNoticeId(noticeId))
