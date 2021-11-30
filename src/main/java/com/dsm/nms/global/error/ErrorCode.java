@@ -35,7 +35,10 @@ public enum ErrorCode {
 
     NOTICE_NOT_FOUND(404, "Notice Not Found"),
 
-    COMMENT_NOT_FOUND(404, "Comment Not Found")
+    COMMENT_NOT_FOUND(404, "Comment Not Found"),
+  
+    STAR_NOT_FOUND(404, "STAR NOT FOUND"),
+    STAR_ALREADY_EXISTS(409, "Star Already Exists")
     ;
 
     private final int status;

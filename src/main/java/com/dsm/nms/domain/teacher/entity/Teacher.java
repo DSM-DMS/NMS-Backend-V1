@@ -28,9 +28,6 @@ public class Teacher extends Writer {
     @Enumerated(EnumType.STRING)
     private Department department;
 
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.REMOVE)
-    private List<Notice> notices;
-
     public Teacher(SignUpRequest signUpRequest) {
         this.name = signUpRequest.getName();
         this.username = signUpRequest.getUsername();
