@@ -2,6 +2,7 @@ package com.dsm.nms.domain.teacher.entity;
 
 import com.dsm.nms.domain.notice.entity.Notice;
 import com.dsm.nms.domain.teacher.api.dto.request.SignUpRequest;
+import com.dsm.nms.global.entity.Role;
 import com.dsm.nms.global.entity.Writer;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -23,6 +24,9 @@ public class Teacher extends Writer {
     private String phoneNumber;
 
     private String introduction;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

@@ -2,6 +2,7 @@ package com.dsm.nms.domain.student.entity;
 
 import com.dsm.nms.domain.star.entity.Star;
 import com.dsm.nms.domain.student.api.dto.request.SignUpRequest;
+import com.dsm.nms.global.entity.Role;
 import com.dsm.nms.global.entity.Writer;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -29,6 +30,9 @@ public class Student extends Writer {
 
     @Column(nullable = false, columnDefinition = "char(2)")
     private String number;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE)
     private List<Star> stars;
