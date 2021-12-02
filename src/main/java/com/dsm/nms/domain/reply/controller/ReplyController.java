@@ -18,4 +18,10 @@ public class ReplyController {
         replyService.addReply(commentId, content);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping
+    public void removeReply(@RequestParam Integer replyId) {
+        replyService.removeReply(replyId);
+    }
+
 }
