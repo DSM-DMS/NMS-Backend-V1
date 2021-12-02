@@ -1,9 +1,8 @@
 package com.dsm.nms.domain.reply.entity;
 
 import com.dsm.nms.domain.comment.entity.Comment;
-import com.dsm.nms.domain.student.entity.Student;
-import com.dsm.nms.domain.teacher.entity.Teacher;
 import com.dsm.nms.global.entity.BaseTimeEntity;
+import com.dsm.nms.global.entity.Writer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,24 +20,17 @@ public class Reply extends BaseTimeEntity {
     @Column(nullable = false)
     private String content;
 
-    private boolean isTeacher;
-
     @JoinColumn(name = "comment_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Comment comment;
 
-    @JoinColumn(name = "teacher_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Teacher teacher;
+    @OneToOne(mappedBy = "reply", fetch = FetchType.EAGER)
+    private Writer writer;
 
-    @JoinColumn(name = "student_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Student student;
-
-    public Reply(Comment comment, String content, Teacher teacher) {
+    public Reply(Comment comment, String content, Writer writer) {
         this.content = content;
         this.comment = comment;
-        this.teacher = teacher;
+        this.writer = writer;
     }
 
 }
