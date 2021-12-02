@@ -22,19 +22,16 @@ public class CommentFacade {
 
     public List<NoticeResponse.comment> getComments(Notice notice) {
         return notice.getComments().stream()
-                .filter(Comment::isTeacher)
-                .map(comment -> {
-                    return NoticeResponse.comment.builder()
-                            .id(comment.getId())
-                            .writer(NoticeResponse.writer.builder()
-                                    .name(comment.getTeacher().getName())
-                                    .profileUrl(comment.getTeacher().getProfileUrl())
-                                    .build())
-                            .content(comment.getContent())
-                            .createdDate(comment.getCreatedDate())
-                            .replies(replyFacade.getReplies(comment))
-                            .build();
-                })
+                .map(comment -> NoticeResponse.comment.builder()
+                        .id(comment.getId())
+                        .writer(NoticeResponse.writer.builder()
+                                .name(comment.getWriter().getName())
+                                .profileUrl(comment.getWriter().getProfileUrl())
+                                .build())
+                        .content(comment.getContent())
+                        .createdDate(comment.getCreatedDate())
+                        .replies(replyFacade.getReplies(comment))
+                        .build())
                 .collect(toList());
     }
 
