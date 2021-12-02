@@ -38,4 +38,8 @@ public class ReplyFacade {
         replyRepository.save(new Reply(commentFacade.getById(commentId), content, writer));
     }
 
+    public void removeReply(Integer replyId) {
+        replyRepository.deleteById(replyId);
+    }
+
 }

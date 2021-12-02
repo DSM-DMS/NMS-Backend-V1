@@ -29,7 +29,13 @@ public class ReplyServiceImpl implements ReplyService {
         } else if (principal instanceof Student) {
             replyFacade.createReply(commentId, content, studentFacade.getCurrentStudent());
         } else throw InvalidRoleException.EXCEPTION;
-        
+
+    }
+
+    @Override
+    @Transactional
+    public void removeReply(Integer replyId) {
+        replyFacade.removeReply(replyId);
     }
 
 }
