@@ -11,11 +11,11 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DiscriminatorValue(value = "S")
 @Entity
 public class Student extends Writer {
 
-    @Id
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     protected String email;
 
     @Column(nullable = false, columnDefinition = "char(60)")

@@ -1,16 +1,16 @@
 package com.dsm.nms.global.entity;
 
+import com.dsm.nms.domain.reply.entity.Reply;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "DTYPE")
 @Entity
 public class Writer {
 
@@ -21,5 +21,8 @@ public class Writer {
     protected String name;
 
     protected String profileUrl;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Reply reply;
 
 }
