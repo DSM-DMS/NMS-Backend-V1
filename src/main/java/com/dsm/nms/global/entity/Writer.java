@@ -1,16 +1,25 @@
 package com.dsm.nms.global.entity;
 
+import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Embeddable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-@Getter @Setter
-@Embeddable
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
 public class Writer {
 
-    private String name;
+    @Id @GeneratedValue
+    protected Integer id;
 
-    private String profileUrl;
+    @Column(nullable = false, columnDefinition = "char(5)")
+    protected String name;
+
+    protected String profileUrl;
 
 }
