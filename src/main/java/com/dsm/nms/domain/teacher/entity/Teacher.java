@@ -1,22 +1,24 @@
 package com.dsm.nms.domain.teacher.entity;
 
-import com.dsm.nms.domain.notice.entity.Notice;
 import com.dsm.nms.domain.teacher.api.dto.request.SignUpRequest;
-import com.dsm.nms.global.entity.Role;
 import com.dsm.nms.global.entity.Writer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Teacher extends Writer {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Id
+    @Column(nullable = false, unique = true)
+    protected String email;
+
+    @Column(nullable = false, columnDefinition = "char(60)")
+    private String password;
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -24,9 +26,6 @@ public class Teacher extends Writer {
     private String phoneNumber;
 
     private String introduction;
-
-    @Enumerated(EnumType.STRING)
-    private Role role;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

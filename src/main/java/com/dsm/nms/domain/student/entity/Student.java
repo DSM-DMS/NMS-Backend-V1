@@ -2,7 +2,6 @@ package com.dsm.nms.domain.student.entity;
 
 import com.dsm.nms.domain.star.entity.Star;
 import com.dsm.nms.domain.student.api.dto.request.SignUpRequest;
-import com.dsm.nms.global.entity.Role;
 import com.dsm.nms.global.entity.Writer;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -15,8 +14,12 @@ import java.util.List;
 @Entity
 public class Student extends Writer {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Id
+    @Column(nullable = false, unique = true)
+    protected String email;
+
+    @Column(nullable = false, columnDefinition = "char(60)")
+    private String password;
 
     @Column(nullable = false, unique = true)
     private String nickname;
@@ -30,9 +33,6 @@ public class Student extends Writer {
 
     @Column(nullable = false, columnDefinition = "char(2)")
     private String number;
-
-    @Enumerated(EnumType.STRING)
-    private Role role;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE)
     private List<Star> stars;
