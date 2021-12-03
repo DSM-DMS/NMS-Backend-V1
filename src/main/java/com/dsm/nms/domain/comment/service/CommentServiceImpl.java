@@ -25,7 +25,7 @@ public class CommentServiceImpl implements CommentService{
     private final UserUtil userUtil;
 
     @Override
-    public void addComment(int noticeId, String content) {
+    public void addComment(Integer noticeId, String content) {
 
         Object principal = userUtil.getPrincipal();
 
@@ -38,7 +38,7 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public void removeComment(int commentId) {
+    public void removeComment(Integer commentId) {
         commentFacade.removeComment(commentId);
     }
 }
