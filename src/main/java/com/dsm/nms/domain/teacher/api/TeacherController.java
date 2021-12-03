@@ -18,7 +18,7 @@ public class TeacherController {
     private final TeacherService teacherService;
 
     @ResponseStatus(value = HttpStatus.CREATED)
-    @PostMapping("/")
+    @PostMapping
     public void signUp(@RequestBody @Valid SignUpRequest signUpRequest) {
         teacherService.signUp(signUpRequest);
     }

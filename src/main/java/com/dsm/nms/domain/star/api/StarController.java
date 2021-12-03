@@ -12,13 +12,13 @@ public class StarController {
 
     private final StarService starService;
 
-    @PostMapping("/")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void star(@RequestParam("notice_id") int noticeId) {
         starService.star(noticeId);
     }
 
-    @DeleteMapping("/")
+    @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void cancel(@RequestParam("comment_id") int commentId) {
         starService.cancel(commentId);
