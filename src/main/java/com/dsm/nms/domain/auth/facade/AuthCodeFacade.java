@@ -53,11 +53,12 @@ public class AuthCodeFacade {
         return true;
     }
 
-    public boolean isCertifiedFilter(String email) {
-        getAuthCode(email)
-                .filter(authCode -> !authCode.getCertified())
+    public void isCertifiedFilter(String email) {
+        
+        AuthCode authCode = getAuthCode(email)
+                .filter(AuthCode::getCertified)
                 .orElseThrow(() -> AuthCodeNotCertifiedException.EXCEPTION);
 
-        return true;
+        authCodeRepository.delete(authCode);
     }
 }

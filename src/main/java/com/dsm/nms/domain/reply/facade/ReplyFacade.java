@@ -20,8 +20,8 @@ import static java.util.stream.Collectors.toList;
 @Component
 public class ReplyFacade {
 
+    private final CommentRepository commentRepository;
     private final ReplyRepository replyRepository;
-    private final CommentFacade commentFacade;
 
     public List<NoticeResponse.reply> getReplies(Comment comment) {
         return comment.getReplies().stream()
@@ -38,7 +38,8 @@ public class ReplyFacade {
     }
 
     public void createReply(Integer commentId, String content, Writer writer) {
-        Comment comment = commentFacade.getById(commentId);
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> CommentNotFoundException.EXCEPTION);
         replyRepository.save(new Reply(comment, content, writer));
     }
 

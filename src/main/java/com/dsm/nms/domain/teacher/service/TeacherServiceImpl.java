@@ -1,5 +1,6 @@
 package com.dsm.nms.domain.teacher.service;
 
+import com.dsm.nms.domain.auth.facade.AuthCodeFacade;
 import com.dsm.nms.domain.teacher.api.dto.request.LoginRequest;
 import com.dsm.nms.domain.teacher.api.dto.request.SignUpRequest;
 import com.dsm.nms.domain.teacher.entity.Teacher;
@@ -22,6 +23,7 @@ public class TeacherServiceImpl implements TeacherService{
 
     private final TeacherRepository teacherRepository;
     private final TeacherFacade teacherFacade;
+    private final AuthCodeFacade authCodeFacade;
     private final UserUtil userUtil;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider tokenProvider;
@@ -29,8 +31,10 @@ public class TeacherServiceImpl implements TeacherService{
     @Override
     @Transactional
     public void signUp(SignUpRequest signUpRequest) {
+
         teacherFacade.existsUsernameFilter(signUpRequest.getUsername());
         userUtil.existEmailFilter(signUpRequest.getEmail());
+        authCodeFacade.isCertifiedFilter(signUpRequest.getEmail());
 
         signUpRequest.encodePassword(passwordEncoder.encode(signUpRequest.getPassword()));
         teacherRepository.save(new Teacher(signUpRequest));
