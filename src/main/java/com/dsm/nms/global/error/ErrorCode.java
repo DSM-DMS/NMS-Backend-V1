@@ -15,6 +15,7 @@ public enum ErrorCode {
     AUTHENTICATION_NOT_FOUND(404, "Authentication Not Found"),
 
     INVALID_AUTH_CODE(401, "Invalid Auth Code"),
+    AUTH_CODE_NOT_CERTIFIED(407, "Auth Code Not Certified"),
     AUTH_CODE_NOT_FOUND(404, "Auth Code Not Found"),
     AUTH_CODE_ALREADY_CERTIFIED(409,"Auth Code Already Certified"),
     AUTH_CODE_REQUEST_OVER_LIMIT(429, "Auth Code Request Over Limit"),
@@ -38,8 +39,9 @@ public enum ErrorCode {
     COMMENT_NOT_FOUND(404, "Comment Not Found"),
   
     STAR_NOT_FOUND(404, "STAR NOT FOUND"),
-    STAR_ALREADY_EXISTS(409, "Star Already Exists")
+    STAR_ALREADY_EXISTS(409, "Star Already Exists"),
 
+    REPLY_NOT_FOUND(404, "Reply Not Found"),
     ;
 
     private final int status;
