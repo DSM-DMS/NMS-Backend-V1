@@ -19,13 +19,13 @@ public class CommentController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public void comment(@RequestParam("notice-id") int noticeId, @RequestBody @Valid CommentRequest commentRequest) {
+    public void comment(@RequestParam("notice-id") Integer noticeId, @RequestBody @Valid CommentRequest commentRequest) {
         commentService.addComment(noticeId, commentRequest.getContent());
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping
-    public void delComment(@RequestParam("comment-id") int commentId) {
+    public void delComment(@RequestParam("comment-id") Integer commentId) {
         commentService.removeComment(commentId);
     }
 }
