@@ -11,5 +11,4 @@ public class CommentNotFoundException extends NmsException {
     private CommentNotFoundException() {
         super(ErrorCode.COMMENT_NOT_FOUND);
     }
-
 }

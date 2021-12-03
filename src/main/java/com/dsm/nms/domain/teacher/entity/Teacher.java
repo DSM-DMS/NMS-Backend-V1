@@ -25,10 +25,9 @@ public class Teacher extends Writer {
     private String username;
 
     @Size(min = 11, max = 11)
-    @Column(nullable = false)
     private String phoneNumber;
 
-    @Column(nullable = false, columnDefinition = "char(32)")
+    @Column(columnDefinition = "char(32)")
     private String introduction;
 
     @Column(nullable = false)

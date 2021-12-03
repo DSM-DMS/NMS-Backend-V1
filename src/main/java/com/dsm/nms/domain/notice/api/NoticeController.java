@@ -19,7 +19,7 @@ public class NoticeController {
 
     private final NoticeService noticeService;
 
-    @PostMapping("/")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void registerNotice(@RequestPart @Valid RegisterNoticeRequest noticeRequest,
                                @RequestPart(required = false) List<MultipartFile> images) {

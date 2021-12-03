@@ -2,9 +2,11 @@ package com.dsm.nms.domain.reply.facade;
 
 import com.dsm.nms.domain.comment.entity.Comment;
 import com.dsm.nms.domain.comment.exception.CommentNotFoundException;
+import com.dsm.nms.domain.comment.facade.CommentFacade;
 import com.dsm.nms.domain.comment.repository.CommentRepository;
 import com.dsm.nms.domain.notice.api.dto.response.NoticeResponse;
 import com.dsm.nms.domain.reply.entity.Reply;
+import com.dsm.nms.domain.reply.exception.ReplyNotFoundException;
 import com.dsm.nms.domain.reply.repository.ReplyRepository;
 import com.dsm.nms.global.entity.Writer;
 import lombok.RequiredArgsConstructor;
@@ -38,12 +40,18 @@ public class ReplyFacade {
     public void createReply(Integer commentId, String content, Writer writer) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> CommentNotFoundException.EXCEPTION);
-
         replyRepository.save(new Reply(comment, content, writer));
     }
 
+    public Reply getById(Integer id) {
+        return replyRepository.findById(id)
+                .orElseThrow(() -> ReplyNotFoundException.EXCEPTION);
+    }
+
     public void removeReply(Integer replyId) {
-        replyRepository.deleteById(replyId);
+        replyRepository.delete(
+                getById(replyId)
+        );
     }
 
 }

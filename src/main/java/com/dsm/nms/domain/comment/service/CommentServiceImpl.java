@@ -1,6 +1,10 @@
-package com.dsm.nms.domain.reply.service;
+package com.dsm.nms.domain.comment.service;
 
-import com.dsm.nms.domain.reply.facade.ReplyFacade;
+import com.dsm.nms.domain.comment.api.dto.request.CommentRequest;
+import com.dsm.nms.domain.comment.entity.Comment;
+import com.dsm.nms.domain.comment.exception.CommentNotFoundException;
+import com.dsm.nms.domain.comment.facade.CommentFacade;
+import com.dsm.nms.domain.comment.repository.CommentRepository;
 import com.dsm.nms.domain.student.entity.Student;
 import com.dsm.nms.domain.student.facade.StudentFacade;
 import com.dsm.nms.domain.teacher.entity.Teacher;
@@ -10,34 +14,34 @@ import com.dsm.nms.global.utils.auth.user.UserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import javax.transaction.Transactional;
 
 @RequiredArgsConstructor
 @Service
-public class ReplyServiceImpl implements ReplyService {
+public class CommentServiceImpl implements CommentService{
 
-    private final ReplyFacade replyFacade;
+    private final CommentFacade commentFacade;
     private final TeacherFacade teacherFacade;
     private final StudentFacade studentFacade;
     private final UserUtil userUtil;
 
     @Override
     @Transactional
-    public void addReply(Integer commentId, String content) {
+    public void addComment(Integer noticeId, String content) {
+
         Object principal = userUtil.getPrincipal();
 
         if (principal instanceof Teacher) {
-            replyFacade.createReply(commentId, content, teacherFacade.getCurrentTeacher());
+            commentFacade.createComment(noticeId, content, teacherFacade.getCurrentTeacher());
         } else if (principal instanceof Student) {
-            replyFacade.createReply(commentId, content, studentFacade.getCurrentStudent());
+            commentFacade.createComment(noticeId, content, studentFacade.getCurrentStudent());
         } else throw InvalidRoleException.EXCEPTION;
 
     }
 
     @Override
-    @Transactional
-    public void removeReply(Integer replyId) {
-        replyFacade.removeReply(replyId);
+    public void removeComment(Integer commentId) {
+        commentFacade.removeComment(commentId);
     }
-
 }
