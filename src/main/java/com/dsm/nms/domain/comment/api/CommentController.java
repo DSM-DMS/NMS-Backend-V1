@@ -17,17 +17,15 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    public void comment(@RequestParam("notice-id") int noticeId,
-                        @RequestBody @Valid CommentRequest commentRequest) {
-
-        commentService.comment(noticeId, commentRequest);
+    @PostMapping
+    public void comment(@RequestParam("notice-id") int noticeId, @RequestBody @Valid CommentRequest commentRequest) {
+        commentService.addComment(noticeId, commentRequest.getContent());
     }
 
-    @DeleteMapping("/")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping
     public void delComment(@RequestParam("comment-id") int commentId) {
-        commentService.delComment(commentId);
+        commentService.removeComment(commentId);
     }
 }
