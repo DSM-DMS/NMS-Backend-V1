@@ -6,6 +6,7 @@ import com.dsm.nms.domain.teacher.exception.TeacherNotFoundException;
 import com.dsm.nms.domain.teacher.exception.UsernameAlreadyExistsException;
 import com.dsm.nms.domain.teacher.repository.TeacherRepository;
 import com.dsm.nms.global.exception.AuthenticationNotFoundException;
+import com.dsm.nms.global.utils.auth.user.UserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +20,7 @@ public class TeacherFacade {
 
     private final PasswordEncoder passwordEncoder;
     private final TeacherRepository teacherRepository;
+    private final UserUtil userUtil;
 
     private static final String pattern = "^[\\w\\.-]{1,64}@[\\w\\.-]{1,252}\\.\\w{2,4}$";
 
@@ -30,12 +32,12 @@ public class TeacherFacade {
     }
 
     public Teacher getCurrentTeacher() {
-        Object object = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object principal = userUtil.getPrincipal();
 
-        if(!(object instanceof Teacher))
+        if(!(principal instanceof Teacher))
             throw AuthenticationNotFoundException.EXCEPTION;
 
-        return (Teacher) object;
+        return (Teacher) principal;
     }
   
     public void existsUsernameFilter(String username) {
