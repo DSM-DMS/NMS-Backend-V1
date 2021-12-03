@@ -7,14 +7,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DiscriminatorValue(value = "T")
 @Entity
 public class Teacher extends Writer {
 
-    @Id
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     protected String email;
 
     @Column(nullable = false, columnDefinition = "char(60)")
@@ -23,8 +24,11 @@ public class Teacher extends Writer {
     @Column(nullable = false, unique = true)
     private String username;
 
+    @Size(min = 11, max = 11)
+    @Column(nullable = false)
     private String phoneNumber;
 
+    @Column(nullable = false, columnDefinition = "char(32)")
     private String introduction;
 
     @Column(nullable = false)
