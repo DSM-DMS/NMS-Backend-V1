@@ -5,7 +5,9 @@ import com.dsm.nms.domain.comment.exception.CommentNotFoundException;
 import com.dsm.nms.domain.comment.repository.CommentRepository;
 import com.dsm.nms.domain.notice.api.dto.response.NoticeResponse;
 import com.dsm.nms.domain.notice.entity.Notice;
+import com.dsm.nms.domain.notice.facade.NoticeFacade;
 import com.dsm.nms.domain.reply.facade.ReplyFacade;
+import com.dsm.nms.global.entity.Writer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +20,7 @@ import static java.util.stream.Collectors.toList;
 public class CommentFacade {
 
     private final ReplyFacade replyFacade;
+    private final NoticeFacade noticeFacade;
     private final CommentRepository commentRepository;
 
     public List<NoticeResponse.comment> getComments(Notice notice) {
@@ -35,9 +38,18 @@ public class CommentFacade {
                 .collect(toList());
     }
 
+    public void createComment(Integer noticeId, String content, Writer writer) {
+        Notice notice = noticeFacade.getByNoticeId(noticeId);
+        commentRepository.save(new Comment(notice, content, writer));
+    }
+
     public Comment getById(Integer id) {
         return commentRepository.findById(id)
                 .orElseThrow(() -> CommentNotFoundException.EXCEPTION);
+    }
+
+    public void removeComment(Integer commentId) {
+        commentRepository.deleteById(commentId);
     }
 
 }

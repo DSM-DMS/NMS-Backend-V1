@@ -35,10 +35,9 @@ public class Comment extends BaseTimeEntity {
     @OneToMany(mappedBy = "comment", cascade = CascadeType.REMOVE)
     private List<Reply> replies;
 
-    @Builder
-    public Comment(CommentRequest commentRequest, String name, String profileUrl) {
-        this.content = commentRequest.getContent();
-        this.writer.setName(name);
-        this.writer.setProfileUrl(profileUrl);
+    public Comment(Notice notice, String content, Writer writer) {
+        this.notice = notice;
+        this.content = content;
+        this.writer = writer;
     }
 }
