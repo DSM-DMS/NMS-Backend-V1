@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @RequiredArgsConstructor
 @Service
 public class CommentServiceImpl implements CommentService{
@@ -25,6 +27,7 @@ public class CommentServiceImpl implements CommentService{
     private final UserUtil userUtil;
 
     @Override
+    @Transactional
     public void addComment(Integer noticeId, String content) {
 
         Object principal = userUtil.getPrincipal();

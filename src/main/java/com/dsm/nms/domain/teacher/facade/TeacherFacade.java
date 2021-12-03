@@ -40,11 +40,9 @@ public class TeacherFacade {
         return (Teacher) principal;
     }
   
-    public boolean existsUsernameFilter(String username) {
+    public void existsUsernameFilter(String username) {
         if (teacherRepository.findByUsername(username).isPresent())
             throw UsernameAlreadyExistsException.EXCEPTION;
-
-        return true;
     }
 
     public Teacher getByEmail(String email) {
