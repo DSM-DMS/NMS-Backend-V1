@@ -73,7 +73,7 @@ public class JwtTokenProvider {
         String bearerToken = request.getHeader(jwtProperties.getHeader());
 
         if(bearerToken != null && bearerToken.startsWith(jwtProperties.getPrefix())) {
-            return bearerToken.substring(jwtProperties.getHeader().length() + 1);
+            return bearerToken.substring(jwtProperties.getPrefix().length() + 1);
         }
         return null;
     }

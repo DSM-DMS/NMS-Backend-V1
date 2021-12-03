@@ -2,6 +2,7 @@ package com.dsm.nms.domain.student.entity;
 
 import com.dsm.nms.domain.star.entity.Star;
 import com.dsm.nms.domain.student.api.dto.request.SignUpRequest;
+import com.dsm.nms.global.entity.Writer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,25 +11,18 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DiscriminatorValue(value = "S")
 @Entity
-public class Student {
+public class Student extends Writer {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @Column(nullable = false, columnDefinition = "char(5)")
-    private String name;
-
-    @Column(nullable = false, unique = true)
-    private String nickname;
-
-    @Column(nullable = false, unique = true)
-    private String email;
+    @Column(nullable = false)
+    protected String email;
 
     @Column(nullable = false, columnDefinition = "char(60)")
     private String password;
 
-    private String profileUrl;
+    @Column(nullable = false, unique = true)
+    private String nickname;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

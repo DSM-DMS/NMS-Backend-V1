@@ -1,44 +1,39 @@
 package com.dsm.nms.domain.teacher.entity;
 
-import com.dsm.nms.domain.notice.entity.Notice;
 import com.dsm.nms.domain.teacher.api.dto.request.SignUpRequest;
+import com.dsm.nms.global.entity.Writer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
-import java.util.List;
+import javax.validation.constraints.Size;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DiscriminatorValue(value = "T")
 @Entity
-public class Teacher {
+public class Teacher extends Writer {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(nullable = false)
+    protected String email;
 
-    @Column(nullable = false, columnDefinition = "char(5)")
-    private String name;
+    @Column(nullable = false, columnDefinition = "char(60)")
+    private String password;
 
     @Column(nullable = false, unique = true)
     private String username;
 
+    @Size(min = 11, max = 11)
     @Column(nullable = false)
-    private String password;
-
-    @Column(nullable = false, unique = true)
-    private String email;
-    private String profileUrl;
-
     private String phoneNumber;
 
+    @Column(nullable = false, columnDefinition = "char(32)")
     private String introduction;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Department department;
-
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.REMOVE)
-    private List<Notice> notices;
 
     public Teacher(SignUpRequest signUpRequest) {
         this.name = signUpRequest.getName();

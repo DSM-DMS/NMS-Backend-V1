@@ -1,12 +1,12 @@
 package com.dsm.nms.domain.reply.entity;
 
-import com.dsm.nms.global.entity.BaseTimeEntity;
 import com.dsm.nms.domain.comment.entity.Comment;
-import com.dsm.nms.domain.teacher.entity.Teacher;
+import com.dsm.nms.global.entity.BaseTimeEntity;
 import com.dsm.nms.global.entity.Writer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Getter
@@ -24,11 +24,13 @@ public class Reply extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Comment comment;
 
-    @AttributeOverrides({
-            @AttributeOverride(name = "name", column = @Column(name = "teacher_name")),
-            @AttributeOverride(name = "profileUrl", column = @Column(name = "teacher_profile_url"))
-    })
-    @Embedded
+    @OneToOne(mappedBy = "reply", fetch = FetchType.EAGER)
     private Writer writer;
+
+    public Reply(Comment comment, String content, Writer writer) {
+        this.content = content;
+        this.comment = comment;
+        this.writer = writer;
+    }
 
 }
