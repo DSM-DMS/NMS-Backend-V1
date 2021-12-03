@@ -3,6 +3,7 @@ package com.dsm.nms.domain.auth.facade;
 import com.dsm.nms.domain.auth.entity.AuthCode;
 import com.dsm.nms.domain.auth.entity.AuthCodeLimit;
 import com.dsm.nms.domain.auth.exception.AuthCodeAlreadyCertifiedException;
+import com.dsm.nms.domain.auth.exception.AuthCodeNotCertifiedException;
 import com.dsm.nms.domain.auth.exception.AuthCodeNotFoundException;
 import com.dsm.nms.domain.auth.exception.AuthCodeRequestOverLimitException;
 import com.dsm.nms.domain.auth.repository.AuthCodeLimitRepository;
@@ -48,6 +49,14 @@ public class AuthCodeFacade {
     public boolean alreadyCertifiedFilter(boolean certify) {
         if (certify)
             throw AuthCodeAlreadyCertifiedException.EXCEPTION;
+
+        return true;
+    }
+
+    public boolean isCertifiedFilter(String email) {
+        getAuthCode(email)
+                .filter(authCode -> !authCode.getCertified())
+                .orElseThrow(() -> AuthCodeNotCertifiedException.EXCEPTION);
 
         return true;
     }
