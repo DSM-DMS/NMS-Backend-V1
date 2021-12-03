@@ -49,7 +49,9 @@ public class CommentFacade {
     }
 
     public void removeComment(Integer commentId) {
-        commentRepository.deleteById(commentId);
+        commentRepository.delete(
+                getById(commentId)
+        );
     }
 
 }
