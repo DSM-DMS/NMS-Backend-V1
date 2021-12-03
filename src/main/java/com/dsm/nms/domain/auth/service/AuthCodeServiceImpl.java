@@ -60,6 +60,7 @@ public class AuthCodeServiceImpl implements AuthCodeService{
                         )
                 )
                 .map(AuthCode::changeCertified)
+                .map(authCodeRepository::save)
                 .orElseThrow(() -> InvalidAuthCodeException.EXCEPTION);
 
         authCodeLimitRepository.deleteById(email);
