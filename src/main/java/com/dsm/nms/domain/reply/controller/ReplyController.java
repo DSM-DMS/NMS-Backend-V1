@@ -1,5 +1,6 @@
 package com.dsm.nms.domain.reply.controller;
 
+import com.dsm.nms.domain.reply.controller.dto.request.ReplyRequest;
 import com.dsm.nms.domain.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,8 +15,8 @@ public class ReplyController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public void addReply(@RequestParam Integer commentId, @RequestBody String content) {
-        replyService.addReply(commentId, content);
+    public void addReply(@RequestParam Integer commentId, @RequestBody ReplyRequest replyRequest) {
+        replyService.addReply(commentId, replyRequest.getContent());
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

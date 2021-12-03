@@ -2,6 +2,7 @@ package com.dsm.nms.domain.reply.facade;
 
 import com.dsm.nms.domain.comment.entity.Comment;
 import com.dsm.nms.domain.comment.exception.CommentNotFoundException;
+import com.dsm.nms.domain.comment.facade.CommentFacade;
 import com.dsm.nms.domain.comment.repository.CommentRepository;
 import com.dsm.nms.domain.notice.api.dto.response.NoticeResponse;
 import com.dsm.nms.domain.reply.entity.Reply;
@@ -18,8 +19,8 @@ import static java.util.stream.Collectors.toList;
 @Component
 public class ReplyFacade {
 
-    private final CommentRepository commentRepository;
     private final ReplyRepository replyRepository;
+    private final CommentFacade commentFacade;
 
     public List<NoticeResponse.reply> getReplies(Comment comment) {
         return comment.getReplies().stream()
@@ -36,9 +37,7 @@ public class ReplyFacade {
     }
 
     public void createReply(Integer commentId, String content, Writer writer) {
-        Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> CommentNotFoundException.EXCEPTION);
-
+        Comment comment = commentFacade.getById(commentId);
         replyRepository.save(new Reply(comment, content, writer));
     }
 
