@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SesConfig {
 
-    @Value("S${aws.region}")
+    @Value("${aws.region}")
     private String region;
 
     private final AwsProperties awsProperties;
