@@ -11,6 +11,6 @@ import javax.validation.constraints.NotBlank;
 public class ReplyRequest {
 
     @NotBlank(message = "content는 Null, 공백을 허용하지 않습니다.")
-    @Length(max = 500, message = "대충 500자 이하여야함")
+    @Length(max = 250, message = "대충 500자 이하여야함")
     String content;
 }
