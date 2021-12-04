@@ -3,7 +3,6 @@ package com.dsm.nms.domain.teacher.api.dto.response;
 import com.dsm.nms.domain.notice.entity.target.TargetTag;
 import com.dsm.nms.domain.teacher.entity.Department;
 import com.dsm.nms.domain.teacher.entity.Teacher;
-import com.dsm.nms.global.entity.Writer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -39,7 +38,6 @@ public class MyPageResponse {
 
     @Getter
     @Builder
-    @AllArgsConstructor
     public static class notice {
         private final Integer id;
         private final writer writer;
