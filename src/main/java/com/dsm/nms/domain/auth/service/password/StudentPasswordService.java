@@ -1,6 +1,8 @@
 package com.dsm.nms.domain.auth.service.password;
 
 import com.dsm.nms.domain.auth.api.dto.request.PasswordRequest;
+import com.dsm.nms.domain.auth.entity.PasswordCertification;
+import com.dsm.nms.domain.auth.facade.PasswordCertificationFacade;
 import com.dsm.nms.domain.student.entity.Student;
 import com.dsm.nms.domain.student.exception.StudentNotFoundException;
 import com.dsm.nms.domain.student.facade.StudentFacade;
@@ -20,6 +22,7 @@ public class StudentPasswordService implements PasswordService {
     private final PasswordUtil passwordUtil;
     private final StudentFacade studentFacade;
     private final PasswordEncoder passwordEncoder;
+    private final PasswordCertificationFacade passwordCertificationFacade;
 
     @Override
     @Transactional
@@ -29,7 +32,7 @@ public class StudentPasswordService implements PasswordService {
         )) {
             throw InvalidPasswordException.EXCEPTION;
         }
-        studentFacade.getCurrentStudent().updateCertified();
+        new PasswordCertification(passwordRequest.getEmail());
     }
 
     @Override
@@ -38,7 +41,7 @@ public class StudentPasswordService implements PasswordService {
         Optional.of(
                 studentFacade.getByEmail(passwordRequest.getEmail())
         )
-                .filter(Student::isPasswordCertified)
+                .filter(student -> passwordCertificationFacade.getByEmail(passwordRequest.getEmail()).isCertified())
                 .map(student -> student.updatePassword(passwordEncoder.encode(passwordRequest.getPassword())))
                 .orElseThrow(() -> StudentNotFoundException.EXCEPTION);
     }
