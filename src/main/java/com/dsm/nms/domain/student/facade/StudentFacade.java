@@ -8,7 +8,6 @@ import com.dsm.nms.domain.student.repository.StudentRepository;
 import com.dsm.nms.global.exception.AuthenticationNotFoundException;
 import com.dsm.nms.global.utils.auth.user.UserUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
