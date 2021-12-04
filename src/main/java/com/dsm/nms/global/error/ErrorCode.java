@@ -15,10 +15,11 @@ public enum ErrorCode {
     AUTHENTICATION_NOT_FOUND(404, "Authentication Not Found"),
 
     INVALID_AUTH_CODE(401, "Invalid Auth Code"),
-    AUTH_CODE_NOT_CERTIFIED(407, "Auth Code Not Certified"),
+    AUTH_CODE_NOT_CERTIFIED(401, "Auth Code Not Certified"),
     AUTH_CODE_NOT_FOUND(404, "Auth Code Not Found"),
     AUTH_CODE_ALREADY_CERTIFIED(409,"Auth Code Already Certified"),
     AUTH_CODE_REQUEST_OVER_LIMIT(429, "Auth Code Request Over Limit"),
+    PASSWORD_NOT_CERTIFIED(401, "Password Not Certified"),
 
     TEACHER_NOT_FOUND(404, "Teacher Not Found"),
     TEACHER_ALREADY_EXISTS(409,  "Teacher Already Exists"),
