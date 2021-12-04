@@ -1,6 +1,7 @@
 package com.dsm.nms.domain.teacher.api;
 
 import com.dsm.nms.domain.teacher.api.dto.request.LoginRequest;
+import com.dsm.nms.domain.teacher.api.dto.response.MyPageResponse;
 import com.dsm.nms.domain.teacher.api.dto.response.ProfileResponse;
 import com.dsm.nms.domain.teacher.service.TeacherService;
 import com.dsm.nms.domain.teacher.api.dto.request.SignUpRequest;
@@ -38,6 +39,11 @@ public class TeacherController {
     @GetMapping
     public ProfileResponse getTeacherProfile(@RequestParam("teacher-id") Integer teacherId) {
         return teacherService.getTeacherProfile(teacherId);
+    }
+
+    @GetMapping
+    public MyPageResponse getTeacherMyPage() {
+        return teacherService.getTeacherMyPage();
     }
 
 }
