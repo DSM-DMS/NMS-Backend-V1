@@ -3,6 +3,7 @@ package com.dsm.nms.domain.teacher.service;
 import com.dsm.nms.domain.auth.facade.AuthCodeFacade;
 import com.dsm.nms.domain.teacher.api.dto.request.LoginRequest;
 import com.dsm.nms.domain.teacher.api.dto.request.SignUpRequest;
+import com.dsm.nms.domain.teacher.api.dto.response.ProfileResponse;
 import com.dsm.nms.domain.teacher.entity.Teacher;
 import com.dsm.nms.domain.teacher.facade.TeacherFacade;
 import com.dsm.nms.domain.teacher.repository.TeacherRepository;
@@ -13,8 +14,8 @@ import com.dsm.nms.global.utils.auth.user.UserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -45,7 +46,7 @@ public class TeacherServiceImpl implements TeacherService{
     @Override
     public TokenResponse login(LoginRequest loginRequest) {
 
-        return Optional.of(teacherFacade.getById(loginRequest.getId()))
+        return Optional.of(teacherFacade.getByUsernameOrEmail(loginRequest.getId()))
                 .filter(
                         teacher -> passwordEncoder.matches(loginRequest.getPassword(), teacher.getPassword())
                 )
@@ -59,4 +60,13 @@ public class TeacherServiceImpl implements TeacherService{
     public TokenResponse reissue(String refreshToken) {
         return userUtil.reissue(refreshToken, role);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ProfileResponse getTeacherProfile(Integer teacherId) {
+        Teacher teacher = teacherFacade.getById(teacherId);
+
+        return new ProfileResponse(teacher);
+    }
+
 }
