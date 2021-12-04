@@ -32,14 +32,14 @@ public class AuthController {
     }
 
     @PostMapping("/student/password")
-    public void verifyStudentPassword(@RequestBody @Valid PasswordRequest passwordRequest) {
-        studentPasswordService.verifyPassword(passwordRequest);
+    public void certifyStudentPassword(@RequestBody @Valid PasswordRequest passwordRequest) {
+        studentPasswordService.certifyPassword(passwordRequest);
     }
 
     @PostMapping("/teacher/password")
     @ResponseStatus(HttpStatus.CREATED)
-    public void verifyTeacherPassword(@RequestBody @Valid PasswordRequest passwordRequest) {
-        teacherPasswordService.verifyPassword(passwordRequest);
+    public void certifyTeacherPassword(@RequestBody @Valid PasswordRequest passwordRequest) {
+        teacherPasswordService.certifyPassword(passwordRequest);
     }
 
     @PutMapping("/student/password")

@@ -22,7 +22,7 @@ public class StudentPasswordService implements PasswordService {
 
     @Override
     @Transactional
-    public void verifyPassword(PasswordRequest passwordRequest) {
+    public void certifyPassword(PasswordRequest passwordRequest) {
         if(passwordUtil.checkPassword(
                 studentFacade.getPasswordByEmail(passwordRequest.getEmail()), passwordRequest.getPassword()
         )) {
