@@ -86,6 +86,7 @@ public class TeacherServiceImpl implements TeacherService{
         Integer noticeCount = noticeRepository.findByTeacher(teacher).size();
         List<MyPageResponse.notice> notices = noticeRepository.findByTeacher(teacher).stream()
                 .map(notice -> MyPageResponse.notice.builder()
+                        .id(notice.getId())
                         .writer(MyPageResponse.writer.builder()
                                 .name(notice.getTeacher().getName())
                                 .profileUrl(notice.getTeacher().getProfileUrl())

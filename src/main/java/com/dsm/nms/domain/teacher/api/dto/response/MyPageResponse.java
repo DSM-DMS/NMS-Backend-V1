@@ -41,6 +41,7 @@ public class MyPageResponse {
     @Builder
     @AllArgsConstructor
     public static class notice {
+        private final Integer id;
         private final writer writer;
         private final LocalDateTime createdDate;
         private final LocalDateTime updatedDate;
