@@ -34,8 +34,6 @@ public class Student extends Writer {
     @Column(nullable = false, columnDefinition = "char(2)")
     private String number;
 
-    private boolean passwordCertified;
-
     @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE)
     private List<Star> stars;
 
@@ -52,10 +50,6 @@ public class Student extends Writer {
     public Student updatePassword(String newPassword) {
         this.password = newPassword;
         return this;
-    }
-
-    public void updateCertified() {
-        this.passwordCertified = true;
     }
 
 }
