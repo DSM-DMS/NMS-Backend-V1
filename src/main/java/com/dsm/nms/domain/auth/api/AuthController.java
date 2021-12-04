@@ -32,6 +32,7 @@ public class AuthController {
     }
 
     @PostMapping("/student/password")
+    @ResponseStatus(HttpStatus.CREATED)
     public void certifyStudentPassword(@RequestBody @Valid PasswordRequest passwordRequest) {
         studentPasswordService.certifyPassword(passwordRequest);
     }

@@ -1,6 +1,6 @@
-package com.dsm.nms.domain.reply.controller;
+package com.dsm.nms.domain.reply.api;
 
-import com.dsm.nms.domain.reply.controller.dto.request.ReplyRequest;
+import com.dsm.nms.domain.reply.api.dto.request.ReplyRequest;
 import com.dsm.nms.domain.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,13 +15,13 @@ public class ReplyController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public void addReply(@RequestParam Integer commentId, @RequestBody ReplyRequest replyRequest) {
+    public void addReply(@RequestParam("comment-id") Integer commentId, @RequestBody ReplyRequest replyRequest) {
         replyService.addReply(commentId, replyRequest.getContent());
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping
-    public void removeReply(@RequestParam Integer replyId) {
+    public void removeReply(@RequestParam("reply-id") Integer replyId) {
         replyService.removeReply(replyId);
     }
 

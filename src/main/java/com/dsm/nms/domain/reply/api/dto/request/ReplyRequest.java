@@ -1,4 +1,4 @@
-package com.dsm.nms.domain.reply.controller.dto.request;
+package com.dsm.nms.domain.reply.api.dto.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

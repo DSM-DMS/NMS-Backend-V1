@@ -31,13 +31,13 @@ public class TeacherController {
     }
 
     @PutMapping("/auth")
-    public TokenResponse reissue(@RequestHeader(name = "X-Refresh-Token") String refresh) {
+    public TokenResponse reissue(@RequestHeader("X-Refresh-Token") String refresh) {
         return teacherService.reissue(refresh);
     }
 
     @GetMapping
-    public ProfileResponse getTeacherProfile(@RequestParam Integer id) {
-        return teacherService.getTeacherProfile(id);
+    public ProfileResponse getTeacherProfile(@RequestParam("teacher-id") Integer teacherId) {
+        return teacherService.getTeacherProfile(teacherId);
     }
 
 }
