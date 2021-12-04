@@ -1,6 +1,7 @@
 package com.dsm.nms.domain.teacher.api;
 
 import com.dsm.nms.domain.teacher.api.dto.request.LoginRequest;
+import com.dsm.nms.domain.teacher.api.dto.response.ProfileResponse;
 import com.dsm.nms.domain.teacher.service.TeacherService;
 import com.dsm.nms.domain.teacher.api.dto.request.SignUpRequest;
 import com.dsm.nms.global.security.jwt.dto.response.TokenResponse;
@@ -33,4 +34,10 @@ public class TeacherController {
     public TokenResponse reissue(@RequestHeader(name = "X-Refresh-Token") String refresh) {
         return teacherService.reissue(refresh);
     }
+
+    @GetMapping
+    public ProfileResponse getTeacherProfile(@RequestParam Integer id) {
+        return teacherService.getTeacherProfile(id);
+    }
+
 }

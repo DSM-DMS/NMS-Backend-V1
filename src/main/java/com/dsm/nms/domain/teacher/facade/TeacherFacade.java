@@ -8,7 +8,6 @@ import com.dsm.nms.domain.teacher.repository.TeacherRepository;
 import com.dsm.nms.global.exception.AuthenticationNotFoundException;
 import com.dsm.nms.global.utils.auth.user.UserUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -59,11 +58,16 @@ public class TeacherFacade {
         return passwordEncoder.encode(getByEmail(email).getPassword());
     }
 
-    public Teacher getById(String id) {
-        if (Pattern.matches(pattern, id))
-            return getByEmail(id);
+    public Teacher getByUsernameOrEmail(String loginId) {
+        if (Pattern.matches(pattern, loginId))
+            return getByEmail(loginId);
 
-        return getByUsername(id);
+        return getByUsername(loginId);
+    }
+
+    public Teacher getById(Integer teacherId) {
+        return teacherRepository.findById(teacherId)
+                .orElseThrow(() -> TeacherNotFoundException.EXCEPTION);
     }
 
 }
