@@ -1,6 +1,7 @@
 package com.dsm.nms.domain.auth.service.password;
 
 import com.dsm.nms.domain.auth.api.dto.request.PasswordRequest;
+import com.dsm.nms.domain.teacher.entity.Teacher;
 import com.dsm.nms.domain.teacher.exception.TeacherNotFoundException;
 import com.dsm.nms.domain.teacher.facade.TeacherFacade;
 import com.dsm.nms.global.exception.InvalidPasswordException;
@@ -23,11 +24,12 @@ public class TeacherPasswordService implements PasswordService {
     @Override
     @Transactional
     public void certifyPassword(PasswordRequest passwordRequest) {
-        if(passwordUtil.checkPassword(
+        if(!passwordUtil.checkPassword(
                 teacherFacade.getPasswordByEmail(passwordRequest.getEmail()), passwordRequest.getPassword()
         )) {
             throw InvalidPasswordException.EXCEPTION;
         }
+        teacherFacade.getCurrentTeacher().updateCertified();
     }
 
     @Override
@@ -35,6 +37,7 @@ public class TeacherPasswordService implements PasswordService {
         Optional.of(
                 teacherFacade.getByEmail(passwordRequest.getEmail())
         )
+                .filter(Teacher::isPasswordCertified)
                 .map(teacher -> teacher.updatePassword(passwordEncoder.encode(passwordRequest.getPassword())))
                 .orElseThrow(() -> TeacherNotFoundException.EXCEPTION);
     }

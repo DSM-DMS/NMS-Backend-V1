@@ -34,6 +34,8 @@ public class Teacher extends Writer {
     @Enumerated(EnumType.STRING)
     private Department department;
 
+    private boolean passwordCertified;
+
     public Teacher(SignUpRequest signUpRequest) {
         this.name = signUpRequest.getName();
         this.username = signUpRequest.getUsername();
@@ -45,6 +47,10 @@ public class Teacher extends Writer {
     public Teacher updatePassword(String newPassword) {
         this.password = newPassword;
         return this;
+    }
+
+    public void updateCertified() {
+        this.passwordCertified = true;
     }
 
 }
