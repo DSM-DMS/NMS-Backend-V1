@@ -7,6 +7,7 @@ import com.dsm.nms.global.security.jwt.dto.response.TokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
@@ -21,6 +22,13 @@ public class StudentController {
     @PostMapping
     public void signUp(@RequestBody @Valid SignUpRequest signUpRequest) {
         studentService.signUp(signUpRequest);
+    }
+
+    @ResponseStatus(value = HttpStatus.CREATED)
+    @PutMapping
+    public void updateStudent(@RequestPart(value = "nickname") String nickname,
+                           @RequestPart(value = "profile") MultipartFile profile) {
+        studentService.updateStudent(nickname, profile);
     }
 
     @PostMapping("/auth")
