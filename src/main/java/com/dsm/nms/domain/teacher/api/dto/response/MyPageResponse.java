@@ -41,7 +41,7 @@ public class MyPageResponse {
     @Builder
     @AllArgsConstructor
     public static class notice {
-        private final Writer writer;
+        private final writer writer;
         private final LocalDateTime createdDate;
         private final LocalDateTime updatedDate;
         private final List<TargetTag> targetTags;
@@ -49,6 +49,14 @@ public class MyPageResponse {
         private final String content;
         private final List<String> images;
         private final Integer starCount;
+    }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    public static class writer {
+        private final String name;
+        private final String profileUrl;
     }
 
 }
