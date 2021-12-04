@@ -7,4 +7,5 @@ import com.dsm.nms.global.security.jwt.dto.response.TokenResponse;
 public interface StudentService {
     void signUp(SignUpRequest signUpRequest);
     TokenResponse login(LoginRequest loginRequest);
+    TokenResponse reissue(String refreshToken);
 }

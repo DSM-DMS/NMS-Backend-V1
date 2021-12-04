@@ -4,7 +4,6 @@ import com.dsm.nms.domain.auth.facade.AuthCodeFacade;
 import com.dsm.nms.domain.student.entity.Student;
 import com.dsm.nms.domain.student.facade.StudentFacade;
 import com.dsm.nms.domain.student.repository.StudentRepository;
-import com.dsm.nms.domain.teacher.entity.Teacher;
 import com.dsm.nms.global.utils.auth.user.UserUtil;
 import com.dsm.nms.global.exception.InvalidPasswordException;
 import com.dsm.nms.global.security.jwt.JwtTokenProvider;
@@ -28,6 +27,8 @@ public class StudentServiceImpl implements StudentService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider tokenProvider;
 
+    private static final String role = "student";
+
     @Override
     public void signUp(SignUpRequest signUpRequest) {
 
@@ -46,8 +47,13 @@ public class StudentServiceImpl implements StudentService {
                         student -> passwordEncoder.matches(loginRequest.getPassword(), student.getPassword())
                 )
                 .map(
-                        student -> tokenProvider.generateToken(loginRequest.getEmail(), "student")
+                        student -> tokenProvider.generateToken(loginRequest.getEmail(), role)
                 )
                 .orElseThrow(() -> InvalidPasswordException.EXCEPTION);
+    }
+
+    @Override
+    public TokenResponse reissue(String refreshToken) {
+        return userUtil.reissue(refreshToken, role);
     }
 }

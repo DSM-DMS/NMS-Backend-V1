@@ -31,4 +31,10 @@ public class RefreshToken implements Serializable {
         this.refreshExpiration = refreshExpiration;
     }
 
+    public String reissue(String refreshToken, Long refreshExpiration) {
+        this.refreshToken = refreshToken;
+        this.refreshExpiration = refreshExpiration;
+        return this.refreshToken;
+    }
+
 }

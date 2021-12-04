@@ -36,7 +36,7 @@ public class JwtTokenProvider {
                 RefreshToken.builder()
                         .id(id)
                         .refreshToken(refresh)
-                        .refreshExpiration(jwtProperties.getRefreshExp() * 1000)
+                        .refreshExpiration(jwtProperties.getRefreshExp())
                         .build()
         );
 
@@ -87,6 +87,14 @@ public class JwtTokenProvider {
 
         UserDetails userDetails = getDetails(body);
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    }
+
+    public boolean isRefresh(String token) {
+        return getBody(token).get("type").equals("refresh");
+    }
+
+    public boolean checkRole(String token, String role) {
+        return getBody(token).get("role").equals(role);
     }
 
     private Claims getBody(String token) {
