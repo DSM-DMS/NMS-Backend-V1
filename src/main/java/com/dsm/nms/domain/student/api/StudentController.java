@@ -17,7 +17,7 @@ public class StudentController {
 
     private final StudentService studentService;
 
-    @ResponseStatus(value = HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public void signUp(@RequestBody @Valid SignUpRequest signUpRequest) {
         studentService.signUp(signUpRequest);
@@ -29,7 +29,7 @@ public class StudentController {
     }
 
     @PutMapping("/auth")
-    public TokenResponse reissue(@RequestHeader(name = "X-Refresh-Token") String refresh) {
+    public TokenResponse reissue(@RequestHeader("X-Refresh-Token") String refresh) {
         return studentService.reissue(refresh);
     }
 
