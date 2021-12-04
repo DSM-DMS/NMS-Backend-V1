@@ -13,8 +13,7 @@ import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -45,6 +44,7 @@ public class AuthCodeServiceImpl implements AuthCodeService{
     }
 
     @Override
+    @Transactional
     public void certifyCode(CertifyCodeRequest request) {
         String email = request.getEmail();
 

@@ -8,7 +8,6 @@ import com.dsm.nms.domain.teacher.facade.TeacherFacade;
 import com.dsm.nms.global.exception.InvalidRoleException;
 import com.dsm.nms.global.utils.auth.user.UserUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
