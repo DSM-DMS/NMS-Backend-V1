@@ -11,7 +11,6 @@ public class ProfileResponse {
 
     private final String name;
     private final String email;
-    private final String username;
     private final Department department;
     private final String phoneNumber;
     private final String introduce;
@@ -20,7 +19,6 @@ public class ProfileResponse {
     public ProfileResponse(Teacher teacher) {
         this.name = teacher.getName();
         this.email = teacher.getEmail();
-        this.username = teacher.getUsername();
         this.department = teacher.getDepartment();
         this.phoneNumber = teacher.getPhoneNumber();
         this.introduce = teacher.getIntroduction();
