@@ -49,7 +49,7 @@ public class MyPageResponse {
         private final String title;
         private final String content;
         private final List<String> images;
-        private final Integer likedCount;
+        private final Integer starCount;
     }
 
 }

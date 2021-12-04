@@ -93,7 +93,7 @@ public class TeacherServiceImpl implements TeacherService{
                         .title(notice.getTitle())
                         .content(notice.getContent())
                         .images(imageFacade.getNoticeImages(notice))
-                        .likedCount(notice.getLikedCount())
+                        .starCount(notice.getStarCount())
                         .build())
                 .collect(Collectors.toList());
 

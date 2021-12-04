@@ -8,7 +8,6 @@ import com.dsm.nms.domain.notice.entity.noticetarget.NoticeTarget;
 import com.dsm.nms.domain.star.entity.Star;
 import com.dsm.nms.domain.notice.api.dto.request.RegisterNoticeRequest;
 import com.dsm.nms.domain.teacher.entity.Teacher;
-import com.dsm.nms.global.entity.Writer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +29,8 @@ public class Notice extends BaseTimeEntity {
 
     @Column(nullable = false)
     private String content;
+
+    private Integer starCount;
 
     @JoinColumn(name = "teacher_id")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -57,6 +58,14 @@ public class Notice extends BaseTimeEntity {
         this.title = noticeRequest.getTitle();
         this.content = noticeRequest.getContent();
         return this;
+    }
+
+    public void addStar() {
+        this.starCount++;
+    }
+
+    public void cancelStar() {
+        this.starCount--;
     }
 
 }
