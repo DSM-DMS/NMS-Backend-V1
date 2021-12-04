@@ -1,8 +1,12 @@
 package com.dsm.nms.domain.teacher.service;
 
 import com.dsm.nms.domain.auth.facade.AuthCodeFacade;
+import com.dsm.nms.domain.image.facade.ImageFacade;
+import com.dsm.nms.domain.notice.facade.NoticeFacade;
+import com.dsm.nms.domain.notice.repository.NoticeRepository;
 import com.dsm.nms.domain.teacher.api.dto.request.LoginRequest;
 import com.dsm.nms.domain.teacher.api.dto.request.SignUpRequest;
+import com.dsm.nms.domain.teacher.api.dto.response.MyPageResponse;
 import com.dsm.nms.domain.teacher.api.dto.response.ProfileResponse;
 import com.dsm.nms.domain.teacher.entity.Teacher;
 import com.dsm.nms.domain.teacher.facade.TeacherFacade;
@@ -16,18 +20,23 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class TeacherServiceImpl implements TeacherService{
 
-    private final TeacherRepository teacherRepository;
+    private final UserUtil userUtil;
+    private final ImageFacade imageFacade;
+    private final NoticeFacade noticeFacade;
     private final TeacherFacade teacherFacade;
     private final AuthCodeFacade authCodeFacade;
-    private final UserUtil userUtil;
-    private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider tokenProvider;
+    private final PasswordEncoder passwordEncoder;
+    private final NoticeRepository noticeRepository;
+    private final TeacherRepository teacherRepository;
 
     private static final String role = "teacher";
 
@@ -67,6 +76,28 @@ public class TeacherServiceImpl implements TeacherService{
         Teacher teacher = teacherFacade.getById(teacherId);
 
         return new ProfileResponse(teacher);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public MyPageResponse getTeacherMyPage() {
+        Teacher teacher = teacherFacade.getCurrentTeacher();
+
+        Integer noticeCount = noticeRepository.findByTeacher(teacher).size();
+        List<MyPageResponse.notice> notices = noticeRepository.findByTeacher(teacher).stream()
+                .map(notice -> MyPageResponse.notice.builder()
+                        .writer(notice.getTeacher())
+                        .createdDate(notice.getCreatedDate())
+                        .updatedDate(notice.getUpdatedDate())
+                        .targetTags(noticeFacade.getTargetTags(notice))
+                        .title(notice.getTitle())
+                        .content(notice.getContent())
+                        .images(imageFacade.getNoticeImages(notice))
+                        .likedCount(notice.getLikedCount())
+                        .build())
+                .collect(Collectors.toList());
+
+        return new MyPageResponse(teacher, noticeCount, notices);
     }
 
 }
