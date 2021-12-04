@@ -25,4 +25,7 @@ public class Writer {
     @OneToOne(fetch = FetchType.LAZY)
     private Reply reply;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private Writer writer;
+
 }

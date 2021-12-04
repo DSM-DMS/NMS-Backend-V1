@@ -29,7 +29,7 @@ public class Comment extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Notice notice;
 
-    @OneToOne(mappedBy = "reply", fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "comment", fetch = FetchType.EAGER)
     private Writer writer;
 
     @OneToMany(mappedBy = "comment", cascade = CascadeType.REMOVE)
