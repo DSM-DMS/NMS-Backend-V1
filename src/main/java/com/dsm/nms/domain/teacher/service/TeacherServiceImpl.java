@@ -28,6 +28,8 @@ public class TeacherServiceImpl implements TeacherService{
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider tokenProvider;
 
+    private static final String role = "teacher";
+
     @Override
     @Transactional
     public void signUp(SignUpRequest signUpRequest) {
@@ -48,8 +50,13 @@ public class TeacherServiceImpl implements TeacherService{
                         teacher -> passwordEncoder.matches(loginRequest.getPassword(), teacher.getPassword())
                 )
                 .map(
-                        teacher -> tokenProvider.generateToken(loginRequest.getId(), "teacher")
+                        teacher -> tokenProvider.generateToken(loginRequest.getId(), role)
                 )
                 .orElseThrow(() -> InvalidPasswordException.EXCEPTION);
+    }
+
+    @Override
+    public TokenResponse reissue(String refreshToken) {
+        return userUtil.reissue(refreshToken, role);
     }
 }

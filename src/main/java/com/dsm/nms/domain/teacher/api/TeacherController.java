@@ -28,4 +28,9 @@ public class TeacherController {
     public TokenResponse login(@RequestBody @Valid LoginRequest loginRequest) {
         return teacherService.login(loginRequest);
     }
+
+    @PutMapping("/auth")
+    public TokenResponse reissue(@RequestHeader(name = "X-Refresh-Token") String refresh) {
+        return teacherService.reissue(refresh);
+    }
 }
