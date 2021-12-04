@@ -52,4 +52,10 @@ public class Student extends Writer {
         return this;
     }
 
+    public Student updateStudent(String profileUrl, String nickname) {
+        this.profileUrl = profileUrl;
+        this.nickname = nickname;
+        return this;
+    }
+
 }

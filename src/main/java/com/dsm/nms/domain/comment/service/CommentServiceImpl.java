@@ -1,10 +1,6 @@
 package com.dsm.nms.domain.comment.service;
 
-import com.dsm.nms.domain.comment.api.dto.request.CommentRequest;
-import com.dsm.nms.domain.comment.entity.Comment;
-import com.dsm.nms.domain.comment.exception.CommentNotFoundException;
 import com.dsm.nms.domain.comment.facade.CommentFacade;
-import com.dsm.nms.domain.comment.repository.CommentRepository;
 import com.dsm.nms.domain.student.entity.Student;
 import com.dsm.nms.domain.student.facade.StudentFacade;
 import com.dsm.nms.domain.teacher.entity.Teacher;
@@ -12,10 +8,8 @@ import com.dsm.nms.domain.teacher.facade.TeacherFacade;
 import com.dsm.nms.global.exception.InvalidRoleException;
 import com.dsm.nms.global.utils.auth.user.UserUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
