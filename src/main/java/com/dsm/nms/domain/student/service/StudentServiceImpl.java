@@ -65,10 +65,12 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public void updateStudent(String nickname, MultipartFile profile) {
-        studentFacade.getCurrentStudent()
-                .updateStudent(
-                        s3Util.getFileUrl(s3Util.upload(profile)),
-                        nickname
-                );
-    }
+        studentRepository.save(
+            studentFacade.getCurrentStudent()
+                    .updateStudent(
+                            s3Util.getFileUrl(s3Util.upload(profile)),
+                            nickname
+                    )
+        );
+}
 }
