@@ -3,7 +3,6 @@ package com.dsm.nms.domain.teacher.api.dto.response;
 import com.dsm.nms.domain.notice.entity.target.TargetTag;
 import com.dsm.nms.domain.teacher.entity.Department;
 import com.dsm.nms.domain.teacher.entity.Teacher;
-import com.dsm.nms.global.entity.Writer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -39,9 +38,9 @@ public class MyPageResponse {
 
     @Getter
     @Builder
-    @AllArgsConstructor
     public static class notice {
-        private final Writer writer;
+        private final Integer id;
+        private final writer writer;
         private final LocalDateTime createdDate;
         private final LocalDateTime updatedDate;
         private final List<TargetTag> targetTags;
@@ -49,6 +48,14 @@ public class MyPageResponse {
         private final String content;
         private final List<String> images;
         private final Integer starCount;
+    }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    public static class writer {
+        private final String name;
+        private final String profileUrl;
     }
 
 }
