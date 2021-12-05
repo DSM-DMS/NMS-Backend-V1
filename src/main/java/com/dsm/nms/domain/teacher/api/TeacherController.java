@@ -51,7 +51,7 @@ public class TeacherController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping
     public void modifyTeacherInfo(@RequestPart @Valid TeacherInfoRequest teacherInfoRequest,
-                                  @RequestPart MultipartFile profile) {
+                                  @RequestPart(required = false) MultipartFile profile) {
         teacherService.modifyTeacherInfo(teacherInfoRequest, profile);
     }
 
