@@ -1,5 +1,6 @@
 package com.dsm.nms.global.entity;
 
+import com.dsm.nms.domain.comment.entity.Comment;
 import com.dsm.nms.domain.reply.entity.Reply;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -26,6 +27,6 @@ public class Writer {
     private Reply reply;
 
     @OneToOne(fetch = FetchType.LAZY)
-    private Writer writer;
+    private Comment comment;
 
 }
