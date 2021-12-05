@@ -13,4 +13,5 @@ public interface NoticeService {
     void removeNotice(Integer noticeId);
     NoticeResponse getAllNotices();
     NoticeResponse.notice getNotice(Integer noticeId);
+    NoticeResponse getNoticeToTarget(String target);
 }
