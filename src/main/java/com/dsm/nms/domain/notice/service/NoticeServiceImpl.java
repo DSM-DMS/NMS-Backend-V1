@@ -71,25 +71,37 @@ public class NoticeServiceImpl implements NoticeService {
         Integer count = getCounts(noticeRepository.count());
 
         List<NoticeResponse.notice> notices =  noticeRepository.findAll().stream()
-                .map(notice -> NoticeResponse.notice.builder()
-                        .noticeId(notice.getId())
-                        .title(notice.getTitle())
-                        .content(notice.getContent())
-                        .writer(NoticeResponse.writer.builder()
-                                .name(notice.getTeacher().getName())
-                                .profileUrl(notice.getTeacher().getProfileUrl())
-                                .build())
-                        .targets(noticeFacade.getTargetTags(notice))
-                        .createdDate(notice.getCreatedDate())
-                        .updatedDate(notice.getUpdatedDate())
-                        .images(imageFacade.getNoticeImages(notice))
-                        .isStar(starFacade.checkIsStar(notice))
-                        .commentCount(getCommentCount(notice))
-                        .comments(commentFacade.getComments(notice))
-                        .build())
+                .map(this::buildNotice)
                 .collect(toList());
 
         return new NoticeResponse(count, notices);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public NoticeResponse.notice getNotice(Integer noticeId) {
+        return noticeRepository.findById(noticeId)
+                .map(this::buildNotice)
+                .orElseThrow(() -> NoticeNotFoundException.EXCEPTION);
+    }
+
+    private NoticeResponse.notice buildNotice(Notice notice) {
+        return NoticeResponse.notice.builder()
+                .noticeId(notice.getId())
+                .title(notice.getTitle())
+                .content(notice.getContent())
+                .writer(NoticeResponse.writer.builder()
+                        .name(notice.getTeacher().getName())
+                        .profileUrl(notice.getTeacher().getProfileUrl())
+                        .build())
+                .targets(noticeFacade.getTargetTags(notice))
+                .createdDate(notice.getCreatedDate())
+                .updatedDate(notice.getUpdatedDate())
+                .images(imageFacade.getNoticeImages(notice))
+                .isStar(starFacade.checkIsStar(notice))
+                .commentCount(getCommentCount(notice))
+                .comments(commentFacade.getComments(notice))
+                .build();
     }
 
     private Integer getCounts(long count) {

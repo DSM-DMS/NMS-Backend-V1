@@ -12,4 +12,5 @@ public interface NoticeService {
     void modifyNotice(Integer noticeId, ModifyNoticeRequest noticeRequest, List<MultipartFile> images);
     void removeNotice(Integer noticeId);
     NoticeResponse getAllNotices();
+    NoticeResponse.notice getNotice(Integer noticeId);
 }
