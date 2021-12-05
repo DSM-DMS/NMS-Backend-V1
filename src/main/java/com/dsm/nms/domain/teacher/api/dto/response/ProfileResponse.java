@@ -21,7 +21,7 @@ public class ProfileResponse {
         this.email = teacher.getEmail();
         this.department = teacher.getDepartment();
         this.phoneNumber = teacher.getPhoneNumber();
-        this.introduce = teacher.getIntroduction();
+        this.introduce = teacher.getIntroduce();
         this.profileUrl = teacher.getProfileUrl();
     }
 

@@ -6,6 +6,7 @@ import com.dsm.nms.domain.notice.facade.NoticeFacade;
 import com.dsm.nms.domain.notice.repository.NoticeRepository;
 import com.dsm.nms.domain.teacher.api.dto.request.LoginRequest;
 import com.dsm.nms.domain.teacher.api.dto.request.SignUpRequest;
+import com.dsm.nms.domain.teacher.api.dto.request.TeacherInfoRequest;
 import com.dsm.nms.domain.teacher.api.dto.response.MyPageResponse;
 import com.dsm.nms.domain.teacher.api.dto.response.ProfileResponse;
 import com.dsm.nms.domain.teacher.entity.Teacher;
@@ -15,10 +16,12 @@ import com.dsm.nms.global.exception.InvalidPasswordException;
 import com.dsm.nms.global.security.jwt.JwtTokenProvider;
 import com.dsm.nms.global.security.jwt.dto.response.TokenResponse;
 import com.dsm.nms.global.utils.auth.user.UserUtil;
+import com.dsm.nms.global.utils.aws.s3.S3Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +31,7 @@ import java.util.stream.Collectors;
 @Service
 public class TeacherServiceImpl implements TeacherService{
 
+    private final S3Util s3Util;
     private final UserUtil userUtil;
     private final ImageFacade imageFacade;
     private final NoticeFacade noticeFacade;
@@ -102,6 +106,19 @@ public class TeacherServiceImpl implements TeacherService{
                 .collect(Collectors.toList());
 
         return new MyPageResponse(teacher, noticeCount, notices);
+    }
+
+    @Override
+    @Transactional
+    public void modifyTeacherInfo(TeacherInfoRequest teacherInfoRequest, MultipartFile profile) {
+
+        teacherRepository.save(
+                teacherFacade.getCurrentTeacher()
+                        .updateInfo(
+                                teacherInfoRequest,
+                                s3Util.getFileUrl(s3Util.upload(profile))
+                        )
+        );
     }
 
 }

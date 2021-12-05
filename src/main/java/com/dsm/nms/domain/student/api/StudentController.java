@@ -27,8 +27,8 @@ public class StudentController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping
-    public void updateStudent(@RequestPart(value = "nickname") String nickname,
-                           @RequestPart(value = "profile") MultipartFile profile) {
+    public void updateStudent(@RequestPart String nickname,
+                           @RequestPart(required = false) MultipartFile profile) {
         studentService.updateStudent(nickname, profile);
     }
 

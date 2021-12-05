@@ -1,6 +1,7 @@
 package com.dsm.nms.domain.teacher.entity;
 
 import com.dsm.nms.domain.teacher.api.dto.request.SignUpRequest;
+import com.dsm.nms.domain.teacher.api.dto.request.TeacherInfoRequest;
 import com.dsm.nms.global.entity.Writer;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -28,7 +29,7 @@ public class Teacher extends Writer {
     private String phoneNumber;
 
     @Column(columnDefinition = "char(32)")
-    private String introduction;
+    private String introduce;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -44,6 +45,14 @@ public class Teacher extends Writer {
 
     public Teacher updatePassword(String newPassword) {
         this.password = newPassword;
+        return this;
+    }
+
+    public Teacher updateInfo(TeacherInfoRequest teacherInfoRequest, String profileUrl) {
+        this.phoneNumber = teacherInfoRequest.getPhoneNumber();
+        this.department = Department.valueOf(teacherInfoRequest.getDepartment());
+        this.introduce = teacherInfoRequest.getIntroduce();
+        this.profileUrl = profileUrl;
         return this;
     }
 
