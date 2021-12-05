@@ -43,7 +43,7 @@ public class TeacherController {
         return teacherService.getTeacherProfile(teacherId);
     }
 
-    @GetMapping
+    @GetMapping("/mypage")
     public MyPageResponse getTeacherMyPage() {
         return teacherService.getTeacherMyPage();
     }
