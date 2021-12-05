@@ -17,7 +17,7 @@ public class SignUpRequest {
 
     @NotBlank(message = "nickname은 Null, 공백을 허용하지 않습니다.")
     @Pattern(regexp = "^[\\S]+$", message = "nickname은 띄어쓰기를 허용하지 않습니다.")
-    @Length(max = 5, message = "nickname은 5글자 제한입니다.")
+    @Length(max = 10, message = "nickname은 10글자 제한입니다.")
     private String nickname;
 
     @NotBlank(message = "name은 Null, 공백을 허용하지 않습니다.")

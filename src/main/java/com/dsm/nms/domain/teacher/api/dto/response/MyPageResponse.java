@@ -52,7 +52,6 @@ public class MyPageResponse {
 
     @Getter
     @Builder
-    @AllArgsConstructor
     public static class writer {
         private final String name;
         private final String profileUrl;

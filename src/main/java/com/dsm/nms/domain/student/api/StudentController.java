@@ -1,6 +1,7 @@
 package com.dsm.nms.domain.student.api;
 
 import com.dsm.nms.domain.student.api.dto.request.SignUpRequest;
+import com.dsm.nms.domain.student.api.dto.response.MyPageResponse;
 import com.dsm.nms.domain.student.service.StudentService;
 import com.dsm.nms.domain.student.api.dto.request.LoginRequest;
 import com.dsm.nms.global.security.jwt.dto.response.TokenResponse;
@@ -24,11 +25,16 @@ public class StudentController {
         studentService.signUp(signUpRequest);
     }
 
-    @ResponseStatus(value = HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping
     public void updateStudent(@RequestPart(value = "nickname") String nickname,
                            @RequestPart(value = "profile") MultipartFile profile) {
         studentService.updateStudent(nickname, profile);
+    }
+
+    @GetMapping
+    public MyPageResponse getStudentMyPage() {
+        return studentService.getStudentMyPage();
     }
 
     @PostMapping("/auth")

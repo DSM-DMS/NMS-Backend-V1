@@ -2,6 +2,9 @@ package com.dsm.nms.domain.student.service;
 
 import com.dsm.nms.domain.auth.facade.AuthCodeFacade;
 import com.dsm.nms.domain.image.facade.ImageFacade;
+import com.dsm.nms.domain.star.entity.Star;
+import com.dsm.nms.domain.star.repository.StarRepository;
+import com.dsm.nms.domain.student.api.dto.response.MyPageResponse;
 import com.dsm.nms.domain.student.entity.Student;
 import com.dsm.nms.domain.student.facade.StudentFacade;
 import com.dsm.nms.domain.student.repository.StudentRepository;
@@ -18,13 +21,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
+    private final StarRepository starRepository;
     private final StudentFacade studentFacade;
     private final AuthCodeFacade authCodeFacade;
     private final S3Util s3Util;
@@ -73,4 +79,25 @@ public class StudentServiceImpl implements StudentService {
                     )
         );
 }
+
+    @Override
+    @Transactional(readOnly = true)
+    public MyPageResponse getStudentMyPage() {
+        Student student = studentFacade.getCurrentStudent();
+
+        List<MyPageResponse.notice> staredNotice = student.getStars()
+                .stream()
+                .map(Star::getNotice)
+                .map(notice -> MyPageResponse.notice.builder()
+                        .id(notice.getId())
+                        .title(notice.getTitle())
+                        .writer(notice.getTeacher().getName())
+                        .department(notice.getTeacher().getDepartment().toString())
+                        .createdDate(notice.getCreatedDate())
+                        .image(notice.getImages().get(0).getImageUrl())
+                        .build())
+                .collect(Collectors.toList());
+
+        return new MyPageResponse(student, staredNotice);
+    }
 }
