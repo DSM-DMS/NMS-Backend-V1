@@ -8,6 +8,8 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Getter
+@AllArgsConstructor
 public class MyPageResponse {
 
     private final String nickname;
@@ -15,8 +17,9 @@ public class MyPageResponse {
     private final String gcn;
     private final String email;
     private final String profileUrl;
-    private final List<notice> likedNotices;
+    private final List<notice> staredNotice;
 
+    @Getter
     @Builder
     public static class notice {
         private final Integer id;
@@ -27,12 +30,12 @@ public class MyPageResponse {
         private final String image;
     }
 
-    public MyPageResponse(Student student, List<notice> likedNotices) {
+    public MyPageResponse(Student student, List<notice> staredNotice) {
         this.nickname = student.getNickname();
         this.name = student.getName();
         this.gcn = student.getGrade() + student.getClassNum() + student.getNumber();
         this.email = student.getEmail();
         this.profileUrl = student.getProfileUrl();
-        this.likedNotices = likedNotices;
+        this.staredNotice = staredNotice;
     }
 }

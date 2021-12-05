@@ -10,6 +10,8 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Getter
+@AllArgsConstructor
 public class MyPageResponse {
 
     private final String name;
@@ -34,6 +36,7 @@ public class MyPageResponse {
         this.myNotices = notices;
     }
 
+    @Getter
     @Builder
     public static class notice {
         private final Integer id;
@@ -47,6 +50,7 @@ public class MyPageResponse {
         private final Integer starCount;
     }
 
+    @Getter
     @Builder
     public static class writer {
         private final String name;

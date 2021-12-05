@@ -5,6 +5,8 @@ import com.dsm.nms.domain.teacher.entity.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+@Getter
+@AllArgsConstructor
 public class ProfileResponse {
 
     private final String name;

@@ -85,7 +85,7 @@ public class StudentServiceImpl implements StudentService {
     public MyPageResponse getStudentMyPage() {
         Student student = studentFacade.getCurrentStudent();
 
-        List<MyPageResponse.notice> likedNotices = student.getStars()
+        List<MyPageResponse.notice> staredNotice = student.getStars()
                 .stream()
                 .map(Star::getNotice)
                 .map(notice -> MyPageResponse.notice.builder()
@@ -94,10 +94,10 @@ public class StudentServiceImpl implements StudentService {
                         .writer(notice.getTeacher().getName())
                         .department(notice.getTeacher().getDepartment().toString())
                         .createdDate(notice.getCreatedDate())
-                        .image(notice.getImages().get(1).getImageUrl())
+                        .image(notice.getImages().get(0).getImageUrl())
                         .build())
                 .collect(Collectors.toList());
 
-        return new MyPageResponse(student, likedNotices);
+        return new MyPageResponse(student, staredNotice);
     }
 }
