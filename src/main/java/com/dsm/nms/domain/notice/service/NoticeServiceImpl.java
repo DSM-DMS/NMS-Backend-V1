@@ -95,14 +95,14 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public NoticeResponse getNoticeToTarget(String target) {
         Target targetTag = targetRepository.findByTargetTag(TargetTag.valueOf(target))
                 .orElseThrow(() -> TargetNotFoundException.EXCEPTION);
 
         Integer count = noticeTargetRepository.countByTarget(targetTag);
 
-        List<NoticeResponse.notice> notices = targetTag.getNotices()
-                .stream()
+        List<NoticeResponse.notice> notices = targetTag.getNotices().stream()
                 .map(NoticeTarget::getNotice)
                 .map(this::buildNotice)
                 .collect(toList());
