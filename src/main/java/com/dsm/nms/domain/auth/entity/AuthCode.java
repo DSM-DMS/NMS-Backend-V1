@@ -1,11 +1,13 @@
 package com.dsm.nms.domain.auth.entity;
 
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
 
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @RedisHash
 public class AuthCode {
@@ -15,7 +17,7 @@ public class AuthCode {
 
     private String code;
 
-    private boolean isCertified;
+    private boolean certified;
 
     @TimeToLive
     private long ttl;
@@ -23,26 +25,22 @@ public class AuthCode {
     public AuthCode(String email, String code) {
         this.email = email;
         this.code = code;
-        this.isCertified = false;
+        this.certified = false;
         this.ttl = 30L;
     }
 
-    public String updateAuthCode(String code) {
+    public AuthCode updateAuthCode(String code) {
         this.code = code;
         this.ttl = 30L;
-        return this.email;
+        return this;
     }
 
     public boolean isAuthCode(String code) {
         return this.code.equals(code);
     }
 
-    public boolean getCertified() {
-        return this.isCertified;
-    }
-
     public AuthCode changeCertified() {
-        this.isCertified = true;
+        this.certified = true;
         this.ttl = 300L;
         return this;
     }
