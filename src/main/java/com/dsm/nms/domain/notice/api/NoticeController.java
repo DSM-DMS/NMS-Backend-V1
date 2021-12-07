@@ -40,9 +40,19 @@ public class NoticeController {
         noticeService.removeNotice(noticeId);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public NoticeResponse getAllNotices() {
         return noticeService.getAllNotices();
+    }
+
+    @GetMapping("/{notice-id")
+    public NoticeResponse.notice getNotice(@PathVariable("notice-id") Integer noticeId) {
+        return noticeService.getNotice(noticeId);
+    }
+
+    @GetMapping
+    public NoticeResponse getNoticeToTarget(@RequestParam String target) {
+        return noticeService.getNoticeToTarget(target);
     }
 
 }
