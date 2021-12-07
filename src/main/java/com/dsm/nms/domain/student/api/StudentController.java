@@ -32,7 +32,7 @@ public class StudentController {
         studentService.updateStudent(nickname, profile);
     }
 
-    @GetMapping
+    @GetMapping("/mypage")
     public MyPageResponse getStudentMyPage() {
         return studentService.getStudentMyPage();
     }

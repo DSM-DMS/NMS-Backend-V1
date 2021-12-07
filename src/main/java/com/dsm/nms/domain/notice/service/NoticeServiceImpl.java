@@ -8,9 +8,15 @@ import com.dsm.nms.domain.notice.api.dto.request.ModifyNoticeRequest;
 import com.dsm.nms.domain.notice.api.dto.request.RegisterNoticeRequest;
 import com.dsm.nms.domain.notice.api.dto.response.NoticeResponse;
 import com.dsm.nms.domain.notice.entity.Notice;
+import com.dsm.nms.domain.notice.entity.noticetarget.NoticeTarget;
+import com.dsm.nms.domain.notice.entity.target.Target;
+import com.dsm.nms.domain.notice.entity.target.TargetTag;
 import com.dsm.nms.domain.notice.exception.NoticeNotFoundException;
+import com.dsm.nms.domain.notice.exception.TargetNotFoundException;
 import com.dsm.nms.domain.notice.facade.NoticeFacade;
 import com.dsm.nms.domain.notice.repository.NoticeRepository;
+import com.dsm.nms.domain.notice.repository.NoticeTargetRepository;
+import com.dsm.nms.domain.notice.repository.TargetRepository;
 import com.dsm.nms.domain.reply.repository.ReplyRepository;
 import com.dsm.nms.domain.star.facade.StarFacade;
 import com.dsm.nms.domain.teacher.entity.Teacher;
@@ -21,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -35,7 +42,9 @@ public class NoticeServiceImpl implements NoticeService {
     private final TeacherFacade teacherFacade;
     private final ReplyRepository replyRepository;
     private final NoticeRepository noticeRepository;
+    private final TargetRepository targetRepository;
     private final CommentRepository commentRepository;
+    private final NoticeTargetRepository noticeTargetRepository;
 
     @Override
     @Transactional
@@ -71,25 +80,53 @@ public class NoticeServiceImpl implements NoticeService {
         Integer count = getCounts(noticeRepository.count());
 
         List<NoticeResponse.notice> notices =  noticeRepository.findAll().stream()
-                .map(notice -> NoticeResponse.notice.builder()
-                        .noticeId(notice.getId())
-                        .title(notice.getTitle())
-                        .content(notice.getContent())
-                        .writer(NoticeResponse.writer.builder()
-                                .name(notice.getTeacher().getName())
-                                .profileUrl(notice.getTeacher().getProfileUrl())
-                                .build())
-                        .targets(noticeFacade.getTargetTags(notice))
-                        .createdDate(notice.getCreatedDate())
-                        .updatedDate(notice.getUpdatedDate())
-                        .images(imageFacade.getNoticeImages(notice))
-                        .isStar(starFacade.checkIsStar(notice))
-                        .commentCount(getCommentCount(notice))
-                        .comments(commentFacade.getComments(notice))
-                        .build())
+                .map(this::buildNotice)
                 .collect(toList());
 
         return new NoticeResponse(count, notices);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public NoticeResponse.notice getNotice(Integer noticeId) {
+        return noticeRepository.findById(noticeId)
+                .map(this::buildNotice)
+                .orElseThrow(() -> NoticeNotFoundException.EXCEPTION);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public NoticeResponse getNoticeToTarget(String target) {
+        Target targetTag = targetRepository.findByTargetTag(TargetTag.valueOf(target))
+                .orElseThrow(() -> TargetNotFoundException.EXCEPTION);
+
+        Integer count = noticeTargetRepository.countByTarget(targetTag);
+
+        List<NoticeResponse.notice> notices = targetTag.getNotices().stream()
+                .map(NoticeTarget::getNotice)
+                .map(this::buildNotice)
+                .collect(toList());
+
+        return new NoticeResponse(count, notices);
+    }
+
+    private NoticeResponse.notice buildNotice(Notice notice) {
+        return NoticeResponse.notice.builder()
+                .noticeId(notice.getId())
+                .title(notice.getTitle())
+                .content(notice.getContent())
+                .writer(NoticeResponse.writer.builder()
+                        .name(notice.getTeacher().getName())
+                        .profileUrl(notice.getTeacher().getProfileUrl())
+                        .build())
+                .targets(noticeFacade.getTargetTags(notice))
+                .createdDate(notice.getCreatedDate())
+                .updatedDate(notice.getUpdatedDate())
+                .images(imageFacade.getNoticeImages(notice))
+                .isStar(starFacade.checkIsStar(notice))
+                .commentCount(getCommentCount(notice))
+                .comments(commentFacade.getComments(notice))
+                .build();
     }
 
     private Integer getCounts(long count) {
