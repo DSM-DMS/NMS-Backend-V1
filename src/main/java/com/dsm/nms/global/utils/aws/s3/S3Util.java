@@ -21,7 +21,7 @@ public class S3Util {
     private final AmazonS3Client amazonS3Client;
 
     public String upload(MultipartFile image) {
-        String fileName = UUID.randomUUID() + image.getOriginalFilename();
+        String fileName = "nms/" + UUID.randomUUID() + image.getOriginalFilename();
 
         try {
             amazonS3Client.putObject(new PutObjectRequest(s3Config.getBucket(), fileName, image.getInputStream(), null)
