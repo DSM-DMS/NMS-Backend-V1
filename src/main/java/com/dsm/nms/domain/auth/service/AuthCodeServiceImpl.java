@@ -35,6 +35,8 @@ public class AuthCodeServiceImpl implements AuthCodeService{
         authCodeRepository.findById(email)
                 .filter(s -> authCodeFacade.checkSendFilter(email))
                 .map(authCode -> authCode.updateAuthCode(code))
+                .map(authCodeRepository::save)
+                .map(AuthCode::getEmail)
                 .flatMap(authCodeLimitRepository::findById)
                 .map(AuthCodeLimit::plusCount)
                 .map(authCodeLimitRepository::save)
@@ -51,7 +53,7 @@ public class AuthCodeServiceImpl implements AuthCodeService{
         authCodeFacade.getAuthCode(email)
                 .filter(
                         authCode -> authCodeFacade.alreadyCertifiedFilter(
-                                authCode.getCertified()
+                                authCode.isCertified()
                         )
                 )
                 .filter(
