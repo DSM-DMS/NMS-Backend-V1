@@ -56,7 +56,7 @@ public class AuthCodeFacade {
     public void isCertifiedFilter(String email) {
         
         AuthCode authCode = getAuthCode(email)
-                .filter(AuthCode::getCertified)
+                .filter(AuthCode::isCertified)
                 .orElseThrow(() -> AuthCodeNotCertifiedException.EXCEPTION);
 
         authCodeRepository.delete(authCode);
