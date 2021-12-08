@@ -8,11 +8,10 @@ import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepScope;
-import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JpaPagingItemReader;
 import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder;
+import org.springframework.batch.item.support.CompositeItemWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -48,8 +47,7 @@ public class BatchConfig {
         return stepBuilderFactory.get("jpaPagingItemStep")
                 .<Image, Image>chunk(chunkSize)
                 .reader(reader())
-//                .processor(processor())
-                .writer(writer())
+                .writer(compositeItem())
                 .build();
     }
 
@@ -64,27 +62,28 @@ public class BatchConfig {
                 .build();
     }
 
-    // item processor
-//    @Bean
-//    @StepScope
-//    public ItemProcessor<List<Image>, Map<String, String>> processor() {
-//        return list -> {
-//            for (Image image : list) {
-//                images.put(image.getImagePath(), null);
-//            }
-//            return images;
-//        };
-//    }
-
-    // item writer
     @Bean
-    public ItemWriter<Image> writer() {
-        return list -> {
-            keys = s3Util.getKeys();
+    public CompositeItemWriter<Image> compositeItem() {
+        final CompositeItemWriter<Image> compositeItemWriter = new CompositeItemWriter<>();
+        compositeItemWriter.setDelegates(Arrays.asList(getImages(), cleanS3()));
+        return compositeItemWriter;
+    }
 
+    // item writer 1
+    @Bean
+    public ItemWriter<Image> getImages() {
+        return list -> {
             for (Image image : list) {
                 images.put(image.getImagePath(), null);
             }
+        };
+    }
+
+    // item writer 2
+    @Bean
+    public ItemWriter<Image> cleanS3() {
+        return list -> {
+            keys = s3Util.getKeys();
 
             for (String imagePath : keys) {
                 if(!images.containsKey(imagePath))
