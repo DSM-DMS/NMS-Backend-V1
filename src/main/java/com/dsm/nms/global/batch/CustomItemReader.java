@@ -17,9 +17,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.EntityManagerFactory;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -33,8 +31,8 @@ public class CustomItemReader {
     private final StepBuilderFactory stepBuilderFactory;
     private final EntityManagerFactory entityManagerFactory;
 
-    private List<String> keys = s3Util.getKeys();
-    private Map<String, String> images = new HashMap<>();
+    private Set<String> keys = new HashSet<>();
+    private final Map<String, String> images = new HashMap<>();
 
     // job
     @Bean
@@ -50,7 +48,7 @@ public class CustomItemReader {
         return stepBuilderFactory.get("jpaPagingItemStep")
                 .<Image, Image>chunk(chunkSize)
                 .reader(reader())
-                .processor(processor())
+//                .processor(processor())
                 .writer(writer())
                 .build();
     }
@@ -67,20 +65,27 @@ public class CustomItemReader {
     }
 
     // item processor
-    @Bean
-    @StepScope
-    public ItemProcessor<Image, Image> processor() {
-        return list -> {
-            for (Image image : list) {
-                images.put(image.getImagePath(), null);
-            }
-        };
-    }
+//    @Bean
+//    @StepScope
+//    public ItemProcessor<List<Image>, Map<String, String>> processor() {
+//        return list -> {
+//            for (Image image : list) {
+//                images.put(image.getImagePath(), null);
+//            }
+//            return images;
+//        };
+//    }
 
     // item writer
     @Bean
     public ItemWriter<Image> writer() {
         return list -> {
+            keys = s3Util.getKeys();
+
+            for (Image image : list) {
+                images.put(image.getImagePath(), null);
+            }
+
             for (String imagePath : keys) {
                 if(!images.containsKey(imagePath))
                     s3Util.removeFile(imagePath);
