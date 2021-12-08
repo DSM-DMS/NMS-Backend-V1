@@ -50,7 +50,7 @@ public class CustomItemReader {
                 .name("jpaPagingItemReader")
                 .entityManagerFactory(entityManagerFactory)
                 .pageSize(chunkSize)
-                .queryString("SELECT i FROM Image i")
+                .queryString("SELECT i FROM Image i Order by id")
                 .build();
     }
 
