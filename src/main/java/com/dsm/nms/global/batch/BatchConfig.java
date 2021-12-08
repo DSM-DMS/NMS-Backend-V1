@@ -33,15 +33,13 @@ public class BatchConfig {
     private Set<String> keys = new HashSet<>();
     private final Map<String, String> images = new HashMap<>();
 
-    // job
     @Bean
     public Job jpaPagingItemJob() {
-        return jobBuilderFactory.get("jpbItemJob")
+        return jobBuilderFactory.get("jpaItemJob")
                 .start(jpaPagingItemStep())
                 .build();
     }
 
-    // step
     @Bean
     public Step jpaPagingItemStep() {
         return stepBuilderFactory.get("jpaItemStep")
@@ -51,7 +49,6 @@ public class BatchConfig {
                 .build();
     }
 
-    // item reader
     @Bean
     public JpaPagingItemReader<Image> reader() {
         return new JpaPagingItemReaderBuilder<Image>()
@@ -69,7 +66,6 @@ public class BatchConfig {
         return compositeItemWriter;
     }
 
-    // item writer 1
     @Bean
     public ItemWriter<Image> getImages() {
         return list -> {
@@ -79,7 +75,6 @@ public class BatchConfig {
         };
     }
 
-    // item writer 2
     @Bean
     public ItemWriter<Image> cleanS3() {
         return list -> {
