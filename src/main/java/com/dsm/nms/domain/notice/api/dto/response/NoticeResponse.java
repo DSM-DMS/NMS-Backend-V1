@@ -27,6 +27,7 @@ public class NoticeResponse {
         private final LocalDateTime updatedDate;
         private final List<String> images;
         private final boolean isStar;
+        private final Integer starCount;
         private final Integer commentCount;
         private final List<comment> comments;
     }

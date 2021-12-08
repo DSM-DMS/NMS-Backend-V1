@@ -124,6 +124,7 @@ public class NoticeServiceImpl implements NoticeService {
                 .updatedDate(notice.getUpdatedDate())
                 .images(imageFacade.getNoticeImages(notice))
                 .isStar(starFacade.checkIsStar(notice))
+                .starCount(starFacade.getStarCount(notice))
                 .commentCount(getCommentCount(notice))
                 .comments(commentFacade.getComments(notice))
                 .build();
