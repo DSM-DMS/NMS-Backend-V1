@@ -22,7 +22,7 @@ import java.util.*;
 @Slf4j
 @RequiredArgsConstructor
 @Configuration
-public class CustomItemReader {
+public class BatchConfig {
 
     private static final int chunkSize = 100;
 

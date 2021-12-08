@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class S3Scheduler {
 
-    private final CustomItemReader customItemReader;
+    private final BatchConfig batchConfig;
 
     @Scheduled(cron = "0 0 0 1/1 * ? *")
     public void cleanFiles() {
-        customItemReader.jpaPagingItemJob();
+        batchConfig.jpaPagingItemJob();
     }
 
 }
