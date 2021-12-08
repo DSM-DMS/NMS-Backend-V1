@@ -12,7 +12,7 @@ public class S3Scheduler {
 
     @Scheduled(cron = "0 0 0 1/1 * ? *")
     public void cleanFiles() {
-        customItemReader.jpaPagingItemReaderJob();
+        customItemReader.jpaPagingItemJob();
     }
 
 }

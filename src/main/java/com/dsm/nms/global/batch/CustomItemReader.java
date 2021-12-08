@@ -8,6 +8,8 @@ import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JpaPagingItemReader;
 import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder;
@@ -15,6 +17,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.EntityManagerFactory;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -28,24 +33,31 @@ public class CustomItemReader {
     private final StepBuilderFactory stepBuilderFactory;
     private final EntityManagerFactory entityManagerFactory;
 
+    private List<String> keys = s3Util.getKeys();
+    private Map<String, String> images = new HashMap<>();
+
+    // job
     @Bean
-    public Job jpaPagingItemReaderJob() {
-        return jobBuilderFactory.get("jpaPagingItemReaderJob")
-                .start(jpaPagingItemReaderStep())
+    public Job jpaPagingItemJob() {
+        return jobBuilderFactory.get("jpaPagingItemJob")
+                .start(jpaPagingItemStep())
                 .build();
     }
 
+    // step
     @Bean
-    public Step jpaPagingItemReaderStep() {
-        return stepBuilderFactory.get("jpaItemReaderStep")
+    public Step jpaPagingItemStep() {
+        return stepBuilderFactory.get("jpaPagingItemStep")
                 .<Image, Image>chunk(chunkSize)
-                .reader(jpaPagingItemReader())
-                .writer(jpaPagingItemWriter())
+                .reader(reader())
+                .processor(processor())
+                .writer(writer())
                 .build();
     }
 
+    // item reader
     @Bean
-    public JpaPagingItemReader<Image> jpaPagingItemReader() {
+    public JpaPagingItemReader<Image> reader() {
         return new JpaPagingItemReaderBuilder<Image>()
                 .name("jpaPagingItemReader")
                 .entityManagerFactory(entityManagerFactory)
@@ -54,69 +66,26 @@ public class CustomItemReader {
                 .build();
     }
 
-    private ItemWriter<Image> jpaPagingItemWriter() {
+    // item processor
+    @Bean
+    @StepScope
+    public ItemProcessor<Image, Image> processor() {
         return list -> {
             for (Image image : list) {
-                log.info("Current Image={}", image.getImagePath());
+                images.put(image.getImagePath(), null);
             }
         };
     }
 
-//    @Bean
-//    public Job tutorialJob() {
-//        return jobBuilderFactory.get("imageJob")
-//                .start(step1())
-//                    .on("FAILED")
-//                    .to(step3())
-//                    .on("*")
-//                    .end()
-//                .from(step1())
-//                    .on("*")
-//                    .to(step2())
-//                    .next(step3())
-//                    .on("*")
-//                    .end()
-//                .end()
-//                .build();
-//    }
-//
-//    @Bean
-//    public Step step1() {
-//        return stepBuilderFactory.get("getImageStep")
-//                .tasklet((contribution, chunkContext) -> {
-//                    log.info("get image step");
-//
-//                    images = imageRepository.findAll().stream()
-//                            .map(Image::getImagePath)
-//                            .collect(toList());
-//
-//                    return RepeatStatus.FINISHED;
-//                })
-//                .build();
-//    }
-//
-//    @Bean
-//    public Step step2() {
-//        return stepBuilderFactory.get("removeImageStep")
-//                .tasklet((contribution, chunkContext) -> {
-//                    log.info("remove image step");
-//
-//                    s3Util.removeFromS3();
-//
-//                    return RepeatStatus.FINISHED;
-//                })
-//                .build();
-//    }
-//
-//    @Bean
-//    public Step step3() {
-//        return stepBuilderFactory.get("lastStep")
-//                .tasklet((contribution, chunkContext) -> {
-//                    log.info("last Step");
-//
-//                    return RepeatStatus.FINISHED;
-//                })
-//                .build();
-//    }
+    // item writer
+    @Bean
+    public ItemWriter<Image> writer() {
+        return list -> {
+            for (String imagePath : keys) {
+                if(!images.containsKey(imagePath))
+                    s3Util.removeFile(imagePath);
+            }
+        };
+    }
 
 }
