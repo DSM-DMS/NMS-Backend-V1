@@ -45,7 +45,7 @@ public class NoticeController {
         return noticeService.getAllNotices();
     }
 
-    @GetMapping("/{notice-id")
+    @GetMapping("/{notice-id}")
     public NoticeResponse.notice getNotice(@PathVariable("notice-id") Integer noticeId) {
         return noticeService.getNotice(noticeId);
     }
