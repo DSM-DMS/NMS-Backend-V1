@@ -2,7 +2,6 @@ package com.dsm.nms.global.batch;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersInvalidException;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
@@ -19,7 +18,7 @@ public class S3Scheduler {
     private final JobLauncher jobLauncher;
     private final UniqueIdGenerator uniqueIdGenerator;
 
-    @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
     public void cleanFiles()
             throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
         jobLauncher.run(job, uniqueIdGenerator.getNext(null));
