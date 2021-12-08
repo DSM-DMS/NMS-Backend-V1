@@ -13,7 +13,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
+
+import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 @Component
@@ -36,15 +39,14 @@ public class S3Util {
         return fileName;
     }
 
-    private void removeFile(String imagePath) {
+    public void removeFile(String imagePath) {
         amazonS3Client.deleteObject(new DeleteObjectRequest(s3Config.getBucket(), imagePath));
     }
 
-    public void removeFromS3() {
-        amazonS3Client.listObjects(s3Config.getBucket()).getObjectSummaries().stream()
+    public List<String> getKeys() {
+        return amazonS3Client.listObjects(s3Config.getBucket()).getObjectSummaries().stream()
                 .map(S3ObjectSummary::getKey)
-                .filter(object -> imageRepository.findByImagePath(object).isEmpty())
-                .forEach(this::removeFile);
+                .collect(toList());
     }
 
     public String getFileUrl(String fileName) {
