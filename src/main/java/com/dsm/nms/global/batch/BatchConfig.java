@@ -36,7 +36,7 @@ public class BatchConfig {
     // job
     @Bean
     public Job jpaPagingItemJob() {
-        return jobBuilderFactory.get("jpaPagingItemJob")
+        return jobBuilderFactory.get("jpbItemJob")
                 .start(jpaPagingItemStep())
                 .build();
     }
@@ -44,7 +44,7 @@ public class BatchConfig {
     // step
     @Bean
     public Step jpaPagingItemStep() {
-        return stepBuilderFactory.get("jpaPagingItemStep")
+        return stepBuilderFactory.get("jpaItemStep")
                 .<Image, Image>chunk(chunkSize)
                 .reader(reader())
                 .writer(compositeItem())
