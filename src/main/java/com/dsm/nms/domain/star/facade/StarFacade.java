@@ -25,4 +25,8 @@ public class StarFacade {
         return starRepository.findByNoticeAndStudent(notice, studentFacade.getCurrentStudent()).isPresent();
     }
 
+    public Integer getStarCount(Notice notice) {
+        return starRepository.countByNotice(notice);
+    }
+
 }

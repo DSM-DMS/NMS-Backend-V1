@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface StarRepository extends JpaRepository<Star, Integer> {
     Optional<Star> findByNoticeId(Integer noticeId);
     Optional<Star> findByNoticeAndStudent(Notice notice, Student student);
+    Integer countByNotice(Notice notice);
 }
