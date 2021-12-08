@@ -1,6 +1,13 @@
 package com.dsm.nms.global.batch;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.JobParametersInvalidException;
+import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
+import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
+import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -8,11 +15,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class S3Scheduler {
 
-    private final BatchConfig batchConfig;
+    private final Job job;
+    private final JobLauncher jobLauncher;
+    private final UniqueIdGenerator uniqueIdGenerator;
 
-    @Scheduled(cron = "0 0 0 1/1 * ? *")
-    public void cleanFiles() {
-        batchConfig.jpaPagingItemJob();
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void cleanFiles()
+            throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
+        jobLauncher.run(job, uniqueIdGenerator.getNext(null));
     }
 
 }
