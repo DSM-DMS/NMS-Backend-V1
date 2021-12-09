@@ -19,7 +19,7 @@ public class S3Scheduler {
     private final JobLauncher jobLauncher;
     private final UniqueIdGenerator uniqueIdGenerator;
 
-    @Scheduled(cron = "0/10 * * * * *", zone = "Asia/Seoul") // 매일 자정마다  : 0 0 0 * * *
+    @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
     public void cleanFiles()
             throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
         jobLauncher.run(job, uniqueIdGenerator.getNext(null));
