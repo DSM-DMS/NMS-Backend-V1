@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  spring:
+    image: glay415as/nms
+    build: .
+    links:
+      - redis
+    ports:
+      - 8080:8080
+    env_file:
+      - .env
+
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
