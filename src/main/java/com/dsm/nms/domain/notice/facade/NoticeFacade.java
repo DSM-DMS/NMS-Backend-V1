@@ -50,4 +50,8 @@ public class NoticeFacade {
                 .collect(toList());
     }
 
+    public Integer getCounts(long count) {
+        return Math.toIntExact(count);
+    }
+
 }
