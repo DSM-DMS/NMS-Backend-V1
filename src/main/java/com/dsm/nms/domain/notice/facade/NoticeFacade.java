@@ -25,9 +25,9 @@ public class NoticeFacade {
     private final NoticeRepository noticeRepository;
     private final NoticeTargetRepository noticeTargetRepository;
 
-    public void addTargetTags(Notice notice, List<TargetTag> tags) {
+    public void addTargetTags(Notice notice, List<String> tags) {
         tags.forEach(targetTag -> noticeTargetRepository.save(NoticeTarget.builder()
-                .target(getTarget(targetTag))
+                .target(getTarget(TargetTag.valueOf(targetTag)))
                 .notice(notice)
                 .build()));
     }
@@ -40,6 +40,7 @@ public class NoticeFacade {
     private Target getTarget(TargetTag tag) {
         return targetRepository.findByTargetTag(tag)
                 .or(() -> Optional.of(new Target(tag)))
+                .map(targetRepository::save)
                 .orElseThrow(() -> TargetNotFoundException.EXCEPTION);
     }
 

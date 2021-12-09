@@ -6,6 +6,7 @@ import com.dsm.nms.domain.student.exception.StudentAlreadyExistsException;
 import com.dsm.nms.domain.student.exception.StudentNotFoundException;
 import com.dsm.nms.domain.student.repository.StudentRepository;
 import com.dsm.nms.global.exception.AuthenticationNotFoundException;
+import com.dsm.nms.global.security.auth.StudentDetails;
 import com.dsm.nms.global.utils.auth.user.UserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,10 +23,10 @@ public class StudentFacade {
     public Student getCurrentStudent() {
         Object principal = userUtil.getPrincipal();
 
-        if(!(principal instanceof Student))
+        if(!(principal instanceof StudentDetails))
             throw AuthenticationNotFoundException.EXCEPTION;
 
-        return (Student) principal;
+        return ((StudentDetails) principal).getStudent();
     }
 
     public boolean isAlreadyExists(String email) {
