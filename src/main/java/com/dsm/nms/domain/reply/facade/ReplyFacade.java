@@ -5,6 +5,7 @@ import com.dsm.nms.domain.comment.exception.CommentNotFoundException;
 import com.dsm.nms.domain.comment.facade.CommentFacade;
 import com.dsm.nms.domain.comment.repository.CommentRepository;
 import com.dsm.nms.domain.notice.api.dto.response.NoticeResponse;
+import com.dsm.nms.domain.notice.entity.Notice;
 import com.dsm.nms.domain.reply.entity.Reply;
 import com.dsm.nms.domain.reply.exception.ReplyNotFoundException;
 import com.dsm.nms.domain.reply.repository.ReplyRepository;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -35,6 +37,10 @@ public class ReplyFacade {
                         .createdDate(reply.getCreatedDate())
                         .build())
                 .collect(toList());
+    }
+
+    public Integer getReplyCount(Integer commentId) {
+        return replyRepository.countByCommentId(commentId);
     }
 
     public void createReply(Integer commentId, String content, Writer writer) {

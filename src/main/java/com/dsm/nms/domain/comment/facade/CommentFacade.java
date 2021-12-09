@@ -33,9 +33,14 @@ public class CommentFacade {
                                 .build())
                         .content(comment.getContent())
                         .createdDate(comment.getCreatedDate())
+                        .replyCount(replyFacade.getReplyCount(comment.getId()))
                         .replies(replyFacade.getReplies(comment))
                         .build())
                 .collect(toList());
+    }
+
+    public Integer getCommentCount(Notice notice) {
+        return noticeFacade.getCounts(commentRepository.countByNoticeId(notice.getId()));
     }
 
     public void createComment(Integer noticeId, String content, Writer writer) {

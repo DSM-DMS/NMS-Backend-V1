@@ -48,6 +48,7 @@ public class NoticeResponse {
         private final writer writer;
         private final String content;
         private final LocalDateTime createdDate;
+        private final Integer replyCount;
         private final List<reply> replies;
     }
 
