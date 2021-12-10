@@ -30,7 +30,6 @@ public class Notice extends BaseTimeEntity {
     @Column(nullable = false)
     private String content;
 
-    @Column(columnDefinition = "integer default 0")
     private Integer starCount;
 
     @JoinColumn(name = "teacher_id")
@@ -53,6 +52,7 @@ public class Notice extends BaseTimeEntity {
         this.title = request.getTitle();
         this.content = request.getContent();
         this.teacher = teacher;
+        this.starCount = 0;
     }
 
     public Notice updateTitleAndContent(ModifyNoticeRequest noticeRequest) {
