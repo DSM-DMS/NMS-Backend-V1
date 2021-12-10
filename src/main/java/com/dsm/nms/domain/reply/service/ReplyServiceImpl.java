@@ -1,11 +1,11 @@
 package com.dsm.nms.domain.reply.service;
 
 import com.dsm.nms.domain.reply.facade.ReplyFacade;
-import com.dsm.nms.domain.student.entity.Student;
 import com.dsm.nms.domain.student.facade.StudentFacade;
-import com.dsm.nms.domain.teacher.entity.Teacher;
 import com.dsm.nms.domain.teacher.facade.TeacherFacade;
 import com.dsm.nms.global.exception.InvalidRoleException;
+import com.dsm.nms.global.security.auth.StudentDetails;
+import com.dsm.nms.global.security.auth.TeacherDetails;
 import com.dsm.nms.global.utils.auth.user.UserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,9 +25,9 @@ public class ReplyServiceImpl implements ReplyService {
     public void addReply(Integer commentId, String content) {
         Object principal = userUtil.getPrincipal();
 
-        if (principal instanceof Teacher) {
+        if (principal instanceof TeacherDetails) {
             replyFacade.createReply(commentId, content, teacherFacade.getCurrentTeacher());
-        } else if (principal instanceof Student) {
+        } else if (principal instanceof StudentDetails) {
             replyFacade.createReply(commentId, content, studentFacade.getCurrentStudent());
         } else throw InvalidRoleException.EXCEPTION;
 
