@@ -24,7 +24,8 @@ public class Reply extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Comment comment;
 
-    @OneToOne(mappedBy = "reply", fetch = FetchType.EAGER)
+    @JoinColumn(name = "writer_id")
+    @ManyToOne
     private Writer writer;
 
     public Reply(Comment comment, String content, Writer writer) {

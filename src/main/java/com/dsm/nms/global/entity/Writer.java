@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -15,7 +16,7 @@ import javax.persistence.*;
 @Entity
 public class Writer {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
     @Column(nullable = false, columnDefinition = "char(5)")
@@ -23,10 +24,10 @@ public class Writer {
 
     protected String profileUrl;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Reply reply;
+    @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY)
+    private List<Reply> replies;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Comment comment;
+    @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY)
+    private List<Comment> comments;
 
 }
