@@ -31,7 +31,7 @@ public class AuthCodeFacade {
 
     public boolean isLimit(String email) {
         authCodeLimitRepository.findById(email)
-                .filter(authCodeLimit -> authCodeLimit.getCount() < 3)
+                .filter(authCodeLimit -> authCodeLimit.getCount() < 100)
                 .orElseThrow(() -> AuthCodeRequestOverLimitException.EXCEPTION);
         return true;
     }
