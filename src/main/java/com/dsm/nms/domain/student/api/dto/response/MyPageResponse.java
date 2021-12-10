@@ -30,10 +30,10 @@ public class MyPageResponse {
         private final String image;
     }
 
-    public MyPageResponse(Student student, List<notice> staredNotice) {
+    public MyPageResponse(Student student, List<notice> staredNotice, String grade) {
         this.nickname = student.getNickname();
         this.name = student.getName();
-        this.gcn = student.getGrade() + student.getClassNum() + student.getNumber();
+        this.gcn = grade + student.getClassNum() + student.getNumber();
         this.email = student.getEmail();
         this.profileUrl = student.getProfileUrl();
         this.staredNotice = staredNotice;
