@@ -20,7 +20,7 @@ public class StarController {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void cancel(@RequestParam("comment-id") Integer commentId) {
+    public void cancel(@RequestParam("notice-id") Integer commentId) {
         starService.cancel(commentId);
     }
 }
