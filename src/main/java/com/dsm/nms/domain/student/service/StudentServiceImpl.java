@@ -6,6 +6,7 @@ import com.dsm.nms.domain.star.entity.Star;
 import com.dsm.nms.domain.star.repository.StarRepository;
 import com.dsm.nms.domain.student.api.dto.response.MyPageResponse;
 import com.dsm.nms.domain.student.entity.Student;
+import com.dsm.nms.domain.student.exception.InvalidGradeException;
 import com.dsm.nms.domain.student.facade.StudentFacade;
 import com.dsm.nms.domain.student.repository.StudentRepository;
 import com.dsm.nms.global.utils.auth.user.UserUtil;
@@ -98,6 +99,15 @@ public class StudentServiceImpl implements StudentService {
                         .build())
                 .collect(Collectors.toList());
 
-        return new MyPageResponse(student, staredNotice);
+        return new MyPageResponse(student, staredNotice, changeGrade(student.getGrade().toString()));
+    }
+
+    private String changeGrade(String grade) {
+        switch (grade) {
+            case "FIRST" : return "1";
+            case "SECOND" : return "2";
+            case "THIRD" : return "3";
+            default: throw InvalidGradeException.EXCEPTION;
+        }
     }
 }
