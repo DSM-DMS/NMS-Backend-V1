@@ -30,6 +30,7 @@ public class Notice extends BaseTimeEntity {
     @Column(nullable = false)
     private String content;
 
+    @Column(columnDefinition = "integer default 0")
     private Integer starCount;
 
     @JoinColumn(name = "teacher_id")
