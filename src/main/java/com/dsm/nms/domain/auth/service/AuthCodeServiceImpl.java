@@ -34,6 +34,7 @@ public class AuthCodeServiceImpl implements AuthCodeService{
 
         authCodeRepository.findById(email)
                 .filter(s -> authCodeFacade.checkSendFilter(email))
+                .filter(s -> authCodeFacade.alreadyCertifiedFilter((s.isCertified())))
                 .map(authCode -> authCode.updateAuthCode(code))
                 .map(authCodeRepository::save)
                 .map(AuthCode::getEmail)
@@ -64,8 +65,6 @@ public class AuthCodeServiceImpl implements AuthCodeService{
                 .map(AuthCode::changeCertified)
                 .map(authCodeRepository::save)
                 .orElseThrow(() -> InvalidAuthCodeException.EXCEPTION);
-
-        authCodeLimitRepository.deleteById(email);
     }
 
 }
