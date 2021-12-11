@@ -110,6 +110,7 @@ public class NoticeServiceImpl implements NoticeService {
                 .title(notice.getTitle())
                 .content(notice.getContent())
                 .writer(NoticeResponse.writer.builder()
+                        .id(notice.getTeacher().getId())
                         .name(notice.getTeacher().getName())
                         .profileUrl(notice.getTeacher().getProfileUrl())
                         .build())

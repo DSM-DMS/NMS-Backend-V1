@@ -36,6 +36,7 @@ public class NoticeResponse {
     @Builder
     @AllArgsConstructor
     public static class writer {
+        private final Integer id;
         private final String name;
         private final String profileUrl;
     }
