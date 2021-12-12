@@ -19,7 +19,6 @@ import com.dsm.nms.domain.star.facade.StarFacade;
 import com.dsm.nms.domain.teacher.entity.Teacher;
 import com.dsm.nms.domain.teacher.facade.TeacherFacade;
 import lombok.RequiredArgsConstructor;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,22 +42,28 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     @Transactional
-    public void registerNotice(RegisterNoticeRequest noticeRequest, @Nullable List<MultipartFile> images) {
+    public void registerNotice(RegisterNoticeRequest noticeRequest, List<MultipartFile> images) {
         Teacher teacher = teacherFacade.getCurrentTeacher();
         Notice notice = noticeRepository.save(new Notice(noticeRequest, teacher));
 
-        imageFacade.addImages(notice, images);
+        if(images != null) {
+            imageFacade.addImages(notice, images);
+        }
+
         noticeFacade.addTargetTags(notice, noticeRequest.getTags());
     }
 
     @Override
     @Transactional
-    public void modifyNotice(Integer noticeId, ModifyNoticeRequest noticeRequest, @Nullable List<MultipartFile> images) {
+    public void modifyNotice(Integer noticeId, ModifyNoticeRequest noticeRequest, List<MultipartFile> images) {
         Notice findNotice = noticeRepository.findById(noticeId)
                 .map(s -> s.updateTitleAndContent(noticeRequest))
                 .orElseThrow(() -> NoticeNotFoundException.EXCEPTION);
 
-        imageFacade.modifyImages(findNotice, images);
+        if(images != null) {
+            imageFacade.modifyImages(findNotice, images);
+        }
+
     }
 
     @Override
