@@ -34,6 +34,7 @@ public class StarServiceImpl implements StarService{
     }
 
     @Override
+    @Transactional
     public void cancel(Integer noticeId) {
         Star star = starRepository.findByNoticeId(noticeId)
                 .orElseThrow(() -> StarNotFoundException.EXCEPTION);
