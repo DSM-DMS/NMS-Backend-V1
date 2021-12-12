@@ -86,7 +86,7 @@ public class StudentServiceImpl implements StudentService {
     public MyPageResponse getStudentMyPage() {
         Student student = studentFacade.getCurrentStudent();
 
-        List<MyPageResponse.notice> staredNotice = student.getStars()
+        List<MyPageResponse.notice> staredNotice = starRepository.findByStudent(student)
                 .stream()
                 .map(Star::getNotice)
                 .map(notice -> MyPageResponse.notice.builder()
