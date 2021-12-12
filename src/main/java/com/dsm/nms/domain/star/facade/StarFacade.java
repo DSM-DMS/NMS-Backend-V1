@@ -26,7 +26,7 @@ public class StarFacade {
     }
 
     public Integer getStarCount(Notice notice) {
-        return starRepository.countByNotice(notice);
+        return notice.getStarCount();
     }
 
 }
