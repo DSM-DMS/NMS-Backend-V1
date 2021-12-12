@@ -46,7 +46,10 @@ public class NoticeServiceImpl implements NoticeService {
         Teacher teacher = teacherFacade.getCurrentTeacher();
         Notice notice = noticeRepository.save(new Notice(noticeRequest, teacher));
 
-        imageFacade.addImages(notice, images);
+        if(images != null) {
+            imageFacade.addImages(notice, images);
+        }
+
         noticeFacade.addTargetTags(notice, noticeRequest.getTags());
     }
 
@@ -57,7 +60,10 @@ public class NoticeServiceImpl implements NoticeService {
                 .map(s -> s.updateTitleAndContent(noticeRequest))
                 .orElseThrow(() -> NoticeNotFoundException.EXCEPTION);
 
-        imageFacade.modifyImages(findNotice, images);
+        if(images != null) {
+            imageFacade.modifyImages(findNotice, images);
+        }
+
     }
 
     @Override
