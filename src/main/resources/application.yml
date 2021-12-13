@@ -5,7 +5,6 @@ spring:
     database: mysql
     generate-ddl: true
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    show-sql: true
 
   datasource:
     url: ${DB_URL}
