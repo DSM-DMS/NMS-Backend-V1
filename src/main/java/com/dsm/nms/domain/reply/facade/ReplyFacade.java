@@ -30,6 +30,7 @@ public class ReplyFacade {
                 .map(reply -> NoticeResponse.reply.builder()
                         .id(reply.getId())
                         .writer(NoticeResponse.writer.builder()
+                                .id(reply.getWriter().getId())
                                 .name(reply.getWriter().getName())
                                 .profileUrl(reply.getWriter().getProfileUrl())
                                 .build())

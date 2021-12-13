@@ -28,6 +28,7 @@ public class CommentFacade {
                 .map(comment -> NoticeResponse.comment.builder()
                         .id(comment.getId())
                         .writer(NoticeResponse.writer.builder()
+                                .id(comment.getWriter().getId())
                                 .name(comment.getWriter().getName())
                                 .profileUrl(comment.getWriter().getProfileUrl())
                                 .build())
