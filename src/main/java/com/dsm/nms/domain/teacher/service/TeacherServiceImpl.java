@@ -116,17 +116,9 @@ public class TeacherServiceImpl implements TeacherService{
                 teacherFacade.getCurrentTeacher()
                         .updateInfo(
                                 teacherInfoRequest,
-                                modifyProfileImage(profile)
+                                userUtil.modifyProfileImage(profile)
                         )
         );
-    }
-
-    private String modifyProfileImage(MultipartFile profile) {
-        if(profile.isEmpty()) {
-            return null;
-        }
-
-        return s3Util.getFileUrl(s3Util.upload(profile));
     }
 
 }

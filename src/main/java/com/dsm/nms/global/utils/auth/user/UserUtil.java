@@ -7,20 +7,23 @@ import com.dsm.nms.global.exception.EmailAlreadyExistsException;
 import com.dsm.nms.global.exception.InvalidTokenException;
 import com.dsm.nms.global.security.jwt.JwtTokenProvider;
 import com.dsm.nms.global.security.jwt.dto.response.TokenResponse;
+import com.dsm.nms.global.utils.aws.s3.S3Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
 @Component
 public class UserUtil {
 
+    private final S3Util s3Util;
+    private final JwtTokenProvider tokenProvider;
     private final TeacherRepository teacherRepository;
     private final StudentRepository studentRepository;
     private final RefreshTokenRepository refreshTokenRepository;
-    private final JwtTokenProvider tokenProvider;
 
     @Value("${jwt.refreshExp}")
     private Long ttl;
@@ -48,4 +51,13 @@ public class UserUtil {
                 })
                 .orElseThrow(()-> InvalidTokenException.EXCEPTION);
     }
+
+    public String modifyProfileImage(MultipartFile profile) {
+        if(profile.isEmpty()) {
+            return null;
+        }
+
+        return s3Util.getFileUrl(s3Util.upload(profile));
+    }
+
 }
