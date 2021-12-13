@@ -26,7 +26,7 @@ public class ReplyFacade {
         return comment.getReplies().stream()
                 .map(reply -> SchoolResponse.reply.builder()
                         .id(reply.getId())
-                        .writer(NoticeResponse.writer.builder()
+                        .writer(SchoolResponse.writer.builder()
                                 .id(reply.getWriter().getId())
                                 .name(reply.getWriter().getName())
                                 .profileUrl(reply.getWriter().getProfileUrl())
