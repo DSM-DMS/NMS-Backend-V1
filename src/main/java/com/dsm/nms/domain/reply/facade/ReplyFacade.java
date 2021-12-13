@@ -2,10 +2,8 @@ package com.dsm.nms.domain.reply.facade;
 
 import com.dsm.nms.domain.comment.entity.Comment;
 import com.dsm.nms.domain.comment.exception.CommentNotFoundException;
-import com.dsm.nms.domain.comment.facade.CommentFacade;
 import com.dsm.nms.domain.comment.repository.CommentRepository;
-import com.dsm.nms.domain.notice.api.dto.response.NoticeResponse;
-import com.dsm.nms.domain.notice.entity.Notice;
+import com.dsm.nms.domain.notice.api.dto.response.SchoolResponse;
 import com.dsm.nms.domain.reply.entity.Reply;
 import com.dsm.nms.domain.reply.exception.ReplyNotFoundException;
 import com.dsm.nms.domain.reply.repository.ReplyRepository;
@@ -14,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -25,11 +22,11 @@ public class ReplyFacade {
     private final CommentRepository commentRepository;
     private final ReplyRepository replyRepository;
 
-    public List<NoticeResponse.reply> getReplies(Comment comment) {
+    public List<SchoolResponse.reply> getReplies(Comment comment) {
         return comment.getReplies().stream()
-                .map(reply -> NoticeResponse.reply.builder()
+                .map(reply -> SchoolResponse.reply.builder()
                         .id(reply.getId())
-                        .writer(NoticeResponse.writer.builder()
+                        .writer(SchoolResponse.writer.builder()
                                 .id(reply.getWriter().getId())
                                 .name(reply.getWriter().getName())
                                 .profileUrl(reply.getWriter().getProfileUrl())

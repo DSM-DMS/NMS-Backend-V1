@@ -4,7 +4,8 @@ import com.dsm.nms.domain.comment.facade.CommentFacade;
 import com.dsm.nms.domain.image.facade.ImageFacade;
 import com.dsm.nms.domain.notice.api.dto.request.ModifyNoticeRequest;
 import com.dsm.nms.domain.notice.api.dto.request.RegisterNoticeRequest;
-import com.dsm.nms.domain.notice.api.dto.response.NoticeResponse;
+import com.dsm.nms.domain.notice.api.dto.response.SchoolResponse;
+import com.dsm.nms.domain.notice.api.dto.response.SuburbResponse;
 import com.dsm.nms.domain.notice.entity.Notice;
 import com.dsm.nms.domain.notice.entity.noticetarget.NoticeTarget;
 import com.dsm.nms.domain.notice.entity.target.Target;
@@ -12,6 +13,7 @@ import com.dsm.nms.domain.notice.entity.target.TargetTag;
 import com.dsm.nms.domain.notice.exception.NoticeNotFoundException;
 import com.dsm.nms.domain.notice.exception.TargetNotFoundException;
 import com.dsm.nms.domain.notice.facade.NoticeFacade;
+import com.dsm.nms.domain.notice.repository.DevEventRepository;
 import com.dsm.nms.domain.notice.repository.NoticeRepository;
 import com.dsm.nms.domain.notice.repository.NoticeTargetRepository;
 import com.dsm.nms.domain.notice.repository.TargetRepository;
@@ -19,6 +21,8 @@ import com.dsm.nms.domain.star.facade.StarFacade;
 import com.dsm.nms.domain.teacher.entity.Teacher;
 import com.dsm.nms.domain.teacher.facade.TeacherFacade;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,6 +42,7 @@ public class NoticeServiceImpl implements NoticeService {
     private final TeacherFacade teacherFacade;
     private final NoticeRepository noticeRepository;
     private final TargetRepository targetRepository;
+    private final DevEventRepository devEventRepository;
     private final NoticeTargetRepository noticeTargetRepository;
 
     @Override
@@ -76,19 +81,19 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     @Transactional(readOnly = true)
-    public NoticeResponse getAllNotices() {
+    public SchoolResponse getAllNotices() {
         Integer count = noticeFacade.getCounts(noticeRepository.count());
 
-        List<NoticeResponse.notice> notices =  noticeRepository.findAll().stream()
+        List<SchoolResponse.notice> notices =  noticeRepository.findAll().stream()
                 .map(this::buildNotice)
                 .collect(toList());
 
-        return new NoticeResponse(count, notices);
+        return new SchoolResponse(count, notices);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public NoticeResponse.notice getNotice(Integer noticeId) {
+    public SchoolResponse.notice getNotice(Integer noticeId) {
         return noticeRepository.findById(noticeId)
                 .map(this::buildNotice)
                 .orElseThrow(() -> NoticeNotFoundException.EXCEPTION);
@@ -96,26 +101,32 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     @Transactional(readOnly = true)
-    public NoticeResponse getNoticeToTarget(String target) {
-        Target targetTag = targetRepository.findByTargetTag(TargetTag.valueOf(target))
-                .orElseThrow(() -> TargetNotFoundException.EXCEPTION);
+    public ResponseEntity<?> getNoticeToTarget(String target) {
+        if (!target.equals(TargetTag.SUBURBS.toString())) {
+            Target targetTag = targetRepository.findByTargetTag(TargetTag.valueOf(target))
+                    .orElseThrow(() -> TargetNotFoundException.EXCEPTION);
 
-        Integer count = noticeTargetRepository.countByTarget(targetTag);
+            Integer count = noticeTargetRepository.countByTarget(targetTag);
 
-        List<NoticeResponse.notice> notices = targetTag.getNotices().stream()
-                .map(NoticeTarget::getNotice)
-                .map(this::buildNotice)
-                .collect(toList());
+            List<SchoolResponse.notice> notices = targetTag.getNotices().stream()
+                    .map(NoticeTarget::getNotice)
+                    .map(this::buildNotice)
+                    .collect(toList());
 
-        return new NoticeResponse(count, notices);
+            return new ResponseEntity<>(new SchoolResponse(count, notices), HttpStatus.OK);
+        }
+
+        Integer count = Math.toIntExact(devEventRepository.count());
+
+        return new ResponseEntity<>(new SuburbResponse(count, devEventRepository.findAll()), HttpStatus.OK);
     }
 
-    private NoticeResponse.notice buildNotice(Notice notice) {
-        return NoticeResponse.notice.builder()
+    private SchoolResponse.notice buildNotice(Notice notice) {
+        return SchoolResponse.notice.builder()
                 .noticeId(notice.getId())
                 .title(notice.getTitle())
                 .content(notice.getContent())
-                .writer(NoticeResponse.writer.builder()
+                .writer(SchoolResponse.writer.builder()
                         .id(notice.getTeacher().getId())
                         .name(notice.getTeacher().getName())
                         .profileUrl(notice.getTeacher().getProfileUrl())
