@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class NoticeResponse {
+public class SchoolResponse {
     private final Integer noticeCount;
     private final List<notice> notices;
 

@@ -2,10 +2,11 @@ package com.dsm.nms.domain.notice.api;
 
 import com.dsm.nms.domain.notice.api.dto.request.ModifyNoticeRequest;
 import com.dsm.nms.domain.notice.api.dto.request.RegisterNoticeRequest;
-import com.dsm.nms.domain.notice.api.dto.response.NoticeResponse;
+import com.dsm.nms.domain.notice.api.dto.response.SchoolResponse;
 import com.dsm.nms.domain.notice.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -41,17 +42,17 @@ public class NoticeController {
     }
 
     @GetMapping("/all")
-    public NoticeResponse getAllNotices() {
+    public SchoolResponse getAllNotices() {
         return noticeService.getAllNotices();
     }
 
     @GetMapping("/{notice-id}")
-    public NoticeResponse.notice getNotice(@PathVariable("notice-id") Integer noticeId) {
+    public SchoolResponse.notice getNotice(@PathVariable("notice-id") Integer noticeId) {
         return noticeService.getNotice(noticeId);
     }
 
     @GetMapping
-    public NoticeResponse getNoticeToTarget(@RequestParam String target) {
+    public ResponseEntity<?> getNoticeToTarget(@RequestParam String target) {
         return noticeService.getNoticeToTarget(target);
     }
 
