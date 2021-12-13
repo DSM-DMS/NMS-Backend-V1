@@ -116,7 +116,7 @@ public class TeacherServiceImpl implements TeacherService{
                 teacherFacade.getCurrentTeacher()
                         .updateInfo(
                                 teacherInfoRequest,
-                                s3Util.getFileUrl(s3Util.upload(profile))
+                                userUtil.modifyProfileImage(profile)
                         )
         );
     }

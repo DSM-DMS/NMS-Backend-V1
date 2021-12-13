@@ -75,7 +75,7 @@ public class StudentServiceImpl implements StudentService {
         studentRepository.save(
             studentFacade.getCurrentStudent()
                     .updateStudent(
-                            s3Util.getFileUrl(s3Util.upload(profile)),
+                            userUtil.modifyProfileImage(profile),
                             nickname
                     )
         );
