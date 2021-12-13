@@ -27,7 +27,12 @@ public class MyPageResponse {
         private final String writer;
         private final String department;
         private final LocalDateTime createdDate;
-        private final String image;
+        private String image;
+
+        public notice inputImage(String image) {
+            this.image = image;
+            return this;
+        }
     }
 
     public MyPageResponse(Student student, List<notice> staredNotice, String grade) {

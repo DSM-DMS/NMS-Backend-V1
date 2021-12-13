@@ -1,7 +1,7 @@
 package com.dsm.nms.domain.student.service;
 
 import com.dsm.nms.domain.auth.facade.AuthCodeFacade;
-import com.dsm.nms.domain.image.facade.ImageFacade;
+import com.dsm.nms.domain.image.entity.Image;
 import com.dsm.nms.domain.star.entity.Star;
 import com.dsm.nms.domain.star.repository.StarRepository;
 import com.dsm.nms.domain.student.api.dto.response.MyPageResponse;
@@ -89,17 +89,26 @@ public class StudentServiceImpl implements StudentService {
         List<MyPageResponse.notice> staredNotice = starRepository.findByStudent(student)
                 .stream()
                 .map(Star::getNotice)
-                .map(notice -> MyPageResponse.notice.builder()
-                        .id(notice.getId())
-                        .title(notice.getTitle())
-                        .writer(notice.getTeacher().getName())
-                        .department(notice.getTeacher().getDepartment().toString())
-                        .createdDate(notice.getCreatedDate())
-                        .image(notice.getImages().get(0).getImageUrl())
-                        .build())
+                .map(notice -> {
+                    MyPageResponse.notice myNotice = MyPageResponse.notice.builder()
+                            .id(notice.getId())
+                            .title(notice.getTitle())
+                            .writer(notice.getTeacher().getName())
+                            .department(notice.getTeacher().getDepartment().toString())
+                            .createdDate(notice.getCreatedDate())
+                            .build();
+                    return imageFilter(myNotice, notice.getImages());
+                })
                 .collect(Collectors.toList());
 
         return new MyPageResponse(student, staredNotice, changeGrade(student.getGrade().toString()));
+    }
+
+    private MyPageResponse.notice imageFilter(MyPageResponse.notice notice, List<Image> images) {
+        if(!images.isEmpty())
+            notice.inputImage(images.get(0).toString());
+
+        return notice;
     }
 
     private String changeGrade(String grade) {
